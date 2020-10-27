@@ -3,7 +3,7 @@
     <div class="header">
         <div class="topbar d-flex justify-content-between align-items-center">
             <div class="topbar-left">
-                <h1>Thi TOEIC Online</h1>
+                <h1>Thi TOEIC Online miễn phí</h1>
             </div>
             <div class="topbar-right">
                 <button type="button" class="btn btn-light">Đăng ký</button>
