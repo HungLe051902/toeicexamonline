@@ -3,12 +3,7 @@ export default {
     login(user) {
         try {
             axios.post(`https://localhost:44346/api/login`,
-                user, {
-                headers: {
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-                }
-            })
+                user)
                 .then(response => {
                     console.log("Đăng nhập", response)
                 })
