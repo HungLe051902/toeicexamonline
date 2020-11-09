@@ -1,15 +1,9 @@
 import axios from 'axios';
 export default {
-    login(user) {
+    async login(user) {
         try {
-            axios.post(`https://localhost:44346/api/login`,
-                user)
-                .then(response => {
-                    console.log("Đăng nhập", response)
-                })
-                .catch(e => {
-                    console.log(e);
-                })
+            return await axios.post(`https://localhost:44346/api/login`,
+                user);
         } catch (error) {
             console.log(error);
         }

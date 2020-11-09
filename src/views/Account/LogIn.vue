@@ -41,6 +41,7 @@
 </template>
 
 <script>
+import $ from 'jquery';
 import Popup from "@/components/Popup.vue";
 import LoginService from "@/services/loginService.js";
 export default {
@@ -55,26 +56,30 @@ export default {
   },
   data: function () {
     return {
-        form: {
-            username: "",
-            password: ""
-        }
+      form: {
+        username: "",
+        password: "",
+      },
     };
   },
   methods: {
     async login() {
       try {
-          if (this.form.username && this.form.password){
-              let dataPost = {
-                  UserName: this.form.username,
-                  Password: this.form.password
-              }
-              var res = await LoginService.login(dataPost);
-              console.log(res);
+        if (this.form.username && this.form.password) {
+          let dataPost = {
+            UserName: this.form.username,
+            Password: this.form.password,
+          };
+          var res = await LoginService.login(dataPost);
+          if (res) {
+            $('#'+this.id).modal('hide');
+            this.$router.push("/toeicexam");
+          } else {
+            alert("Không tồn tại tài khoản");
           }
-          else {
-              alert("Mời bạn nhập đủ thông tin");
-          }
+        } else {
+          alert("Mời bạn nhập đủ thông tin");
+        }
       } catch (e) {
         console.log(e);
       }
