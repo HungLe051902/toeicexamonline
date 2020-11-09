@@ -36,14 +36,25 @@
       </form>
     </template>
     <template slot="popup-footer">
-      <button type="submit" class="btn btn-light ml-3">Đăng nhập</button>
-      <button v-on:click="createAccount" type="submit" class="btn btn-primary">Đăng ký</button>
+      <button
+        v-on:click="openLoginForm"
+        type="submit"
+        class="btn btn-light ml-3"
+      >
+        Đăng nhập
+      </button>
+      <button v-on:click="createAccount" type="submit" class="btn btn-primary">
+        Đăng ký
+      </button>
     </template>
   </Popup>
 </template>
 
 <script>
+import $ from "jquery";
 import Popup from "@/components/Popup.vue";
+import LoginService from "@/services/loginService.js";
+
 export default {
   props: {
     id: {
@@ -64,13 +75,36 @@ export default {
     };
   },
   methods: {
-    createAccount() {
+    // Hàm tắt form đăng ký và mở form đăng nhập
+    openLoginForm() {
       try {
-        if (this.form.nickname && this.form.password && (this.form.password == this.repassword)) {
-          alert("Tạo tài khoản");
-        }
-        else {
-            alert("Hãy nhập đủ thông tin")
+        // Tăt form đăng ký
+        $("#" + this.id).modal("hide");
+        // Mở form đăng nhập
+        $("#login").modal("show");
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    // Hàm tạo tài khoản
+    async createAccount() {
+      try {
+        if (this.form.nickname && this.form.password && this.form.password) {
+          if (this.form.password == this.repassword) {
+            let user = {
+              UserName: this.form.nickname,
+              Password: this.form.password,
+            };
+            var res = await LoginService.register(user);
+            if (res) {
+              $("#" + this.id).modal("hide");
+              alert("Đăng ký thành công");
+            }
+          } else {
+            alert("Mật khẩu nhập lại không khớp");
+          }
+        } else {
+          alert("Hãy nhập đủ thông tin");
         }
       } catch (e) {
         console.log(e);

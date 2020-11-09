@@ -5,7 +5,7 @@
         class="main-topbar d-flex justify-content-between align-items-center"
       >
         <div class="topbar-left">
-          <h1 class="mb-0">Thi TOEIC Online</h1>
+          <h1 class="mb-0">Thi TOEIC trực tuyến</h1>
         </div>
         <div class="topbar-right">
           <button
