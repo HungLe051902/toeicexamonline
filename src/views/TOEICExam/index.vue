@@ -45,16 +45,6 @@
         </div>
       </div>
     </div>
-    <div class="footer">
-      <div class="footer-content"></div>
-      <div class="footer-copyright">
-        <div
-          class="h-100 align-items-center d-flex justify-content-center text-light"
-        >
-          © 2020 Copyright: LEXUANHUNG
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 <script>
@@ -130,9 +120,7 @@ export default {
   },
   methods: {},
   props: {},
-  created() {
-    this.showNoti("abcdef");
-  },
+  created() {},
 };
 </script>
 
@@ -148,8 +136,9 @@ export default {
       .col-6 {
         border: 1px solid gray;
         padding: 0;
-        .label {
-          background-color: gray;
+        label {
+          background-color: #1864a3;
+          color: #FFFFFF;
         }
         .exam {
           text-align: left;
@@ -165,20 +154,6 @@ export default {
       }
     }
   }
-  .footer {
-    height: 200px;
-    width: 100vw;
-    background-color: #4682b4;
-    position: relative;
-    .footer-copyright {
-      position: absolute;
-      width: 100%;
-      height: 50px;
-      bottom: 0;
-      left: 0;
-      background-color: #1864a3;
-      text-align: center;
-    }
-  }
+  
 }
 </style>

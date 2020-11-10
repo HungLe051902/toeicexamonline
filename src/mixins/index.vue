@@ -14,22 +14,24 @@ export default {
       );
       return uuid;
     },
-    showNoti(message) {
+    showNoti(type, message) {
       try {
-        this.$toast(message, {
-          position: "top-center",
-          timeout: 2000,
-          closeOnClick: true,
-          pauseOnFocusLoss: true,
-          pauseOnHover: true,
-          draggable: true,
-          draggablePercent: 0.6,
-          showCloseButtonOnHover: false,
-          hideProgressBar: true,
-          closeButton: "button",
-          icon: true,
-          rtl: false,
-        });
+        if (type) {
+          this.$toast[type](message, {
+            position: "top-center",
+            timeout: 2000,
+            closeOnClick: true,
+            pauseOnFocusLoss: true,
+            pauseOnHover: true,
+            draggable: true,
+            draggablePercent: 0.6,
+            showCloseButtonOnHover: false,
+            hideProgressBar: true,
+            closeButton: "button",
+            icon: true,
+            rtl: false,
+          });
+        }
       } catch (e) {
         console.log(e);
       }

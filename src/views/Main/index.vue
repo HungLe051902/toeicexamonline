@@ -28,10 +28,10 @@
       </div>
       <div class="toolbar">
         <div class="u-navbar d-flex justify-content-start align-items-center">
-          <div v-on:click="showNoti('Chức năng đang phát triển!')" class="navbar-item">Trang chủ</div>
-          <div v-on:click="showNoti('Chức năng đang phát triển!')" class="navbar-item">Luyện thi TOEIC</div>
-          <div v-on:click="showNoti('Chức năng đang phát triển!')" class="navbar-item">Danh mục</div>
-          <div v-on:click="showNoti('Chức năng đang phát triển!')" class="navbar-item">Mẹo thi TOEIC</div>
+          <div v-on:click="showNoti('info', 'Chức năng đang phát triển!')" class="navbar-item">Trang chủ</div>
+          <div v-on:click="showNoti('info', 'Chức năng đang phát triển!')" class="navbar-item">Luyện thi TOEIC</div>
+          <div v-on:click="showNoti('info', 'Chức năng đang phát triển!')" class="navbar-item">Danh mục</div>
+          <div v-on:click="showNoti('info', 'Chức năng đang phát triển!')" class="navbar-item">Mẹo thi TOEIC</div>
           <div v-on:click="goToExamView" class="navbar-item">Thi trực tuyến</div>
         </div>
       </div>
@@ -88,7 +88,7 @@ export default {
 <style lang="scss" scoped>
 .main-topbar {
   height: 50px;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100vw;

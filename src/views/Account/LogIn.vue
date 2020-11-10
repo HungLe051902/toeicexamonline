@@ -71,14 +71,14 @@ export default {
             Password: this.form.password,
           };
           var res = await LoginService.login(dataPost);
-          if (res) {
+          if (res.data) {
             $('#'+this.id).modal('hide');
             this.$router.push("/toeicexam");
           } else {
-            alert("Không tồn tại tài khoản");
+            this.showNoti('warning', 'Không tồn tại tài khoản trên hệ thống!');
           }
         } else {
-          alert("Mời bạn nhập đủ thông tin");
+          this.showNoti('warning', 'Xin hãy nhập đủ thông tin!');
         }
       } catch (e) {
         console.log(e);

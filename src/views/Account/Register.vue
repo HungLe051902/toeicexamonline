@@ -98,13 +98,13 @@ export default {
             var res = await LoginService.register(user);
             if (res) {
               $("#" + this.id).modal("hide");
-              alert("Đăng ký thành công");
+              this.showNoti('success', 'Đăng ký thành công!');
             }
           } else {
-            alert("Mật khẩu nhập lại không khớp");
+            this.showNoti('warning', 'Mật khẩu nhập lại không khớp!');
           }
         } else {
-          alert("Hãy nhập đủ thông tin");
+          this.showNoti('warning', 'Xin hãy nhập đủ thông tin!');
         }
       } catch (e) {
         console.log(e);
