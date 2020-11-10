@@ -48,7 +48,11 @@
     <div class="footer">
       <div class="footer-content"></div>
       <div class="footer-copyright">
-        <div class="h-100 align-items-center d-flex justify-content-center text-light">© 2020 Copyright: LEXUANHUNG</div>
+        <div
+          class="h-100 align-items-center d-flex justify-content-center text-light"
+        >
+          © 2020 Copyright: LEXUANHUNG
+        </div>
       </div>
     </div>
   </div>
@@ -126,7 +130,9 @@ export default {
   },
   methods: {},
   props: {},
-  created() {},
+  created() {
+    this.showNoti("abcdef");
+  },
 };
 </script>
 
