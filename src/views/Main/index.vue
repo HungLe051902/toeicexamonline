@@ -9,6 +9,7 @@
         </div>
         <div class="topbar-right">
           <button
+            v-on:click="isShowRegisterForm = true"
             type="button"
             class="btn btn-light"
             data-toggle="modal"
@@ -17,8 +18,9 @@
             Đăng ký
           </button>
           <button
+            v-on:click="isShowLoginForm = true"
             type="button"
-            class="btn btn-primary ml-3"
+            class="btn h-btn-primary ml-3"
             data-toggle="modal"
             data-target="#login"
           >
@@ -35,11 +37,11 @@
           <div v-on:click="goToExamView" class="navbar-item">Thi trực tuyến</div>
         </div>
       </div>
-      <Register id="register" />
-      <LogIn id="login" />
+      <Register id="register" @closeModal="closeRegisterForm" v-if="isShowRegisterForm" />
+      <LogIn id="login" @closeModal="isShowLoginForm = false" v-if="isShowLoginForm" />
     </div>
     <div class="content w-100">
-      <div class="intro w-100 p-3">
+      <div class="intro w-100 p-4">
         <h2>Thi TOEIC trực tuyến miễn phí</h2>
         <p class="p-2 wrap text-left">
           TOEIC là một chứng chỉ được sử dụng phổ biến nhằm đánh giá trình độ sử
@@ -62,16 +64,50 @@
 </template>
 
 <script>
-// import $ from "jquery";
+import $ from "jquery";
 import Register from "@/views/Account/Register.vue";
 import LogIn from "@/views/Account/LogIn.vue";
 export default {
+  data () {
+    return {
+      isShowLoginForm: false,
+      isShowRegisterForm: false 
+    }
+  },
   name: "Main",
   components: {
     Register,
     LogIn
   },
   methods: {
+    // Hàm đóng form đăng ký
+    closeRegisterForm(isShowLoginForm){
+      try{
+        if (isShowLoginForm){
+          // var vm = this;
+          this.isShowRegisterForm = false;
+          // this.$nextTick(function(){
+          //   setTimeout(function(){vm.openLoginForm();}, 1000);
+
+          // })
+          
+        }
+        else {
+          this.isShowRegisterForm = false;
+        }
+      } catch(e){
+        console.log(e);
+      }
+    },
+    // Hàm mở form đăng nhập
+    openLoginForm(){
+      try{
+        this.isShowLoginForm = Object.assign(true);
+        $("#login").modal("show");
+      } catch(e){
+        console.log(e);
+      }
+    },
     // Nhảy sang màn hình thi trực tuyến
     goToExamView(){
       try{
@@ -99,8 +135,9 @@ export default {
   top: 50px;
   position: absolute;
   width: 100vw;
-  background-color: #4cbb17;
+  background-color: #1864a3;
 }
+
 .u-navbar {
   height: 100%;
   padding: 0 24px;
@@ -111,7 +148,7 @@ export default {
     height: 100%;
     &:hover {
       cursor: pointer;
-      background-color: #006400;
+      background-color: #075696;
     }
   }
 }

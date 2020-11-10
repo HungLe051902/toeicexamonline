@@ -1,0 +1,21 @@
+.h-btn-primary {
+    color: #FFFFFF !important;
+    background-color: #1864a3 !important;
+    &:hover{
+        background-color: #075696 !important;
+    }
+}
+
+.bg-primary{
+    background-color: #1864a3 !important;
+}
+
+.error{
+    color: red;
+    font-style: italic;
+    font-size: 13px;
+}
+
+.form-control--error{
+    border: 1px solid red !important;
+}

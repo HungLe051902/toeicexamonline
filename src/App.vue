@@ -3,20 +3,27 @@
     <div id="app-main-content">
       <router-view />
     </div>
+    <!-- Loading -->
+    <Loading />
     <div id="app-footer">
     </div>
   </div>
 </template>
 <script>
 // import Footer from "@/layouts/Footer.vue";
+import Loading from "@/components/Loading.vue"
 export default {
   components: {
     // Footer,
+    Loading
   },
 };
 </script>
 
-<style>
+<style lang="scss">
+@import 'assets/css/base.scss';
+
+
 #app-main-content{
   position: relative;
 }

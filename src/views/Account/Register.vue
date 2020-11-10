@@ -1,17 +1,25 @@
 <template>
-  <Popup :id="id" title="Đăng ký">
+  <Popup :divID="id" title="Đăng ký">
     <template slot="popup-body">
       <form>
         <div class="form-group">
-          <label for="nickname">Tên đăng nhập</label>
+          <label for="username">Tên đăng nhập</label>
           <input
             type="email"
             class="form-control"
-            id="nickname"
-            v-model="form.nickname"
+            id="username"
+            v-model.trim="$v.form.username.$model"
             aria-describedby="emailHelp"
             placeholder="Nhập tài khoản"
+            :class="{ 'form-control--error': $v.form.username.$error }"
           />
+          <div class="error" v-if="!$v.form.username.required && hasSubmited">
+            Trường bắt buộc nhập
+          </div>
+          <div class="error" v-if="!$v.form.username.minLength && hasSubmited">
+            Tên đăng nhập phải có ít nhất
+            {{ $v.form.username.$params.minLength.min }} ký tự.
+          </div>
         </div>
         <div class="form-group">
           <label for="register-password">Mật khẩu</label>
@@ -19,9 +27,13 @@
             type="password"
             class="form-control"
             id="register-password"
-            v-model="form.password"
+            v-model.trim="$v.form.password.$model"
             placeholder="Nhập mật khẩu"
+            :class="{ 'form-control--error': $v.form.password.$error }"
           />
+          <div class="error" v-if="!$v.form.password.required && hasSubmited">
+            Trường bắt buộc nhập
+          </div>
         </div>
         <div class="form-group">
           <label for="register-repassword">Nhập lại mật khẩu</label>
@@ -29,21 +41,32 @@
             type="password"
             class="form-control"
             id="register-repassword"
-            v-model="repassword"
+            v-model.trim="$v.repassword.$model"
             placeholder="Nhập lại mật khẩu"
+            :class="{ 'form-control--error': repassword != form.password && hasSubmited}"
           />
+          <div
+            class="error"
+            v-if="repassword != form.password && hasSubmited"
+          >
+            Mật khẩu phải giống hệt nhau.
+          </div>
         </div>
       </form>
     </template>
     <template slot="popup-footer">
-      <button
+      <!--<button
         v-on:click="openLoginForm"
         type="submit"
         class="btn btn-light ml-3"
       >
         Đăng nhập
-      </button>
-      <button v-on:click="createAccount" type="submit" class="btn btn-primary">
+      </button>-->
+      <button
+        v-on:click="createAccount"
+        type="submit"
+        class="btn h-btn-primary"
+      >
         Đăng ký
       </button>
     </template>
@@ -54,6 +77,7 @@
 import $ from "jquery";
 import Popup from "@/components/Popup.vue";
 import LoginService from "@/services/loginService.js";
+import { required, minLength } from "vuelidate/lib/validators";
 
 export default {
   props: {
@@ -68,20 +92,47 @@ export default {
   data: function () {
     return {
       form: {
-        nickname: "",
+        username: "",
         password: "",
       },
       repassword: "",
+      hasSubmited: false,
     };
   },
+  validations: {
+    form: {
+      username: {
+        required,
+        minLength: minLength(6),
+      },
+      password: {
+        required,
+      },
+    },
+    repassword: {
+      required
+    },
+  },
   methods: {
-    // Hàm tắt form đăng ký và mở form đăng nhập
-    openLoginForm() {
+    // Hàm đóng form
+    closeForm(isShowLogin) {
       try {
         // Tăt form đăng ký
         $("#" + this.id).modal("hide");
+        // Emit ra sự kiện đóng modal
+        this.$emit("closeModal", isShowLogin);
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    // Hàm tắt form đăng ký và mở form đăng nhập
+    openLoginForm() {
+      try {
+        // Đóng form đăng ký
+        this.closeForm(true);
         // Mở form đăng nhập
-        $("#login").modal("show");
+        // $("#login").modal("show");
+        // this.$emit('openLoginForm');
       } catch (e) {
         console.log(e);
       }
@@ -89,23 +140,44 @@ export default {
     // Hàm tạo tài khoản
     async createAccount() {
       try {
-        if (this.form.nickname && this.form.password && this.form.password) {
-          if (this.form.password == this.repassword) {
-            let user = {
-              UserName: this.form.nickname,
-              Password: this.form.password,
-            };
-            var res = await LoginService.register(user);
-            if (res) {
+        this.$v.$touch();
+        this.hasSubmited = true;
+        if (
+          this.form.username &&
+          this.form.password &&
+          this.form.password &&
+          this.form.password == this.repassword
+        ) {
+          // if (this.form.password == this.repassword) {
+          let user = {
+            UserName: this.form.username,
+            Password: this.form.password,
+          };
+          this.showLoading();
+          var res = await LoginService.register(user);
+          if (res) {
+            this.hideLoading();
+            if (res.data){
               $("#" + this.id).modal("hide");
-              this.showNoti('success', 'Đăng ký thành công!');
+              this.showNoti("success", "Đăng ký thành công!");
             }
-          } else {
-            this.showNoti('warning', 'Mật khẩu nhập lại không khớp!');
+            else {
+              this.hideLoading();
+              this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
+            }
           }
-        } else {
-          this.showNoti('warning', 'Xin hãy nhập đủ thông tin!');
+          else {
+            this.hideLoading();
+            this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
+          }
+          // }
+          // else {
+          //   this.showNoti("warning", "Mật khẩu nhập lại không khớp!");
+          // }
         }
+        // else {
+        //   this.showNoti("warning", "Xin hãy nhập đủ thông tin!");
+        // }
       } catch (e) {
         console.log(e);
       }

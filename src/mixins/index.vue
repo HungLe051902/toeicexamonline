@@ -1,5 +1,6 @@
 
 <script>
+import $ from "jquery";
 export default {
   methods: {
     create_UUID() {
@@ -14,6 +15,7 @@ export default {
       );
       return uuid;
     },
+    // Hàm show toast
     showNoti(type, message) {
       try {
         if (type) {
@@ -32,6 +34,20 @@ export default {
             rtl: false,
           });
         }
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    showLoading() {
+      try {
+        $("#h-loading").show();
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    hideLoading() {
+      try {
+        $("#h-loading").hide();
       } catch (e) {
         console.log(e);
       }

@@ -12,6 +12,9 @@ Vue.use(Toast, {
   newestOnTop: true
 });
 
+import Vuelidate from 'vuelidate'
+Vue.use(Vuelidate);
+
 Vue.mixin(mixin)
 
 Vue.config.productionTip = false

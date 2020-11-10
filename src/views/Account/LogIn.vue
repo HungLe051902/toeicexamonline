@@ -1,39 +1,51 @@
 <template>
-  <Popup :id="id" title="Đăng nhập">
+  <Popup :divID="id" @closeModal="closeModal" title="Đăng nhập">
     <template slot="popup-body">
-      <form class="was-validated">
-        <div class="form-group">
-          <label for="uname">Tài khoản:</label>
+      <form class="">
+        <div
+          class="form-group"
+          :class="{ 'form-group--error': $v.form.username.$error }"
+        >
+          <label for="login-username">Tài khoản:</label>
           <input
             type="text"
             class="form-control"
-            id="uname"
+            id="login-username"
             placeholder="Nhập tài khoản"
-            v-model="form.username"
-            name="uname"
-            required
+            v-model.trim="$v.form.username.$model"
+            name="login-username"
+            :class="{ 'form-control--error': $v.form.username.$error }"
           />
-          <div class="valid-feedback">Hợp lệ.</div>
-          <div class="invalid-feedback">Vui lòng điền vào trường này.</div>
+          <div class="error" v-if="!$v.form.username.required && hasSubmited">
+            Trường bắt buộc nhập
+          </div>
+          <div class="error" v-if="!$v.form.username.minLength && hasSubmited">
+            Tên đăng nhập phải có ít nhất
+            {{ $v.form.username.$params.minLength.min }} ký tự.
+          </div>
         </div>
         <div class="form-group">
-          <label for="pwd">Mật khẩu:</label>
+          <label for="login-pwd">Mật khẩu:</label>
           <input
             type="password"
             class="form-control"
-            id="pwd"
-            v-model="form.password"
+            id="login-pwd"
+            v-model.trim="$v.form.password.$model"
             placeholder="Nhập mật khẩu"
-            name="pswd"
-            required
+            name="login-pwd"
+            :class="{ 'form-control--error': $v.form.password.$error }"
           />
-          <div class="valid-feedback">Hợp lệ.</div>
-          <div class="invalid-feedback">Vui lòng điền vào trường này.</div>
+          <div class="error" v-if="!$v.form.password.required && hasSubmited">
+            Trường bắt buộc nhập
+          </div>
         </div>
       </form>
     </template>
     <template slot="popup-footer">
-      <button v-on:click="login" type="submit" class="btn btn-primary">
+      <button v-on:click="closeModal" type="submit" class="btn btn-light">
+        Đóng
+      </button>
+      <button v-on:click="login" type="submit" class="btn h-btn-primary">
         Đăng nhập
       </button>
     </template>
@@ -41,9 +53,10 @@
 </template>
 
 <script>
-import $ from 'jquery';
+import $ from "jquery";
 import Popup from "@/components/Popup.vue";
 import LoginService from "@/services/loginService.js";
+import { required, minLength } from "vuelidate/lib/validators";
 export default {
   props: {
     id: {
@@ -56,6 +69,7 @@ export default {
   },
   data: function () {
     return {
+      hasSubmited: false,
       form: {
         username: "",
         password: "",
@@ -63,26 +77,62 @@ export default {
     };
   },
   methods: {
+    // Hàm đóng modal
+    closeModal(){
+      // Clear hết dữ liệu
+      this.form.username = "";
+      this.form.password = "";
+      this.hasSubmited = false;
+      // Đóng modal
+      $("#" + this.id).modal("hide");
+      // Emit ra sự kiện đóng form
+      this.$emit('closeModal')
+    },
+    // Thực hiện đăng nhập
     async login() {
       try {
-        if (this.form.username && this.form.password) {
+        this.$v.$touch();
+        this.hasSubmited = true;
+        if (this.form.username && this.form.password && !this.$v.$invalid) {
           let dataPost = {
             UserName: this.form.username,
             Password: this.form.password,
           };
+          this.showLoading();
           var res = await LoginService.login(dataPost);
-          if (res.data) {
-            $('#'+this.id).modal('hide');
-            this.$router.push("/toeicexam");
+          if (res) {
+            this.hideLoading();
+            if (res.data) {
+              this.closeModal();
+              this.$router.push("/toeicexam");
+            } else {
+              this.showNoti(
+                "warning",
+                "Không tồn tại tài khoản trên hệ thống!"
+              );
+            }
           } else {
-            this.showNoti('warning', 'Không tồn tại tài khoản trên hệ thống!');
+            this.hideLoading();
+            this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
           }
-        } else {
-          this.showNoti('warning', 'Xin hãy nhập đủ thông tin!');
         }
+        // else {
+        //   this.showNoti('warning', 'Xin hãy nhập đủ thông tin!');
+        // }
       } catch (e) {
         console.log(e);
       }
+    },
+  },
+  validations: {
+    form: {
+      username: {
+        required,
+        minLength: minLength(6),
+      },
+      password: {
+        required,
+      },
     },
   },
 };
