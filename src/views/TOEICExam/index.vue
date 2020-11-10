@@ -1,7 +1,6 @@
 <template>
   <div id="toeic-exam">
-    <div class="header">
-    </div>
+    <div class="header"></div>
     <div class="main-content mb-4">
       <div class="intro w-100 p-3">
         <h2>Thi TOEIC trực tuyến miễn phí</h2>
@@ -27,17 +26,31 @@
             <label class="m-0 p-2 w-100 text-left" for=""
               ><b>ETS TOEIC 2020</b></label
             >
-            <div v-for="(item, index) in listExam" :key="index">
+            <div v-for="(item, index) in listExam2020" :key="index">
               <div class="exam">
                 {{ item.name }}
               </div>
             </div>
           </div>
-          <div class="col-6">ETS TOEIC 2019</div>
+          <div class="col-6">
+            <label class="m-0 p-2 w-100 text-left" for=""
+              ><b>ETS TOEIC 2019</b></label
+            >
+            <div v-for="(item, index) in listExam2019" :key="index">
+              <div class="exam">
+                {{ item.name }}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="footer"></div>
+    <div class="footer">
+      <div class="footer-content"></div>
+      <div class="footer-copyright">
+        <div class="h-100 align-items-center d-flex justify-content-center text-light">© 2020 Copyright: LEXUANHUNG</div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -45,7 +58,7 @@ export default {
   watch: {},
   data() {
     return {
-      listExam: [
+      listExam2020: [
         {
           name: "Đề số 1 - ETS 2020",
         },
@@ -75,6 +88,38 @@ export default {
         },
         {
           name: "Đề số 10 - ETS 2020",
+        },
+      ],
+      listExam2019: [
+        {
+          name: "Đề số 1 - ETS 2019",
+        },
+        {
+          name: "Đề số 2 - ETS 2019",
+        },
+        {
+          name: "Đề số 3 - ETS 2020",
+        },
+        {
+          name: "Đề số 4 - ETS 2019",
+        },
+        {
+          name: "Đề số 5 - ETS 2019",
+        },
+        {
+          name: "Đề số 6 - ETS 2019",
+        },
+        {
+          name: "Đề số 7 - ETS 2019",
+        },
+        {
+          name: "Đề số 8 - ETS 2019",
+        },
+        {
+          name: "Đề số 9 - ETS 2019",
+        },
+        {
+          name: "Đề số 10 - ETS 2019",
         },
       ],
     };
@@ -118,6 +163,16 @@ export default {
     height: 200px;
     width: 100vw;
     background-color: #4682b4;
+    position: relative;
+    .footer-copyright {
+      position: absolute;
+      width: 100%;
+      height: 50px;
+      bottom: 0;
+      left: 0;
+      background-color: #1864a3;
+      text-align: center;
+    }
   }
 }
 </style>

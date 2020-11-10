@@ -32,7 +32,7 @@
           <div class="navbar-item">Luyện thi TOEIC</div>
           <div class="navbar-item">Danh mục</div>
           <div class="navbar-item">Mẹo thi TOEIC</div>
-          <div class="navbar-item">Thi trực tuyến</div>
+          <div v-on:click="goToExamView" class="navbar-item">Thi trực tuyến</div>
         </div>
       </div>
       <Register id="register" />
@@ -72,6 +72,14 @@ export default {
     LogIn
   },
   methods: {
+    // Nhảy sang màn hình thi trực tuyến
+    goToExamView(){
+      try{
+        this.$router.push('toeicexam');
+      }catch(e){
+        console.log(e);
+      }
+    },
     showRegisterForm() {},
   },
 };
