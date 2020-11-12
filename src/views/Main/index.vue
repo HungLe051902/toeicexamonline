@@ -30,19 +30,53 @@
       </div>
       <div class="toolbar">
         <div class="u-navbar d-flex justify-content-start align-items-center">
-          <div v-on:click="showNoti('info', 'Chức năng đang phát triển!')" class="navbar-item">Trang chủ</div>
-          <div v-on:click="showNoti('info', 'Chức năng đang phát triển!')" class="navbar-item">Luyện thi TOEIC</div>
-          <div v-on:click="showNoti('info', 'Chức năng đang phát triển!')" class="navbar-item">Danh mục</div>
-          <div v-on:click="showNoti('info', 'Chức năng đang phát triển!')" class="navbar-item">Mẹo thi TOEIC</div>
-          <div v-on:click="goToExamView" class="navbar-item">Thi trực tuyến</div>
+          <div
+            v-on:click="showNoti('info', 'Chức năng đang phát triển!')"
+            class="navbar-item"
+          >
+            Trang chủ
+          </div>
+          <div
+            v-on:click="showNoti('info', 'Chức năng đang phát triển!')"
+            class="navbar-item"
+          >
+            Luyện thi TOEIC
+          </div>
+          <div
+            v-on:click="showNoti('info', 'Chức năng đang phát triển!')"
+            class="navbar-item"
+          >
+            Danh mục
+          </div>
+          <div
+            v-on:click="showNoti('info', 'Chức năng đang phát triển!')"
+            class="navbar-item"
+          >
+            Mẹo thi TOEIC
+          </div>
+          <div v-on:click="goToExamView" class="navbar-item">
+            Thi trực tuyến
+          </div>
         </div>
       </div>
-      <Register id="register" @closeModal="closeRegisterForm" v-if="isShowRegisterForm" />
-      <LogIn id="login" @closeModal="isShowLoginForm = false" v-if="isShowLoginForm" />
+      <Register
+        id="register"
+        @closeModal="closeRegisterForm"
+        v-if="isShowRegisterForm"
+      />
+      <LogIn
+        id="login"
+        @closeModal="isShowLoginForm = false"
+        v-if="isShowLoginForm"
+      />
     </div>
     <div class="content w-100">
       <div class="intro w-100 p-4">
         <h2>Thi TOEIC trực tuyến miễn phí</h2>
+        <el-button @click="visible = true">Button</el-button>
+        <el-dialog :visible.sync="visible" title="Hello world">
+          <p>Try Element</p>
+        </el-dialog>
         <p class="p-2 wrap text-left">
           TOEIC là một chứng chỉ được sử dụng phổ biến nhằm đánh giá trình độ sử
           dụng tiếng Anh trong môi trường giao tiếp quốc tế. Ở Việt Nam, chứng
@@ -68,51 +102,49 @@ import $ from "jquery";
 import Register from "@/views/Account/Register.vue";
 import LogIn from "@/views/Account/LogIn.vue";
 export default {
-  data () {
+  data() {
     return {
       isShowLoginForm: false,
-      isShowRegisterForm: false 
-    }
+      isShowRegisterForm: false,
+    };
   },
   name: "Main",
   components: {
     Register,
-    LogIn
+    LogIn,
   },
   methods: {
     // Hàm đóng form đăng ký
-    closeRegisterForm(isShowLoginForm){
-      try{
-        if (isShowLoginForm){
+    closeRegisterForm(isShowLoginForm) {
+      try {
+        if (isShowLoginForm) {
           // var vm = this;
           this.isShowRegisterForm = false;
           // this.$nextTick(function(){
           //   setTimeout(function(){vm.openLoginForm();}, 1000);
 
           // })
-          
-        }
-        else {
+        } else {
           this.isShowRegisterForm = false;
         }
-      } catch(e){
+      } catch (e) {
         console.log(e);
       }
     },
     // Hàm mở form đăng nhập
-    openLoginForm(){
-      try{
+    openLoginForm() {
+      try {
         this.isShowLoginForm = Object.assign(true);
         $("#login").modal("show");
-      } catch(e){
+      } catch (e) {
         console.log(e);
       }
     },
     // Nhảy sang màn hình thi trực tuyến
-    goToExamView(){
-      try{
-        this.$router.push('toeicexam');
-      }catch(e){
+    goToExamView() {
+      try {
+        this.$router.push("toeicexam");
+      } catch (e) {
         console.log(e);
       }
     },
