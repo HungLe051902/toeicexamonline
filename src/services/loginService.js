@@ -3,7 +3,7 @@ export default {
     // Đăng nhập
     async login(user) {
         try {
-            return await axios.post(`https://localhost:44346/api/Login/login`,
+            return await axios.post(`http://toeicexamonline.gq/api/Login/login`,
                 user);
         } catch (error) {
             console.log(error);
@@ -12,7 +12,7 @@ export default {
     // Đăng ký
     async register(user) {
         try {
-            return await axios.post(`https://localhost:44346/api/Login/register`,
+            return await axios.post(`http://toeicexamonline.gq/api/Login/register`,
                 user);
         } catch (error) {
             console.log(error);
