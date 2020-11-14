@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import mixin from './mixins'
+import 'element-ui/lib/theme-chalk/index.css';
 
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
