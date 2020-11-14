@@ -24,6 +24,8 @@ Vue.use(Element)
 
 Vue.config.productionTip = false
 
+// Vue.config.silent = true
+
 new Vue({
   router,
   store,

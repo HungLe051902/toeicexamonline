@@ -1,5 +1,5 @@
 <template>
-  <Popup :divID="id" @closeModal="closeModal" title="Đăng nhập">
+  <!--<Popup :divID="id" @closeModal="closeModal" title="Đăng nhập">
     <template slot="popup-body">
       <form class="">
         <div
@@ -49,23 +49,70 @@
         Đăng nhập
       </button>
     </template>
-  </Popup>
+  </Popup>-->
+  <Dialog title="Đăng nhập" @closeDialog="closeDialog" :dialogVisible="isShow">
+    <form class="">
+      <div
+        class="form-group"
+        :class="{ 'form-group--error': $v.form.username.$error }"
+      >
+        <label for="login-username">Tài khoản:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="login-username"
+          placeholder="Nhập tài khoản"
+          v-model.trim="$v.form.username.$model"
+          name="login-username"
+          :class="{ 'form-control--error': $v.form.username.$error }"
+        />
+        <div class="error" v-if="!$v.form.username.required && hasSubmited">
+          Trường bắt buộc nhập
+        </div>
+        <div class="error" v-if="!$v.form.username.minLength && hasSubmited">
+          Tên đăng nhập phải có ít nhất
+          {{ $v.form.username.$params.minLength.min }} ký tự.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="login-pwd">Mật khẩu:</label>
+        <input
+          type="password"
+          class="form-control"
+          id="login-pwd"
+          v-model.trim="$v.form.password.$model"
+          placeholder="Nhập mật khẩu"
+          name="login-pwd"
+          :class="{ 'form-control--error': $v.form.password.$error }"
+        />
+        <div class="error" v-if="!$v.form.password.required && hasSubmited">
+          Trường bắt buộc nhập
+        </div>
+      </div>
+    </form>
+  </Dialog>
 </template>
 
 <script>
 import $ from "jquery";
-import Popup from "@/components/Popup.vue";
+// import Popup from "@/components/Popup.vue";
 import LoginService from "@/services/loginService.js";
 import { required, minLength } from "vuelidate/lib/validators";
+import Dialog from "@/components/Dialog.vue";
 export default {
   props: {
     id: {
       type: String,
       default: "",
     },
+    isShow: {
+      type: Boolean,
+      default: false,
+    },
   },
   components: {
-    Popup,
+    // Popup,
+    Dialog,
   },
   data: function () {
     return {
@@ -77,8 +124,15 @@ export default {
     };
   },
   methods: {
+    closeDialog() {
+      try {
+        this.$emit("closeLoginDialog");
+      } catch (e) {
+        console.log(e);
+      }
+    },
     // Hàm đóng modal
-    closeModal(){
+    closeModal() {
       // Clear hết dữ liệu
       this.form.username = "";
       this.form.password = "";
@@ -86,7 +140,7 @@ export default {
       // Đóng modal
       $("#" + this.id).modal("hide");
       // Emit ra sự kiện đóng form
-      this.$emit('closeModal')
+      this.$emit("closeModal");
     },
     // Thực hiện đăng nhập
     async login() {

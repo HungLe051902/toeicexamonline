@@ -66,17 +66,15 @@
       />
       <LogIn
         id="login"
+        :isShow="isShowLoginForm"
         @closeModal="isShowLoginForm = false"
+        @closeLoginDialog="isShowLoginForm = false"
         v-if="isShowLoginForm"
       />
     </div>
     <div class="content w-100">
       <div class="intro w-100 p-4">
         <h2>Thi TOEIC trực tuyến miễn phí</h2>
-        <el-button @click="visible = true">Button</el-button>
-        <el-dialog :visible.sync="visible" title="Hello world">
-          <p>Try Element</p>
-        </el-dialog>
         <p class="p-2 wrap text-left">
           TOEIC là một chứng chỉ được sử dụng phổ biến nhằm đánh giá trình độ sử
           dụng tiếng Anh trong môi trường giao tiếp quốc tế. Ở Việt Nam, chứng
