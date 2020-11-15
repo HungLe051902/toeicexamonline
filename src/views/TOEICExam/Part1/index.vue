@@ -1,19 +1,21 @@
 <template>
-    <div>
-        <h1>mmmmmmmmmmmmmmmmmmmmmmmmm</h1>
-        <h1>mmmmmmmmmmmmmmmmmmmmmmmmm</h1>
-        <h1>mmmmmmmmmmmmmmmmmmmmmmmmm</h1>
-        <h1>mmmmmmmmmmmmmmmmmmmmmmmmm</h1>
-        <h1>mmmmmmmmmmmmmmmmmmmmmmmmm</h1>
-        <h1>mmmmmmmmmmmmmmmmmmmmmmmmm</h1>
-        <h1>mmmmmmmmmmmmmmmmmmmmmmmmm</h1>
-        <h1>mmmmmmmmmmmmmmmmmmmmmmmmm</h1>
-        <h1>mmmmmmmmmmmmmmmmmmmmmmmmm</h1>
-        <h1>mmmmmmmmmmmmmmmmmmmmmmmmm</h1>
+    <div id="part1-detail">
+        <h1>PART1-DETAIL</h1>
+
     </div>
 </template>
 <script>
 export default {
+  methods: {
+  },
+  data () {
+    return {
+    }
+  },
+  props: {
+  },
+  created () {
+  },
     
 }
 </script>

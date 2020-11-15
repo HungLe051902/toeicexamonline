@@ -31,7 +31,7 @@
               <div v-for="item in listExam2020" :key="item.ExamID">
                 <div
                   class="exam"
-                  v-on:click="goToIntroExam(item.ExamCode, item.Year)"
+                  v-on:click="goToIntroExam(item)"
                 >
                   {{ item.ExamName }} - ETS 2020
                 </div>
@@ -44,7 +44,7 @@
               <div v-for="item in listExam2019" :key="item.ExamID">
                 <div
                   class="exam"
-                  v-on:click="goToIntroExam(item.ExamCode, item.Year)"
+                  v-on:click="goToIntroExam(item)"
                 >
                   {{ item.ExamName }} - ETS 2019
                 </div>
@@ -168,10 +168,12 @@ export default {
   },
   methods: {
     // Đi tới màn hình giới thiệu đề thi
-    goToIntroExam(examCode, year) {
+    goToIntroExam(exam) {
       try {
-        console.log(examCode, year);
-        this.$router.push("part1-intro");
+        console.log(exam);
+        localStorage.setItem('selected-exam', JSON.stringify(exam));
+        this.$router.push(`/toeicexam/${exam.ExamID}`);
+        // this.$router.push(`/toeicexam/introduction`);
       } catch (e) {
         console.log(e);
       }

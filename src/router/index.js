@@ -26,6 +26,11 @@ const routes = [
     name: 'TOEICExam',
     component: () => import('@/views/TOEICExam')
   },
+  // {
+  //   path: '/toeicexam/instruction',
+  //   name: 'Instruction',
+  //   component: () => import('@/views/TOEICExam/Instruction.vue')
+  // },
   toeicexamroute
 ]
 
