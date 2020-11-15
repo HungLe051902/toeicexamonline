@@ -1,5 +1,6 @@
 import axios from 'axios';
-const baseURL = "http://toeicexamonline.gq/api";
+// const baseURL = "http://toeicexamonline.gq/api";
+const baseURL = "https://localhost:44346/api"
 export default {
     // Đăng nhập
     async login(user) {
@@ -13,7 +14,7 @@ export default {
     // Đăng ký
     async register(user) {
         try {
-            return await axios.post(`${baseURL}/api/Login/register`,
+            return await axios.post(`${baseURL}/Login/register`,
                 user);
         } catch (error) {
             console.log(error);

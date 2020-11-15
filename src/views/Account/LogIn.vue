@@ -51,45 +51,51 @@
     </template>
   </Popup>-->
   <Dialog title="Đăng nhập" @closeDialog="closeDialog" :dialogVisible="isShow">
-    <form class="">
-      <div
-        class="form-group"
-        :class="{ 'form-group--error': $v.form.username.$error }"
-      >
-        <label for="login-username">Tài khoản:</label>
-        <input
-          type="text"
-          class="form-control"
-          id="login-username"
-          placeholder="Nhập tài khoản"
-          v-model.trim="$v.form.username.$model"
-          name="login-username"
-          :class="{ 'form-control--error': $v.form.username.$error }"
-        />
-        <div class="error" v-if="!$v.form.username.required && hasSubmited">
-          Trường bắt buộc nhập
-        </div>
-        <div class="error" v-if="!$v.form.username.minLength && hasSubmited">
-          Tên đăng nhập phải có ít nhất
-          {{ $v.form.username.$params.minLength.min }} ký tự.
-        </div>
+    <div
+      class="form-group"
+      :class="{ 'form-group--error': $v.form.username.$error }"
+    >
+      <label for="login-username">Tài khoản:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="login-username"
+        placeholder="Nhập tài khoản"
+        v-model.trim="$v.form.username.$model"
+        name="login-username"
+        :class="{ 'form-control--error': $v.form.username.$error }"
+      />
+      <div class="error" v-if="!$v.form.username.required && hasSubmited">
+        Trường bắt buộc nhập
       </div>
-      <div class="form-group">
-        <label for="login-pwd">Mật khẩu:</label>
-        <input
-          type="password"
-          class="form-control"
-          id="login-pwd"
-          v-model.trim="$v.form.password.$model"
-          placeholder="Nhập mật khẩu"
-          name="login-pwd"
-          :class="{ 'form-control--error': $v.form.password.$error }"
-        />
-        <div class="error" v-if="!$v.form.password.required && hasSubmited">
-          Trường bắt buộc nhập
-        </div>
+      <div class="error" v-if="!$v.form.username.minLength && hasSubmited">
+        Tên đăng nhập phải có ít nhất
+        {{ $v.form.username.$params.minLength.min }} ký tự.
       </div>
-    </form>
+    </div>
+    <div class="form-group">
+      <label for="login-pwd">Mật khẩu:</label>
+      <input
+        type="password"
+        class="form-control"
+        id="login-pwd"
+        v-model.trim="$v.form.password.$model"
+        placeholder="Nhập mật khẩu"
+        name="login-pwd"
+        :class="{ 'form-control--error': $v.form.password.$error }"
+      />
+      <div class="error" v-if="!$v.form.password.required && hasSubmited">
+        Trường bắt buộc nhập
+      </div>
+    </div>
+    <template slot="dialog-footer">
+      <button v-on:click="closeDialog" type="submit" class="btn btn-light">
+        Đóng
+      </button>
+      <button v-on:click="login" type="submit" class="btn h-btn-primary ml-3">
+        Đăng nhập
+      </button>
+    </template>
   </Dialog>
 </template>
 
@@ -156,14 +162,17 @@ export default {
           var res = await LoginService.login(dataPost);
           if (res) {
             this.hideLoading();
-            if (res.data) {
+            if (res.data.APPCode == 200) {
               this.closeModal();
               this.$router.push("/toeicexam");
-            } else {
+            } else if (res.data.APPCode == 600) {
               this.showNoti(
                 "warning",
                 "Không tồn tại tài khoản trên hệ thống!"
               );
+            }
+            else {
+              this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
             }
           } else {
             this.hideLoading();

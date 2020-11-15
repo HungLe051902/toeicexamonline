@@ -1,5 +1,5 @@
 <template>
-  <Popup :divID="id" title="Đăng ký">
+  <!--<Popup :divID="id" title="Đăng ký">
     <template slot="popup-body">
       <form>
         <div class="form-group">
@@ -55,13 +55,13 @@
       </form>
     </template>
     <template slot="popup-footer">
-      <!--<button
+      <button
         v-on:click="openLoginForm"
         type="submit"
         class="btn btn-light ml-3"
       >
         Đăng nhập
-      </button>-->
+      </button>
       <button
         v-on:click="createAccount"
         type="submit"
@@ -70,14 +70,82 @@
         Đăng ký
       </button>
     </template>
-  </Popup>
+  </Popup>-->
+  <Dialog title="Đăng ký" @closeDialog="closeDialog" :dialogVisible="isShow">
+    <div class="form-group">
+      <label for="username">Tên đăng nhập</label>
+      <input
+        type="email"
+        class="form-control"
+        id="username"
+        v-model.trim="$v.form.username.$model"
+        aria-describedby="emailHelp"
+        placeholder="Nhập tài khoản"
+        :class="{ 'form-control--error': $v.form.username.$error }"
+      />
+      <div class="error" v-if="!$v.form.username.required && hasSubmited">
+        Trường bắt buộc nhập
+      </div>
+      <div class="error" v-if="!$v.form.username.minLength && hasSubmited">
+        Tên đăng nhập phải có ít nhất
+        {{ $v.form.username.$params.minLength.min }} ký tự.
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="register-password">Mật khẩu</label>
+      <input
+        type="password"
+        class="form-control"
+        id="register-password"
+        v-model.trim="$v.form.password.$model"
+        placeholder="Nhập mật khẩu"
+        :class="{ 'form-control--error': $v.form.password.$error }"
+      />
+      <div class="error" v-if="!$v.form.password.required && hasSubmited">
+        Trường bắt buộc nhập
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="register-repassword">Nhập lại mật khẩu</label>
+      <input
+        type="password"
+        class="form-control"
+        id="register-repassword"
+        v-model.trim="$v.repassword.$model"
+        placeholder="Nhập lại mật khẩu"
+        :class="{
+          'form-control--error': repassword != form.password && hasSubmited,
+        }"
+      />
+      <div class="error" v-if="repassword != form.password && hasSubmited">
+        Mật khẩu phải giống hệt nhau.
+      </div>
+    </div>
+    <template slot="dialog-footer">
+      <button
+        v-on:click="openLoginForm"
+        type="submit"
+        class="btn btn-light ml-3"
+      >
+        Đăng nhập
+      </button>
+      <button
+        v-on:click="createAccount"
+        type="submit"
+        class="btn h-btn-primary ml-3"
+      >
+        Đăng ký
+      </button></template
+    >
+  </Dialog>
 </template>
 
 <script>
 import $ from "jquery";
-import Popup from "@/components/Popup.vue";
+// import Popup from "@/components/Popup.vue";
 import LoginService from "@/services/loginService.js";
 import { required, minLength } from "vuelidate/lib/validators";
+import Dialog from "@/components/Dialog.vue";
 
 export default {
   props: {
@@ -85,9 +153,14 @@ export default {
       type: String,
       default: "",
     },
+    isShow: {
+      type: Boolean,
+      default: false,
+    },
   },
   components: {
-    Popup,
+    // Popup,
+    Dialog,
   },
   data: function () {
     return {
@@ -110,10 +183,17 @@ export default {
       },
     },
     repassword: {
-      required
+      required,
     },
   },
   methods: {
+    closeDialog() {
+      try {
+        this.$emit("closeRegisterDialog");
+      } catch (e) {
+        console.log(e);
+      }
+    },
     // Hàm đóng form
     closeForm(isShowLogin) {
       try {
@@ -128,11 +208,7 @@ export default {
     // Hàm tắt form đăng ký và mở form đăng nhập
     openLoginForm() {
       try {
-        // Đóng form đăng ký
-        this.closeForm(true);
-        // Mở form đăng nhập
-        // $("#login").modal("show");
-        // this.$emit('openLoginForm');
+        this.$emit('openLoginForm');
       } catch (e) {
         console.log(e);
       }
@@ -157,16 +233,14 @@ export default {
           var res = await LoginService.register(user);
           if (res) {
             this.hideLoading();
-            if (res.data){
+            if (res.data) {
               $("#" + this.id).modal("hide");
               this.showNoti("success", "Đăng ký thành công!");
-            }
-            else {
+            } else {
               this.hideLoading();
               this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
             }
-          }
-          else {
+          } else {
             this.hideLoading();
             this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
           }

@@ -61,13 +61,14 @@
       </div>
       <Register
         id="register"
-        @closeModal="closeRegisterForm"
+        :isShow="isShowRegisterForm"
+        @closeRegisterDialog="isShowRegisterForm = false"
+        @openLoginForm="isShowRegisterForm = false;isShowLoginForm = true"
         v-if="isShowRegisterForm"
       />
       <LogIn
         id="login"
         :isShow="isShowLoginForm"
-        @closeModal="isShowLoginForm = false"
         @closeLoginDialog="isShowLoginForm = false"
         v-if="isShowLoginForm"
       />
