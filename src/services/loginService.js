@@ -1,6 +1,6 @@
 import axios from 'axios';
 // const baseURL = "http://toeicexamonline.gq/api";
-const baseURL = process.env.VUE_APP_BASE_URL
+const baseURL = process.env.VUE_APP_BASE_URL_LOGIN
 export default {
     // Đăng nhập
     async login(user) {
