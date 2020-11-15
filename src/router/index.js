@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Main from '../views/Main/index.vue'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import toeicexamroute from '@/router/toeicexam.js';
 
 Vue.use(VueRouter)
 
@@ -23,8 +24,9 @@ const routes = [
   {
     path: '/toeicexam',
     name: 'TOEICExam',
-    component: () => import('../views/TOEICExam')
-  }
+    component: () => import('@/views/TOEICExam')
+  },
+  toeicexamroute
 ]
 
 const router = new VueRouter({
