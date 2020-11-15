@@ -101,6 +101,9 @@ import $ from "jquery";
 import Register from "@/views/Account/Register.vue";
 import LogIn from "@/views/Account/LogIn.vue";
 export default {
+  created () {
+    console.log("abc", process.env.VUE_APP_BASE_URL);
+  },
   data() {
     return {
       isShowLoginForm: false,
