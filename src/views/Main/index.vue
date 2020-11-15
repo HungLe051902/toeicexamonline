@@ -102,7 +102,7 @@ import Register from "@/views/Account/Register.vue";
 import LogIn from "@/views/Account/LogIn.vue";
 export default {
   created () {
-    console.log("enviroment", process.env.process.env.VUE_APP_BASE_URL_LOGIN);
+    console.log("enviroment", process.env.VUE_APP_BASE_URL_LOGIN);
   },
   data() {
     return {
