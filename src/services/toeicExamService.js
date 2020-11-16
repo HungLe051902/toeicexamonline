@@ -10,4 +10,11 @@ export default {
             console.log(error);
         }
     },
+    async getQuestionPart1ByYearAndExamNo(year, examNo) {
+        try {
+            return await axios.get(`${baseURL}/ToeicExam/exam/par1?year=${year}&examNo=${examNo}`);
+        } catch (e) {
+            console.log(e);
+        }
+    }
 }

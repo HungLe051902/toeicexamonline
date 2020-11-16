@@ -28,7 +28,6 @@ export default {
     };
   },
   created() {
-    console.log("advsa", JSON.parse(localStorage.getItem("selected-exam")));
     this.selectedExam = JSON.parse(localStorage.getItem("selected-exam"));
   },
 };
