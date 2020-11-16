@@ -2,7 +2,7 @@
   <div>
     <div class="exam-header">
       <div class="left-content">
-        <b>TOEICExamOnline.pg</b>
+        <b>{{ getHeaderTitle }}</b>
       </div>
       <div class="right-content">
         <div class="item">TOEICExamOnline.pg</div>
@@ -19,7 +19,12 @@
   </div>
 </template>
 <script>
-export default {};
+import { mapGetters } from "vuex";
+export default {
+  computed: {
+    ...mapGetters("toeicexam", ["getHeaderTitle"]),
+  },
+};
 </script>
 <style lang="scss" scoped>
 .exam-header {
@@ -59,11 +64,12 @@ export default {};
   height: calc(100vh - 50px);
   width: 100vw;
   padding: 24px;
-  .container-fluid{
-      background-color: #FFFFFF;
-      height: 100%;
-      overflow: auto;
-      padding: 16px;
+  .container-fluid {
+    background-color: #FFFFFF;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    padding: 16px;
   }
 }
 </style>

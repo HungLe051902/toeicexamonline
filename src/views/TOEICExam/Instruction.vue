@@ -12,6 +12,7 @@
   </div>
 </template>
 <script>
+import titleResource from "@/assets/resources/title.js";
 export default {
   methods: {
     start() {
@@ -28,6 +29,8 @@ export default {
     };
   },
   created() {
+    // Đặt lại tiêu đề header
+    this.$store.commit("toeicexam/setHeaderTitle", titleResource.MAIN_TITLE);
     this.selectedExam = JSON.parse(localStorage.getItem("selected-exam"));
   },
 };

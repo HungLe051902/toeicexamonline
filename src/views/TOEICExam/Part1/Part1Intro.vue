@@ -9,8 +9,8 @@
       at the picture and choose the statement that best describes what you see
       in the picture. Choose the best answer A, B, C or D
     </p>
-    <img src="@/assets/img/part_1_instruction.png" alt="" />
-    <audio controls class="d-block mt-3">
+    <img class="w-100 h-100" src="@/assets/img/part_1_instruction.png" alt="" />
+    <audio controls class="d-block mt-3 w-100">
       <source
         src="https://toeic24.vn/upload/audio/part_i_intro.mp3"
         type="audio/mp3"
