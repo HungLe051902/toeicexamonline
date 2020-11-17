@@ -6,7 +6,7 @@
       </div>
       <div class="right-content">
         <div class="item">TOEICExamOnline.pg</div>
-        <div class="item">02:00:00</div>
+        <div class="item">{{ countdown }}</div>
         <div class="item">☰</div>
         <div class="item">&#x2715;</div>
       </div>
@@ -19,10 +19,69 @@
   </div>
 </template>
 <script>
+import EventBus from '@/EventBus.js'
 import { mapGetters } from "vuex";
 export default {
+  watch: {
+    isStarted(val){
+      console.log('isStarted', val);
+    }
+  },
+  data() {
+    return {
+      countdown: "02:00:00",
+    };
+  },
+  mounted() {
+    var vm = this;
+    // Đếm ngược thời gian làm bài
+    // var timeEnd = parseIlocalStorage.getItem('timeEnd');
+    EventBus.$on('abc', function(){
+      console.log("vào");
+    })
+    this.countdown = localStorage.getItem("timeEnd");
+    if (localStorage.getItem("timeEnd")) {
+      this.countdown = "hahaha";
+      var timeEnd = parseInt(localStorage.getItem("timeEnd"));
+      // Update the count down every 1 second
+      var x = setInterval(function () {
+        // Get today's date and time
+        var now = new Date().getTime();
+
+        // Find the distance between now and the count down date
+        var distance = timeEnd - now;
+
+        // Time calculations for hours, minutes and seconds
+        var hours = Math.floor(
+          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Output the result in an element with id="demo"
+        vm.countdown =
+          (hours < 10 ? "0" + hours : hours) +
+          ":" +
+          (minutes < 10 ? "0" + minutes : minutes) +
+          ":" +
+          (seconds < 10 ? "0" + seconds : seconds);
+
+        // If the count down is over, write some text
+        if (distance < 0) {
+          clearInterval(x);
+          localStorage.removeItem("timeEnd");
+          vm.countdown = "00:00:00";
+        }
+      }, 1);
+    } else {
+      this.countdown = "02:00:00";
+    }
+  },
   computed: {
     ...mapGetters("toeicexam", ["getHeaderTitle"]),
+    isStarted(){
+      return localStorage.getItem("timeEnd");
+    }
   },
 };
 </script>
@@ -31,7 +90,7 @@ export default {
   position: fixed;
   width: 100vw;
   height: 50px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   display: flex;
   align-items: center;
   padding: 0 0 0 24px;
@@ -52,7 +111,7 @@ export default {
       &:hover {
         cursor: pointer;
         background-color: #ccc3c3;
-        color: #FFFFFF;
+        color: #ffffff;
       }
     }
   }
@@ -65,7 +124,7 @@ export default {
   width: 100vw;
   padding: 24px;
   .container-fluid {
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     height: 100%;
     width: 100%;
     overflow: auto;
