@@ -25,25 +25,26 @@
       <p>Therefore, you should choose answer (D).</p>
       <div class="radio">
         <label
-          ><input type="radio" name="example" disabled />&nbsp;&nbsp;&nbsp;A. He is on the
-          phone</label
+          ><input type="radio" name="example" disabled />&nbsp;&nbsp;&nbsp;A. He
+          is on the phone</label
         >
       </div>
       <div class="radio">
         <label
-          ><input type="radio" name="example" disabled />&nbsp;&nbsp;&nbsp;B. She is driving the car</label
+          ><input type="radio" name="example" disabled />&nbsp;&nbsp;&nbsp;B.
+          She is driving the car</label
         >
       </div>
       <div class="radio">
         <label
-          ><input type="radio" name="example" disabled />&nbsp;&nbsp;&nbsp;C. She is typing on the
-          computer</label
+          ><input type="radio" name="example" disabled />&nbsp;&nbsp;&nbsp;C.
+          She is typing on the computer</label
         >
       </div>
       <div class="radio">
         <label
-          ><input type="radio" name="example" checked/>&nbsp;&nbsp;&nbsp;D. He is sitting next to
-          her</label
+          ><input type="radio" name="example" checked />&nbsp;&nbsp;&nbsp;D. He
+          is sitting next to her</label
         >
       </div>
       <button v-on:click="start" class="btn h-btn-primary">Bắt đầu</button>
@@ -53,22 +54,22 @@
 <script>
 export default {
   methods: {
-    start(){
-      try{
+    start() {
+      try {
         // Lấy thông giờ hiện tại + thêm 2 h để countdown
 
         var examID = JSON.parse(localStorage.getItem("selected-exam"))?.ExamID;
         this.$router.push(`/toeicexam/${examID}/part1-detail`);
-      } catch(e){
+      } catch (e) {
         console.log(e);
       }
-    }
+    },
   },
 };
-  
 </script>
 <style lang="scss" scoped>
-#part1-instruction {
-  padding: 0 100px;
-}
+// #part1-instruction {
+//   width: 600px;
+//   margin: auto;
+// }
 </style>

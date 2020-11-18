@@ -27,13 +27,15 @@
         </div>
       </div>
     </div>
+    <button v-on:click="nextToPart2" class="btn h-btn-primary mb-4">
+      Next
+    </button>
   </div>
 </template>
 <script>
 import ToeicExamService from "@/services/toeicExamService.js";
 import titleResource from "@/assets/resources/title.js";
 export default {
-  methods: {},
   data() {
     return {
       selectedExam: null,
@@ -48,22 +50,43 @@ export default {
     // Lấy thông tin đề thi hiện tại
     this.selectedExam = JSON.parse(localStorage.getItem("selected-exam"));
     // Lấy dữ liệu part 1
-    this.isShowLoading = true;
-    var res = await ToeicExamService.getQuestionPart1ByYearAndExamNo(
-      this.selectedExam?.Year,
-      this.selectedExam?.ExamCode
-    );
-    this.isShowLoading = false;
-    if (res) {
-      if (res.data.APPCode == 200) {
-        this.part1Data = res.data.Data;
-      } else {
-        this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
-      }
-    } else {
-      this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
-    }
+    this.getQuestionPart1();
   },
+  methods: {
+    // Lấy câu hỏi part 1
+    async getQuestionPart1() {
+      try {
+        this.isShowLoading = true;
+        var res = await ToeicExamService.getQuestionPart1ByYearAndExamNo(
+          this.selectedExam?.Year,
+          this.selectedExam?.ExamCode
+        );
+        this.isShowLoading = false;
+        if (res) {
+          if (res.data.APPCode == 200) {
+            this.part1Data = res.data.Data;
+          } else {
+            this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
+          }
+        } else {
+          this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    // Chuyển sang phần 2
+    nextToPart2() {
+      try {
+        this.$router.push(
+          `/toeicexam/${this.selectedExam?.ExamID}/part2-instruction`
+        );
+      } catch (e) {
+        console.log(e);
+      }
+    },
+  },
+
   computed: {
     // ...mapState("toeicexam", ["headerTitle"])
   },
@@ -72,5 +95,8 @@ export default {
 <style lang="scss" scoped>
 #part1-detail {
   height: 100%;
+  width: 600px;
+  max-width: 800px;
+  margin: auto;
 }
 </style>

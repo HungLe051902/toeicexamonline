@@ -24,7 +24,9 @@ export default {
             "timeEnd",
             new Date().getTime() + 2 * 60 * 60 * 1000
           );
-        this.$router.push(`/toeicexam/${this.selectedExam.ExamID}/part1-intro`);
+        // Chuyển tới trang hướng dẫn part1
+        this.$router.push(`/toeicexam/${this.selectedExam.ExamID}/part1-instruction`);
+        // Thông báo sự kiện để đếm ngược thời gian làm bài
         this.$eventBus.$emit("countdown");
       } catch (e) {
         console.log(e);

@@ -22,6 +22,7 @@ export default {
 
 <style lang="scss">
 @import 'assets/css/base.scss';
+@import 'assets/css/font.scss';
 
 
 #app-main-content{

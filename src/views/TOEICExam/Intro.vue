@@ -13,7 +13,9 @@
     </div>
     <div class="exam-content">
       <div class="container-fluid">
-        <router-view></router-view>
+        <div class="content h-100">
+          <router-view></router-view>
+        </div>
       </div>
     </div>
   </div>
@@ -141,6 +143,10 @@ export default {
     width: 100%;
     overflow: auto;
     padding: 16px;
+    .content{
+      width: 600px;
+      margin: auto;
+    }
   }
 }
 </style>
