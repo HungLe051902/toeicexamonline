@@ -13,17 +13,19 @@
 </template>
 <script>
 import titleResource from "@/assets/resources/title.js";
-import EventBus from '@/EventBus.js'
+// import EventBus from "@/EventBus.js";
 export default {
   methods: {
     start() {
       try {
-        EventBus.$emit('abc');
-        console.log(EventBus);
-          // Lưu thông tin thời gian bắt đầu làm + thêm 2h
-          if (!localStorage.getItem('timeEnd'))
-            localStorage.setItem('timeEnd', new Date().getTime() + 2*60*60*1000);
-          this.$router.push(`/toeicexam/${this.selectedExam.ExamID}/part1-intro`);
+        // Lưu thông tin thời gian bắt đầu làm + thêm 2h
+        if (!localStorage.getItem("timeEnd"))
+          localStorage.setItem(
+            "timeEnd",
+            new Date().getTime() + 2 * 60 * 60 * 1000
+          );
+        this.$router.push(`/toeicexam/${this.selectedExam.ExamID}/part1-intro`);
+        this.$eventBus.$emit("countdown");
       } catch (e) {
         console.log(e);
       }

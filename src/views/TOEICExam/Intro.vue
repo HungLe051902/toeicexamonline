@@ -19,69 +19,81 @@
   </div>
 </template>
 <script>
-import EventBus from '@/EventBus.js'
 import { mapGetters } from "vuex";
 export default {
+  created() {
+    this.countDownTime();
+  },
   watch: {
-    isStarted(val){
-      console.log('isStarted', val);
-    }
+    isStarted(val) {
+      console.log("isStarted", val);
+    },
   },
   data() {
     return {
       countdown: "02:00:00",
     };
   },
+  methods: {
+    // Hàm đếm ngược thời gian làm bài
+    countDownTime() {
+      try {
+        var vm = this;
+        if (localStorage.getItem("timeEnd")) {
+          var timeEnd = parseInt(localStorage.getItem("timeEnd"));
+          // Update the count down every 1 second
+          var x = setInterval(function () {
+            // Get today's date and time
+            var now = new Date().getTime();
+
+            // Find the distance between now and the count down date
+            var distance = timeEnd - now;
+
+            // Time calculations for hours, minutes and seconds
+            var hours = Math.floor(
+              (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+            );
+            var minutes = Math.floor(
+              (distance % (1000 * 60 * 60)) / (1000 * 60)
+            );
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Output the result in an element with id="demo"
+            vm.countdown =
+              (hours < 10 ? "0" + hours : hours) +
+              ":" +
+              (minutes < 10 ? "0" + minutes : minutes) +
+              ":" +
+              (seconds < 10 ? "0" + seconds : seconds);
+
+            // If the count down is over, write some text
+            if (distance < 0) {
+              clearInterval(x);
+              localStorage.removeItem("timeEnd");
+              vm.countdown = "00:00:00";
+            }
+          }, 1);
+        } else {
+          this.countdown = "02:00:00";
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    },
+  },
   mounted() {
     var vm = this;
     // Đếm ngược thời gian làm bài
-    // var timeEnd = parseIlocalStorage.getItem('timeEnd');
-    EventBus.$on('abc', function(){
-      console.log("vào");
-    })
-    this.countdown = localStorage.getItem("timeEnd");
-    if (localStorage.getItem("timeEnd")) {
-      this.countdown = "hahaha";
-      var timeEnd = parseInt(localStorage.getItem("timeEnd"));
-      // Update the count down every 1 second
-      var x = setInterval(function () {
-        // Get today's date and time
-        var now = new Date().getTime();
-
-        // Find the distance between now and the count down date
-        var distance = timeEnd - now;
-
-        // Time calculations for hours, minutes and seconds
-        var hours = Math.floor(
-          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        // Output the result in an element with id="demo"
-        vm.countdown =
-          (hours < 10 ? "0" + hours : hours) +
-          ":" +
-          (minutes < 10 ? "0" + minutes : minutes) +
-          ":" +
-          (seconds < 10 ? "0" + seconds : seconds);
-
-        // If the count down is over, write some text
-        if (distance < 0) {
-          clearInterval(x);
-          localStorage.removeItem("timeEnd");
-          vm.countdown = "00:00:00";
-        }
-      }, 1);
-    } else {
-      this.countdown = "02:00:00";
-    }
+    this.$eventBus.$on("countdown", function () {
+      vm.countDownTime();
+    });
+    // this.countdown = localStorage.getItem("timeEnd");
   },
   computed: {
     ...mapGetters("toeicexam", ["getHeaderTitle"]),
-    isStarted(){
+    isStarted() {
       return localStorage.getItem("timeEnd");
-    }
+    },
   },
 };
 </script>

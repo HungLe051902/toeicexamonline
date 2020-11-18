@@ -8,6 +8,9 @@ import 'element-ui/lib/theme-chalk/index.css';
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import Element from 'element-ui'
+const EventBus = new Vue()
+
+Vue.prototype.$eventBus = EventBus;
 
 Vue.use(Toast, {
   transition: "Vue-Toastification__bounce",
