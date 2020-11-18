@@ -21,6 +21,14 @@ var routes = {
         {
             path: 'part2-detail',
             component: () => import("@/views/TOEICExam/Part2")
+        },
+        {
+            path: 'part3-instruction',
+            component: () => import("@/views/TOEICExam/Part3/Part3Instruction.vue")
+        },
+        {
+            path: 'part3-detail',
+            component: () => import("@/views/TOEICExam/Part3")
         }
 
     ]
