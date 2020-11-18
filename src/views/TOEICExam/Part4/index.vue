@@ -1,15 +1,15 @@
 <template>
-  <div id="part3-detail" v-loading="isShowLoading">
-    <h5>Part III: Short Conversations</h5>
-    <div>
+  <div id="part4-detail" v-loading="isShowLoading">
+    <h5>Part IV: Short Talks</h5>
+    <div class="list-question">
       <div
         class="group-question"
-        v-for="(item, index) in part3Data"
+        v-for="(item, index) in part4Data"
         :key="item.GroupQuestionID"
       >
         <label class="mb-0" for=""
           ><b
-            >Question {{ 32 + index * 3 }}-{{ 32 + index * 3 + 2 }} refer to
+            >Question {{ 71 + index * 3 }}-{{ 71 + index * 3 + 2 }} refer to
             following conversation:</b
           ></label
         >
@@ -20,7 +20,7 @@
           <div>
             <div class="question">
               <label for=""
-                ><b>{{ 32 + index * 3 }}. {{ item.FirstQuestion }}</b></label
+                ><b>{{ 71 + index * 3 }}. {{ item.FirstQuestion }}</b></label
               >
             </div>
             <div class="options">
@@ -66,7 +66,7 @@
             <div class="question">
               <label for=""
                 ><b
-                  >{{ 32 + index * 3 + 1 }}. {{ item.SecondQuestion }}</b
+                  >{{ 71 + index * 3 + 1 }}. {{ item.SecondQuestion }}</b
                 ></label
               >
             </div>
@@ -113,7 +113,7 @@
             <div class="question">
               <label for=""
                 ><b
-                  >{{ 32 + index * 3 + 2 }}. {{ item.ThirdQuestion }}</b
+                  >{{ 71 + index * 3 + 2 }}. {{ item.ThirdQuestion }}</b
                 ></label
               >
             </div>
@@ -159,7 +159,7 @@
         </div>
       </div>
     </div>
-    <button v-on:click="nextToPart4" class="btn h-btn-primary mb-4">
+    <button v-on:click="nextToPart5" class="btn h-btn-primary mb-4">
       Next
     </button>
   </div>
@@ -170,42 +170,42 @@ import ToeicExamService from "@/services/toeicExamService.js";
 export default {
   created() {
     // Đổi tiêu đề trên thanh header
-    this.$store.commit("toeicexam/setHeaderTitle", titleResource.PART3_TITLE);
+    this.$store.commit("toeicexam/setHeaderTitle", titleResource.PART4_TITLE);
     // Lấy thông tin đề thi hiện tại
     this.selectedExam = JSON.parse(localStorage.getItem("selected-exam"));
     // Lấy dữ liệu part 1
-    this.getQuestionPart3();
+    this.getQuestionPart4();
   },
   data() {
     return {
       selectedExam: null,
       isShowLoading: false,
-      part3Data: [],
+      part4Data: [],
     };
   },
   methods: {
-    // Chuyển sang làm part4
-    nextToPart4() {
+    // Chuyển sang làm part5
+    nextToPart5() {
       try {
         this.$router.push(
-          `/toeicexam/${this.selectedExam?.ExamID}/part4-instruction`
+          `/toeicexam/${this.selectedExam?.ExamID}/part5-instruction`
         );
       } catch (e) {
         console.log(e);
       }
     },
     // Lấy câu hỏi part2
-    async getQuestionPart3() {
+    async getQuestionPart4() {
       try {
         this.isShowLoading = true;
-        var res = await ToeicExamService.getQuestionPart3ByYearAndExamNo(
+        var res = await ToeicExamService.getQuestionPart4ByYearAndExamNo(
           this.selectedExam?.Year,
           this.selectedExam?.ExamCode
         );
         this.isShowLoading = false;
         if (res) {
           if (res.data.APPCode == 200) {
-            this.part3Data = res.data.Data;
+            this.part4Data = res.data.Data;
           } else {
             this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
           }

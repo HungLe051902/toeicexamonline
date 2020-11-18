@@ -47,7 +47,7 @@
           is sitting next to her</label
         >
       </div>
-      <button v-on:click="start" class="btn h-btn-primary">Bắt đầu</button>
+      <button v-on:click="start" class="btn h-btn-primary mb-4">Bắt đầu</button>
     </div>
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <div id="part1-detail" v-loading="isShowLoading">
-    <h3>PART 1</h3>
+    <h5>Part I: Picture Description</h5>
     <div class="question-area">
       <div v-for="(item, index) in part1Data" :key="item.QuestionID">
         <label for=""

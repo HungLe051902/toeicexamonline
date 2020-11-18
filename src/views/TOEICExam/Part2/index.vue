@@ -1,10 +1,9 @@
 <template>
   <div id="part2-detail" v-loading="isShowLoading">
-    <h3>PART 2</h3>
+    <h5>Part II: Question - Response</h5>
     <h6>Mark your answer on your answer sheet:</h6>
     <div class="audio-area">
       <audio controls class="d-block mt-3 w-100">
-        <p></p>
         <source
           :src="
             part2Data
