@@ -17,7 +17,7 @@
         <div class="question-area mb-5">
           <div class="question">
             <label for=""
-              ><b>{{ 131 + index * 4 }}. --(1)--</b></label
+              ><b>{{ 131 + index * 4 }}. _ _(1)_ _</b></label
             >
             <div class="options">
               <div class="form-check">
@@ -60,7 +60,7 @@
           </div>
           <div class="question">
             <label for=""
-              ><b>{{ 131 + index * 4 + 1 }}. --(2)--</b></label
+              ><b>{{ 131 + index * 4 + 1 }}. _ _(2)_ _</b></label
             >
             <div class="options">
               <div class="form-check">
@@ -103,7 +103,7 @@
           </div>
           <div class="question">
             <label for=""
-              ><b>{{ 131 + index * 4 + 2 }}. --(3)--</b></label
+              ><b>{{ 131 + index * 4 + 2 }}. _ _(3)_ _</b></label
             >
             <div class="options">
               <div class="form-check">
@@ -146,7 +146,7 @@
           </div>
           <div class="question">
             <label for=""
-              ><b>{{ 131 + index * 4 + 3 }}. --(4)--</b></label
+              ><b>{{ 131 + index * 4 + 3 }}. _ _(4)_ _</b></label
             >
             <div class="options">
               <div class="form-check">

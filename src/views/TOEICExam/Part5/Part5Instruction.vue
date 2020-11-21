@@ -12,26 +12,42 @@
       <p><b>The mother held her newborn _ _ _</b></p>
       <div class="radio">
         <label
-          ><input type="radio" name="example" disabled />&nbsp;&nbsp;&nbsp;A. loving</label
+          ><input
+            type="radio"
+            name="part5-example"
+            disabled
+          />&nbsp;&nbsp;&nbsp;A. loving</label
         >
       </div>
       <div class="radio">
         <label
-          ><input type="radio" name="example" disabled />&nbsp;&nbsp;&nbsp;B. lovely</label
+          ><input
+            type="radio"
+            name="part5-example"
+            disabled
+          />&nbsp;&nbsp;&nbsp;B. lovely</label
         >
       </div>
       <div class="radio">
         <label
-          ><input type="radio" name="example" checked />&nbsp;&nbsp;&nbsp;C. lovingly</label
+          ><input
+            type="radio"
+            name="part5-example"
+            checked
+          />&nbsp;&nbsp;&nbsp;C. lovingly</label
         >
       </div>
       <div class="radio">
         <label
-          ><input type="radio" name="example" disabled />&nbsp;&nbsp;&nbsp;D. love</label
+          ><input
+            type="radio"
+            name="part5-example"
+            disabled
+          />&nbsp;&nbsp;&nbsp;D. love</label
         >
       </div>
+      <p>Correct answer (C)</p>
     </div>
-    <p>Correct answer (C)</p>
     <button v-on:click="start" class="btn h-btn-primary">Bắt đầu</button>
   </div>
 </template>

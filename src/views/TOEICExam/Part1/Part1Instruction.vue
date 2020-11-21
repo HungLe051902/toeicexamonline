@@ -25,25 +25,25 @@
       <p>Therefore, you should choose answer (D).</p>
       <div class="radio">
         <label
-          ><input type="radio" name="example" disabled />&nbsp;&nbsp;&nbsp;A. He
+          ><input type="radio" name="part1-example" disabled />&nbsp;&nbsp;&nbsp;A. He
           is on the phone</label
         >
       </div>
       <div class="radio">
         <label
-          ><input type="radio" name="example" disabled />&nbsp;&nbsp;&nbsp;B.
+          ><input type="radio" name="part1-example" disabled />&nbsp;&nbsp;&nbsp;B.
           She is driving the car</label
         >
       </div>
       <div class="radio">
         <label
-          ><input type="radio" name="example" disabled />&nbsp;&nbsp;&nbsp;C.
+          ><input type="radio" name="part1-example" disabled />&nbsp;&nbsp;&nbsp;C.
           She is typing on the computer</label
         >
       </div>
       <div class="radio">
         <label
-          ><input type="radio" name="example" checked />&nbsp;&nbsp;&nbsp;D. He
+          ><input type="radio" name="part1-example" checked />&nbsp;&nbsp;&nbsp;D. He
           is sitting next to her</label
         >
       </div>

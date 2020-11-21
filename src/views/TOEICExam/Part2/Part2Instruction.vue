@@ -20,19 +20,19 @@
       <p><b>Why are you late?</b></p>
       <div class="radio">
         <label
-          ><input type="radio" name="example" disabled />&nbsp;&nbsp;&nbsp;A. He
+          ><input type="radio" name="part2-example" disabled />&nbsp;&nbsp;&nbsp;A. He
           is on the phone</label
         >
       </div>
       <div class="radio">
         <label
-          ><input type="radio" name="example" checked />&nbsp;&nbsp;&nbsp;B. My
+          ><input type="radio" name="part2-example" checked />&nbsp;&nbsp;&nbsp;B. My
           car broke down</label
         >
       </div>
       <div class="radio">
         <label
-          ><input type="radio" name="example" disabled />&nbsp;&nbsp;&nbsp;C. He
+          ><input type="radio" name="part2-example" disabled />&nbsp;&nbsp;&nbsp;C. He
           alway is</label
         >
       </div>

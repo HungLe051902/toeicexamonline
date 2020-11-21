@@ -57,6 +57,14 @@ export default {
         } catch (e) {
             console.log(e);
         }
+    },
+    // Lấy các câu hỏi part7
+    async getQuestionPart7ByYearAndExamNo(year, examNo) {
+        try {
+            return await axios.get(`${baseURL}/ToeicExam/exam/part7?year=${year}&examNo=${examNo}`);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
 }
