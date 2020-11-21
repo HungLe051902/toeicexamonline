@@ -45,6 +45,14 @@ var routes = {
         {
             path: 'part5-detail',
             component: () => import("@/views/TOEICExam/Part5")
+        },
+        {
+            path: 'part6-instruction',
+            component: () => import("@/views/TOEICExam/Part6/Part6Instruction.vue")
+        },
+        {
+            path: 'part6-detail',
+            component: () => import("@/views/TOEICExam/Part6")
         }
 
     ]
