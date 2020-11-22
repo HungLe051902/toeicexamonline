@@ -2,7 +2,7 @@
   <div id="part1-detail" v-loading="isShowLoading">
     <h5>Part I: Picture Description</h5>
     <div class="question-area">
-      <div v-for="(item, index) in part1Data" :key="item.QuestionID">
+      <div v-for="(item, index) in getPart1Data" :key="item.QuestionID">
         <label for=""
           ><b>{{ index + 1 }}. {{ item.Title }}</b></label
         >
@@ -12,34 +12,25 @@
 
         <img :src="item.LinkImg" class="w-100 my-3" alt="" />
         <div class="option-area">
-          <label class="radio-inline mr-3"
-            ><input type="radio" :name="item.QuestionID" />&nbsp;A</label
-          >
-          <label class="radio-inline mr-3"
-            ><input type="radio" :name="item.QuestionID" />&nbsp;B</label
-          >
-          <label class="radio-inline mr-3"
-            ><input type="radio" :name="item.QuestionID" />&nbsp;C</label
-          >
-          <label class="radio-inline"
-            ><input type="radio" :name="item.QuestionID" />&nbsp;D</label
-          >
+          <label class="radio-inline mr-3"><input type="radio" :name="item.QuestionID" />&nbsp;A</label>
+          <label class="radio-inline mr-3"><input type="radio" :name="item.QuestionID" />&nbsp;B</label>
+          <label class="radio-inline mr-3"><input type="radio" :name="item.QuestionID" />&nbsp;C</label>
+          <label class="radio-inline"><input type="radio" :name="item.QuestionID" />&nbsp;D</label>
         </div>
       </div>
     </div>
-    <button v-on:click="nextToPart2" class="btn h-btn-primary mb-4">
-      Next
-    </button>
+    <button v-on:click="nextToPart2" class="btn h-btn-primary mb-4">Next</button>
   </div>
 </template>
 <script>
-import ToeicExamService from "@/services/toeicExamService.js";
+// import ToeicExamService from "@/services/toeicExamService.js";
 import titleResource from "@/assets/resources/title.js";
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
       selectedExam: null,
-      part1Data: null,
+      // part1Data: null,
       isShowLoading: false,
     };
   },
@@ -56,19 +47,26 @@ export default {
     // Lấy câu hỏi part 1
     async getQuestionPart1() {
       try {
+        if (this.getPart1Data && this.getPart1Data.length > 0){
+          return ;
+        }
         this.isShowLoading = true;
-        var res = await ToeicExamService.getQuestionPart1ByYearAndExamNo(
-          this.selectedExam?.Year,
-          this.selectedExam?.ExamCode
-        );
+        // var res = await ToeicExamService.getQuestionPart1ByYearAndExamNo(
+        //   this.selectedExam?.Year,
+        //   this.selectedExam?.ExamCode
+        // );
+        var res = await this.$store.dispatch("toeicexam/getQuestionByPart", { part: "PART_1", year: this.selectedExam?.Year, examNo: this.selectedExam?.ExamCode });
         this.isShowLoading = false;
-        if (res) {
-          if (res.data.APPCode == 200) {
-            this.part1Data = res.data.Data;
-          } else {
-            this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
-          }
-        } else {
+        // if (res) {
+        //   if (res.data.APPCode == 200) {
+        //     this.part1Data = res.data.Data;
+        //   } else {
+        //     this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
+        //   }
+        // } else {
+        //   this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
+        // }
+        if (!res) {
           this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
         }
       } catch (e) {
@@ -78,9 +76,7 @@ export default {
     // Chuyển sang phần 2
     nextToPart2() {
       try {
-        this.$router.push(
-          `/toeicexam/${this.selectedExam?.ExamID}/part2-instruction`
-        );
+        this.$router.push(`/toeicexam/${this.selectedExam?.ExamID}/part2-instruction`);
       } catch (e) {
         console.log(e);
       }
@@ -88,8 +84,16 @@ export default {
   },
 
   computed: {
-    // ...mapState("toeicexam", ["headerTitle"])
+    ...mapGetters("toeicexam", ["getPart1Data"]),
   },
+  // watch: {
+  //   part1Data: {
+  //     deep: true,
+  //     handler(val){
+  //       console.log('part1Data', val);
+  //     }
+  //   }
+  // }
 };
 </script>
 <style lang="scss" scoped>

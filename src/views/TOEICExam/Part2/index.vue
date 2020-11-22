@@ -6,8 +6,8 @@
       <audio controls class="d-block mt-3 w-100">
         <source
           :src="
-            part2Data
-              ? part2Data[0].LinkAudio
+            getPart2Data && getPart2Data.length > 0
+              ? getPart2Data[0].LinkAudio
               : 'https://firebasestorage.googleapis.com/v0/b/test1-part2.appspot.com/o/part2%2Ftest1_part2.mp3?alt=media&token=f2de3b84-e7aa-43cb-82c8-d052b2f021c3'
           "
           type="audio/mp3"
@@ -17,7 +17,7 @@
     <div class="question-area mt-3 row">
       <div
         class="question col-3"
-        v-for="(item, index) in part2Data"
+        v-for="(item, index) in getPart2Data"
         :key="item.QuestionID"
       >
         <label for=""
@@ -43,7 +43,7 @@
 </template>
 <script>
 import titleResource from "@/assets/resources/title.js";
-import ToeicExamService from "@/services/toeicExamService.js";
+import { mapGetters } from "vuex";
 export default {
   created() {
     // Đổi tiêu đề trên thanh header
@@ -57,14 +57,13 @@ export default {
     return {
       selectedExam: null,
       isShowLoading: false,
-      part2Data: [],
     };
   },
   methods: {
     // Chuyển sang làm part3
     nextToPart3() {
       try {
-          this.$router.push(
+        this.$router.push(
           `/toeicexam/${this.selectedExam?.ExamID}/part3-instruction`
         );
       } catch (e) {
@@ -74,25 +73,41 @@ export default {
     // Lấy câu hỏi part2
     async getQuestionPart2() {
       try {
+        if (this.getPart2Data && this.getPart2Data.length > 0) {
+          return;
+        }
         this.isShowLoading = true;
-        var res = await ToeicExamService.getQuestionPart2ByYearAndExamNo(
-          this.selectedExam?.Year,
-          this.selectedExam?.ExamCode
-        );
+        var res = await this.$store.dispatch("toeicexam/getQuestionByPart", {
+          part: "PART_2",
+          year: this.selectedExam?.Year,
+          examNo: this.selectedExam?.ExamCode,
+        });
         this.isShowLoading = false;
-        if (res) {
-          if (res.data.APPCode == 200) {
-            this.part2Data = res.data.Data;
-          } else {
-            this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
-          }
-        } else {
+        if (!res) {
           this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
         }
+        // this.isShowLoading = true;
+        // var res = await ToeicExamService.getQuestionPart2ByYearAndExamNo(
+        //   this.selectedExam?.Year,
+        //   this.selectedExam?.ExamCode
+        // );
+        // this.isShowLoading = false;
+        // if (res) {
+        //   if (res.data.APPCode == 200) {
+        //     this.part2Data = res.data.Data;
+        //   } else {
+        //     this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
+        //   }
+        // } else {
+        //   this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
+        // }
       } catch (e) {
         console.log(e);
       }
     },
+  },
+  computed: {
+    ...mapGetters("toeicexam", ["getPart2Data"]),
   },
 };
 </script>

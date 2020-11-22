@@ -112,7 +112,6 @@ export default {
     // Đi tới màn hình giới thiệu đề thi
     goToIntroExam(exam) {
       try {
-        console.log(exam);
         localStorage.setItem("selected-exam", JSON.stringify(exam));
         this.$router.push(`/toeicexam/${exam.ExamID}`);
         // this.$router.push(`/toeicexam/introduction`);

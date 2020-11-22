@@ -4,7 +4,7 @@
     <div>
       <div
         class="group-question"
-        v-for="(item, index) in part3Data"
+        v-for="(item, index) in getPart3Data"
         :key="item.GroupQuestionID"
       >
         <label class="mb-0" for=""
@@ -166,7 +166,7 @@
 </template>
 <script>
 import titleResource from "@/assets/resources/title.js";
-import ToeicExamService from "@/services/toeicExamService.js";
+import { mapGetters } from "vuex";
 export default {
   created() {
     // Đổi tiêu đề trên thanh header
@@ -180,7 +180,6 @@ export default {
     return {
       selectedExam: null,
       isShowLoading: false,
-      part3Data: [],
     };
   },
   methods: {
@@ -197,26 +196,42 @@ export default {
     // Lấy câu hỏi part2
     async getQuestionPart3() {
       try {
+        if (this.getPart3Data && this.getPart3Data.length > 0) {
+          return;
+        }
         this.isShowLoading = true;
-        var res = await ToeicExamService.getQuestionPart3ByYearAndExamNo(
-          this.selectedExam?.Year,
-          this.selectedExam?.ExamCode
-        );
+        var res = await this.$store.dispatch("toeicexam/getQuestionByPart", {
+          part: "PART_3",
+          year: this.selectedExam?.Year,
+          examNo: this.selectedExam?.ExamCode,
+        });
         this.isShowLoading = false;
-        if (res) {
-          if (res.data.APPCode == 200) {
-            this.part3Data = res.data.Data;
-          } else {
-            this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
-          }
-        } else {
+        if (!res) {
           this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
         }
+        // this.isShowLoading = true;
+        // var res = await ToeicExamService.getQuestionPart3ByYearAndExamNo(
+        //   this.selectedExam?.Year,
+        //   this.selectedExam?.ExamCode
+        // );
+        // this.isShowLoading = false;
+        // if (res) {
+        //   if (res.data.APPCode == 200) {
+        //     this.part3Data = res.data.Data;
+        //   } else {
+        //     this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
+        //   }
+        // } else {
+        //   this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
+        // }
       } catch (e) {
         console.log(e);
       }
     },
   },
+  computed: {
+    ...mapGetters("toeicexam", ["getPart3Data"]),
+  }
 };
 </script>
 <style lang="scss" scoped>
