@@ -10,13 +10,14 @@
         <label for=""
           ><b>{{ 101 + index }}. {{ item.Question }}</b></label
         >
-        <div class="options">
+        <div class="option-area">
           <div class="form-check">
             <label class="form-check-label">
               <input
                 type="radio"
                 class="form-check-input"
                 :name="item.QuestionID"
+                value="A"
               />A. {{ item.OptionA }}
             </label>
           </div>
@@ -26,6 +27,7 @@
                 type="radio"
                 class="form-check-input"
                 :name="item.QuestionID"
+                value="B"
               />B. {{ item.OptionB }}
             </label>
           </div>
@@ -35,6 +37,7 @@
                 type="radio"
                 class="form-check-input"
                 :name="item.QuestionID"
+                value="C"
               />C. {{ item.OptionC }}
             </label>
           </div>
@@ -44,6 +47,7 @@
                 type="radio"
                 class="form-check-input"
                 :name="item.QuestionID"
+                value="D"
               />D. {{ item.OptionD }}
             </label>
           </div>
@@ -53,11 +57,15 @@
     <button v-on:click="nextToPart6" class="btn h-btn-primary mb-4">
       Next
     </button>
+    <button v-on:click="finish" class="btn h-btn-primary mb-4 ml-3">
+      Chấm điểm
+    </button>
   </div>
 </template>
 <script>
 import titleResource from "@/assets/resources/title.js";
 import { mapGetters } from "vuex";
+import $ from "jquery";
 export default {
   created() {
     // Đổi tiêu đề trên thanh header
@@ -71,9 +79,38 @@ export default {
     return {
       selectedExam: null,
       isShowLoading: false,
+      isFinished: false,
     };
   },
   methods: {
+    // test
+    finish() {
+      try {
+        var me = this;
+        this.isFinished = true;
+        var index = 0;
+        $.each($("#part5-detail .option-area"), function () {
+          var vm = this;
+          $.each($(vm).find("input"), function () {
+            var input = this;
+            if ($(this).val() == me.getPart5Data[index]?.Answer) {
+              me.$nextTick(function () {
+                $(input).parent().addClass("correct");
+              });
+            } else {
+              if ($(this).is(":checked")) {
+                me.$nextTick(function () {
+                  $(input).parent().addClass("wrong");
+                });
+              }
+            }
+          });
+          index++;
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    },
     // Chuyển sang làm part6
     nextToPart6() {
       try {

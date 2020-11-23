@@ -17,21 +17,28 @@
     <div class="question-area mt-3 row">
       <div
         class="question col-3"
+        v-bind:class="isFinished ? 'col-12' : 'col-3'"
         v-for="(item, index) in getPart2Data"
         :key="item.QuestionID"
       >
         <label for=""
-          ><b>{{ index + 7 }}.</b></label
+          ><b>{{ index + 7 }}. <span v-if="isFinished">{{ item.Question }}</span></b></label
         >
         <div class="option-area">
-          <label class="radio-inline mr-3"
-            ><input type="radio" :name="item.QuestionID" />&nbsp;A</label
+          <label class="radio-inline mr-3" v-bind:class="isFinished ? 'd-block' : ''"
+            ><input type="radio" :name="item.QuestionID" value="A" />&nbsp;A
+            <span v-if="isFinished">. {{ item.OptionA }}</span>  
+          </label
           >
-          <label class="radio-inline mr-3"
-            ><input type="radio" :name="item.QuestionID" />&nbsp;B</label
+          <label class="radio-inline mr-3" v-bind:class="isFinished ? 'd-block' : ''"
+            ><input type="radio" :name="item.QuestionID" value="B" />&nbsp;B
+            <span v-if="isFinished">. {{ item.OptionB }}</span>   
+          </label
           >
-          <label class="radio-inline mr-3"
-            ><input type="radio" :name="item.QuestionID" />&nbsp;C</label
+          <label class="radio-inline mr-3" v-bind:class="isFinished ? 'd-block' : ''"
+            ><input type="radio" :name="item.QuestionID" value="C" />&nbsp;C
+            <span v-if="isFinished">. {{ item.OptionC }}</span>   
+          </label
           >
         </div>
       </div>
@@ -39,11 +46,15 @@
     <button v-on:click="nextToPart3" class="btn h-btn-primary mb-4">
       Next
     </button>
+    <button v-on:click="finish" class="btn h-btn-primary mb-4 ml-3">
+      Chấm điểm
+    </button>
   </div>
 </template>
 <script>
 import titleResource from "@/assets/resources/title.js";
 import { mapGetters } from "vuex";
+import $ from "jquery";
 export default {
   created() {
     // Đổi tiêu đề trên thanh header
@@ -57,9 +68,39 @@ export default {
     return {
       selectedExam: null,
       isShowLoading: false,
+      isFinished: false
     };
   },
   methods: {
+    // test
+    finish() {
+      try {
+        var me = this;
+        this.isFinished = true;
+        var index = 0;
+        $.each($("#part2-detail .option-area"), function () {
+          var vm = this;
+          $.each($(vm).find("input"), function () {
+            
+            var input = this;
+            if ($(this).val() == me.getPart2Data[index]?.Answer) {
+              me.$nextTick(function () {
+                $(input).parent().addClass("correct");
+              });
+            } else {
+              if ($(this).is(":checked")) {
+                me.$nextTick(function () {
+                  $(input).parent().addClass("wrong");
+                });
+              }
+            }
+          });
+          index++;
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    },
     // Chuyển sang làm part3
     nextToPart3() {
       try {

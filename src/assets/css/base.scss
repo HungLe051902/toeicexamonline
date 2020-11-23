@@ -19,3 +19,29 @@
 .form-control--error{
     border: 1px solid red !important;
 }
+
+.correct {
+    font-weight: bold;
+    position: relative;
+    &:after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      top: -5px;
+      background-image: url("~@/assets/icons/tick.png");
+      background-size: 100% 100%;
+    }
+}
+.wrong{
+    position: relative;
+    &:after {
+        content: "";
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        top: -5px;
+        background-image: url("~@/assets/icons/wrong.png");
+        background-size: 100% 100%;
+    }
+}

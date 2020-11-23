@@ -14,35 +14,19 @@
         <div class="option-area">
           <label class="radio mr-3" v-bind:class="isFinished ? 'd-block' : ''"
             ><input type="radio" :name="item.QuestionID" value="A" />&nbsp;A
-            <span
-              v-if="isFinished"
-              v-bind:class="item.Answer == 'A' ? 'font-weight-bold' : ''"
-              >. {{ item.OptionA }}</span
-            ></label
+            <span v-if="isFinished">. {{ item.OptionA }}</span></label
           >
           <label class="radio mr-3" v-bind:class="isFinished ? 'd-block' : ''"
             ><input type="radio" :name="item.QuestionID" value="B" />&nbsp;B
-            <span
-              v-if="isFinished"
-              v-bind:class="item.Answer == 'B' ? 'font-weight-bold' : ''"
-              >. {{ item.OptionB }}</span
-            ></label
+            <span v-if="isFinished">. {{ item.OptionB }}</span></label
           >
           <label class="radio mr-3" v-bind:class="isFinished ? 'd-block' : ''"
             ><input type="radio" :name="item.QuestionID" value="C" />&nbsp;C
-            <span
-              v-if="isFinished"
-              v-bind:class="item.Answer == 'C' ? 'font-weight-bold' : ''"
-              >. {{ item.OptionC }}</span
-            ></label
+            <span v-if="isFinished">. {{ item.OptionC }}</span></label
           >
           <label class="radio" v-bind:class="isFinished ? 'd-block' : ''"
             ><input type="radio" :name="item.QuestionID" value="D" />&nbsp;D
-            <span
-              v-if="isFinished"
-              v-bind:class="item.Answer == 'D' ? 'font-weight-bold' : ''"
-              >. {{ item.OptionD }}</span
-            ></label
+            <span v-if="isFinished">. {{ item.OptionD }}</span></label
           >
         </div>
       </div>
@@ -88,15 +72,16 @@ export default {
         $.each($("#part1-detail .option-area"), function () {
           var vm = this;
           $.each($(vm).find("input"), function () {
+            var input = this;
             if ($(this).val() == me.getPart1Data[index]?.Answer) {
-              $(this)
-                .parent()
-                .after("<span class='text-success'>Correct</span>");
+              me.$nextTick(function () {
+                $(input).parent().addClass("correct");
+              });
             } else {
               if ($(this).is(":checked")) {
-                $(this)
-                  .parent()
-                  .after("<span class='text-danger'>Wrong</span>");
+                me.$nextTick(function () {
+                  $(input).parent().addClass("wrong");
+                });
               }
             }
           });
@@ -113,25 +98,12 @@ export default {
           return;
         }
         this.isShowLoading = true;
-        // var res = await ToeicExamService.getQuestionPart1ByYearAndExamNo(
-        //   this.selectedExam?.Year,
-        //   this.selectedExam?.ExamCode
-        // );
         var res = await this.$store.dispatch("toeicexam/getQuestionByPart", {
           part: "PART_1",
           year: this.selectedExam?.Year,
           examNo: this.selectedExam?.ExamCode,
         });
         this.isShowLoading = false;
-        // if (res) {
-        //   if (res.data.APPCode == 200) {
-        //     this.part1Data = res.data.Data;
-        //   } else {
-        //     this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
-        //   }
-        // } else {
-        //   this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
-        // }
         if (!res) {
           this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
         }
