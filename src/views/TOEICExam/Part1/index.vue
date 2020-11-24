@@ -73,7 +73,7 @@ export default {
           var vm = this;
           $.each($(vm).find("input"), function () {
             // Disable tất cả input
-            
+            $(this).prop("disabled", true);
             var input = this;
             if ($(this).val() == me.getPart1Data[index]?.Answer) {
               me.$nextTick(function () {

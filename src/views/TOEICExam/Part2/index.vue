@@ -22,24 +22,30 @@
         :key="item.QuestionID"
       >
         <label for=""
-          ><b>{{ index + 7 }}. <span v-if="isFinished">{{ item.Question }}</span></b></label
+          ><b
+            >{{ index + 7 }}.
+            <span v-if="isFinished">{{ item.Question }}</span></b
+          ></label
         >
         <div class="option-area">
-          <label class="radio-inline mr-3" v-bind:class="isFinished ? 'd-block' : ''"
+          <label
+            class="radio-inline mr-3"
+            v-bind:class="isFinished ? 'd-block' : ''"
             ><input type="radio" :name="item.QuestionID" value="A" />&nbsp;A
-            <span v-if="isFinished">. {{ item.OptionA }}</span>  
-          </label
-          >
-          <label class="radio-inline mr-3" v-bind:class="isFinished ? 'd-block' : ''"
+            <span v-if="isFinished">. {{ item.OptionA }}</span>
+          </label>
+          <label
+            class="radio-inline mr-3"
+            v-bind:class="isFinished ? 'd-block' : ''"
             ><input type="radio" :name="item.QuestionID" value="B" />&nbsp;B
-            <span v-if="isFinished">. {{ item.OptionB }}</span>   
-          </label
-          >
-          <label class="radio-inline mr-3" v-bind:class="isFinished ? 'd-block' : ''"
+            <span v-if="isFinished">. {{ item.OptionB }}</span>
+          </label>
+          <label
+            class="radio-inline mr-3"
+            v-bind:class="isFinished ? 'd-block' : ''"
             ><input type="radio" :name="item.QuestionID" value="C" />&nbsp;C
-            <span v-if="isFinished">. {{ item.OptionC }}</span>   
-          </label
-          >
+            <span v-if="isFinished">. {{ item.OptionC }}</span>
+          </label>
         </div>
       </div>
     </div>
@@ -68,7 +74,7 @@ export default {
     return {
       selectedExam: null,
       isShowLoading: false,
-      isFinished: false
+      isFinished: false,
     };
   },
   methods: {
@@ -81,7 +87,8 @@ export default {
         $.each($("#part2-detail .option-area"), function () {
           var vm = this;
           $.each($(vm).find("input"), function () {
-            
+            // Disable tất cả input
+            $(this).prop("disabled", true);
             var input = this;
             if ($(this).val() == me.getPart2Data[index]?.Answer) {
               me.$nextTick(function () {

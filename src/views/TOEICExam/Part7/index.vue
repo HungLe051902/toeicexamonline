@@ -4,235 +4,250 @@
     <div class="list-question">
       <div
         class="group-question mb-5"
-        v-for="(item) in getPart7Data"
+        v-for="item in getPart7Data"
         :key="item.QuestionID"
       >
-        <label for=""><b>Question {{showRangeQuestion(item)}} refer to following paragraph:</b></label>
-        <img :src="item.LinkImg" alt="">
+        <label for=""
+          ><b
+            >Question {{ showRangeQuestion(item) }} refer to following
+            paragraph:</b
+          ></label
+        >
+        <img :src="item.LinkImg" alt="" />
         <div class="first-question">
-          <label for=""><b>{{item.StartNumber}}. {{item.FirstQuestion}}</b></label>
+          <label for=""
+            ><b>{{ item.StartNumber }}. {{ item.FirstQuestion }}</b></label
+          >
           <div class="option-area">
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input
-                    type="radio"
-                    class="form-check-input"
-                    :name="item.GroupQuestionID + 'first'"
-                    value="A"
-                  />A. {{ item.FirstOptionA }}
-                </label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input
-                    type="radio"
-                    class="form-check-input"
-                    :name="item.GroupQuestionID + 'first'"
-                    value="B"
-                  />B. {{ item.FirstOptionB }}
-                </label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input
-                    type="radio"
-                    class="form-check-input"
-                    :name="item.GroupQuestionID + 'first'"
-                    value="C"
-                  />C. {{ item.FirstOptionC }}
-                </label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input
-                    type="radio"
-                    class="form-check-input"
-                    :name="item.GroupQuestionID + 'first'"
-                    value="D"
-                  />D. {{ item.FirstOptionD }}
-                </label>
-              </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  :name="item.GroupQuestionID + 'first'"
+                  value="A"
+                />A. {{ item.FirstOptionA }}
+              </label>
             </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  :name="item.GroupQuestionID + 'first'"
+                  value="B"
+                />B. {{ item.FirstOptionB }}
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  :name="item.GroupQuestionID + 'first'"
+                  value="C"
+                />C. {{ item.FirstOptionC }}
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  :name="item.GroupQuestionID + 'first'"
+                  value="D"
+                />D. {{ item.FirstOptionD }}
+              </label>
+            </div>
+          </div>
         </div>
         <div class="second-question">
-          <label for=""><b>{{item.StartNumber + 1}}. {{item.SecondQuestion}}</b></label>
+          <label for=""
+            ><b>{{ item.StartNumber + 1 }}. {{ item.SecondQuestion }}</b></label
+          >
           <div class="option-area">
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input
-                    type="radio"
-                    class="form-check-input"
-                    :name="item.GroupQuestionID + 'second'"
-                    value="A"
-                  />A. {{ item.SecondOptionA }}
-                </label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input
-                    type="radio"
-                    class="form-check-input"
-                    :name="item.GroupQuestionID + 'second'"
-                    value="B"
-                  />B. {{ item.SecondOptionB }}
-                </label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input
-                    type="radio"
-                    class="form-check-input"
-                    :name="item.GroupQuestionID + 'second'"
-                    value="C"
-                  />C. {{ item.SecondOptionC }}
-                </label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input
-                    type="radio"
-                    class="form-check-input"
-                    :name="item.GroupQuestionID + 'second'"
-                    value="D"
-                  />D. {{ item.SecondOptionD }}
-                </label>
-              </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  :name="item.GroupQuestionID + 'second'"
+                  value="A"
+                />A. {{ item.SecondOptionA }}
+              </label>
             </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  :name="item.GroupQuestionID + 'second'"
+                  value="B"
+                />B. {{ item.SecondOptionB }}
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  :name="item.GroupQuestionID + 'second'"
+                  value="C"
+                />C. {{ item.SecondOptionC }}
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  :name="item.GroupQuestionID + 'second'"
+                  value="D"
+                />D. {{ item.SecondOptionD }}
+              </label>
+            </div>
+          </div>
         </div>
         <div class="third-question" v-if="calculateRangeQuestion(item) >= 3">
-          <label for=""><b>{{item.StartNumber + 2}}. {{item.ThirdQuestion}}</b></label>
+          <label for=""
+            ><b>{{ item.StartNumber + 2 }}. {{ item.ThirdQuestion }}</b></label
+          >
           <div class="option-area">
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input
-                    type="radio"
-                    class="form-check-input"
-                    :name="item.GroupQuestionID + 'third'"
-                    value="A"
-                  />A. {{ item.ThirdOptionA }}
-                </label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input
-                    type="radio"
-                    class="form-check-input"
-                    :name="item.GroupQuestionID + 'third'"
-                    value="B"
-                  />B. {{ item.ThirdOptionB }}
-                </label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input
-                    type="radio"
-                    class="form-check-input"
-                    :name="item.GroupQuestionID + 'third'"
-                    value="C"
-                  />C. {{ item.ThirdOptionC }}
-                </label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input
-                    type="radio"
-                    class="form-check-input"
-                    :name="item.GroupQuestionID + 'third'"
-                    value="D"
-                  />D. {{ item.ThirdOptionD }}
-                </label>
-              </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  :name="item.GroupQuestionID + 'third'"
+                  value="A"
+                />A. {{ item.ThirdOptionA }}
+              </label>
             </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  :name="item.GroupQuestionID + 'third'"
+                  value="B"
+                />B. {{ item.ThirdOptionB }}
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  :name="item.GroupQuestionID + 'third'"
+                  value="C"
+                />C. {{ item.ThirdOptionC }}
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  :name="item.GroupQuestionID + 'third'"
+                  value="D"
+                />D. {{ item.ThirdOptionD }}
+              </label>
+            </div>
+          </div>
         </div>
         <div class="fourth-question" v-if="calculateRangeQuestion(item) >= 4">
-          <label for=""><b>{{item.StartNumber + 3}}. {{item.FourthQuestion}}</b></label>
+          <label for=""
+            ><b>{{ item.StartNumber + 3 }}. {{ item.FourthQuestion }}</b></label
+          >
           <div class="option-area">
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input
-                    type="radio"
-                    class="form-check-input"
-                    :name="item.GroupQuestionID + 'fourth'"
-                    value="A"
-                  />A. {{ item.FourthOptionA }}
-                </label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input
-                    type="radio"
-                    class="form-check-input"
-                    :name="item.GroupQuestionID + 'fourth'"
-                    value="B"
-                  />B. {{ item.FourthOptionB }}
-                </label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input
-                    type="radio"
-                    class="form-check-input"
-                    :name="item.GroupQuestionID + 'fourth'"
-                    value="C"
-                  />C. {{ item.FourthOptionC }}
-                </label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input
-                    type="radio"
-                    class="form-check-input"
-                    :name="item.GroupQuestionID + 'fourth'"
-                    value="D"
-                  />D. {{ item.FourthOptionD }}
-                </label>
-              </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  :name="item.GroupQuestionID + 'fourth'"
+                  value="A"
+                />A. {{ item.FourthOptionA }}
+              </label>
             </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  :name="item.GroupQuestionID + 'fourth'"
+                  value="B"
+                />B. {{ item.FourthOptionB }}
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  :name="item.GroupQuestionID + 'fourth'"
+                  value="C"
+                />C. {{ item.FourthOptionC }}
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  :name="item.GroupQuestionID + 'fourth'"
+                  value="D"
+                />D. {{ item.FourthOptionD }}
+              </label>
+            </div>
+          </div>
         </div>
         <div class="fifth-question" v-if="calculateRangeQuestion(item) >= 5">
-          <label for=""><b>{{item.StartNumber + 4}}. {{item.FifthQuestion}}</b></label>
+          <label for=""
+            ><b>{{ item.StartNumber + 4 }}. {{ item.FifthQuestion }}</b></label
+          >
           <div class="option-area">
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input
-                    type="radio"
-                    class="form-check-input"
-                    :name="item.GroupQuestionID + 'fifth'"
-                    value="A"
-                  />A. {{ item.FifthOptionA }}
-                </label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input
-                    type="radio"
-                    class="form-check-input"
-                    :name="item.GroupQuestionID + 'fifth'"
-                    value="B"
-                  />B. {{ item.FifthOptionB }}
-                </label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input
-                    type="radio"
-                    class="form-check-input"
-                    :name="item.GroupQuestionID + 'fifth'"
-                    value="C"
-                  />C. {{ item.FifthOptionC }}
-                </label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label">
-                  <input
-                    type="radio"
-                    class="form-check-input"
-                    :name="item.GroupQuestionID + 'fifth'"
-                    value="D"
-                  />D. {{ item.FifthOptionD }}
-                </label>
-              </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  :name="item.GroupQuestionID + 'fifth'"
+                  value="A"
+                />A. {{ item.FifthOptionA }}
+              </label>
             </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  :name="item.GroupQuestionID + 'fifth'"
+                  value="B"
+                />B. {{ item.FifthOptionB }}
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  :name="item.GroupQuestionID + 'fifth'"
+                  value="C"
+                />C. {{ item.FifthOptionC }}
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  :name="item.GroupQuestionID + 'fifth'"
+                  value="D"
+                />D. {{ item.FifthOptionD }}
+              </label>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -267,119 +282,155 @@ export default {
       try {
         var me = this;
         this.isFinished = true;
-        var indexFirst = 0, indexSecond = 0, indexThird = 0, indexFourth = 0 , indexFifth = 0;
-        $.each($("#part7-detail .group-question .first-question .option-area"), function () {
-          var vm = this;
-          $.each($(vm).find("input"), function () {
-            var input = this;
-            if ($(input).val() == me.getPart7Data[indexFirst]?.FirstAnswer) {
-              me.$nextTick(function () {
-                $(input).parent().addClass("correct");
-              });
-            } else {
-              if ($(input).is(":checked")) {
+        var indexFirst = 0,
+          indexSecond = 0,
+          indexThird = 0,
+          indexFourth = 0,
+          indexFifth = 0;
+        $.each(
+          $("#part7-detail .group-question .first-question .option-area"),
+          function () {
+            var vm = this;
+            $.each($(vm).find("input"), function () {
+              // Disable tất cả input câu hỏi thứ 1
+              $(this).prop("disabled", true);
+              var input = this;
+              if ($(input).val() == me.getPart7Data[indexFirst]?.FirstAnswer) {
                 me.$nextTick(function () {
-                  $(input).parent().addClass("wrong");
+                  $(input).parent().addClass("correct");
                 });
+              } else {
+                if ($(input).is(":checked")) {
+                  me.$nextTick(function () {
+                    $(input).parent().addClass("wrong");
+                  });
+                }
               }
-            }
-          });
-          indexFirst++;
-        });
+            });
+            indexFirst++;
+          }
+        );
 
-        $.each($("#part7-detail .group-question .second-question .option-area"), function () {
-          var vm = this;
-          $.each($(vm).find("input"), function () {
-            var input = this;
-            if ($(input).val() == me.getPart7Data[indexSecond]?.SecondAnswer) {
-              me.$nextTick(function () {
-                $(input).parent().addClass("correct");
-              });
-            } else {
-              if ($(input).is(":checked")) {
+        $.each(
+          $("#part7-detail .group-question .second-question .option-area"),
+          function () {
+            var vm = this;
+            $.each($(vm).find("input"), function () {
+              // Disable tất cả input câu hỏi thứ 2
+              $(this).prop("disabled", true);
+              var input = this;
+              if (
+                $(input).val() == me.getPart7Data[indexSecond]?.SecondAnswer
+              ) {
                 me.$nextTick(function () {
-                  $(input).parent().addClass("wrong");
+                  $(input).parent().addClass("correct");
                 });
+              } else {
+                if ($(input).is(":checked")) {
+                  me.$nextTick(function () {
+                    $(input).parent().addClass("wrong");
+                  });
+                }
               }
-            }
-          });
-          indexSecond++;
-        });
+            });
+            indexSecond++;
+          }
+        );
 
-        $.each($("#part7-detail .group-question .third-question .option-area"), function () {
-          var vm = this;
-          $.each($(vm).find("input"), function () {
-            var input = this;
-            if ($(input).val() == me.getPart7Data[indexThird]?.ThirdAnswer) {
-              me.$nextTick(function () {
-                $(input).parent().addClass("correct");
-              });
-            } else {
-              if ($(input).is(":checked")) {
+        $.each(
+          $("#part7-detail .group-question .third-question .option-area"),
+          function () {
+            var vm = this;
+            $.each($(vm).find("input"), function () {
+              // Disable tất cả input câu hỏi thứ 3
+              $(this).prop("disabled", true);
+              var input = this;
+              if ($(input).val() == me.getPart7Data[indexThird]?.ThirdAnswer) {
                 me.$nextTick(function () {
-                  $(input).parent().addClass("wrong");
+                  $(input).parent().addClass("correct");
                 });
+              } else {
+                if ($(input).is(":checked")) {
+                  me.$nextTick(function () {
+                    $(input).parent().addClass("wrong");
+                  });
+                }
               }
-            }
-          });
-          indexThird++;
-        });
+            });
+            indexThird++;
+          }
+        );
 
-        $.each($("#part7-detail .group-question .fourth-question .option-area"), function () {
-          var vm = this;
-          $.each($(vm).find("input"), function () {
-            var input = this;
-            if ($(input).val() == me.getPart7Data[indexFourth]?.FirstAnswer) {
-              me.$nextTick(function () {
-                $(input).parent().addClass("correct");
-              });
-            } else {
-              if ($(input).is(":checked")) {
+        $.each(
+          $("#part7-detail .group-question .fourth-question .option-area"),
+          function () {
+            var vm = this;
+            $.each($(vm).find("input"), function () {
+              // Disable tất cả input câu hỏi thứ 4
+              $(this).prop("disabled", true);
+              var input = this;
+              if ($(input).val() == me.getPart7Data[indexFourth]?.FirstAnswer) {
                 me.$nextTick(function () {
-                  $(input).parent().addClass("wrong");
+                  $(input).parent().addClass("correct");
                 });
+              } else {
+                if ($(input).is(":checked")) {
+                  me.$nextTick(function () {
+                    $(input).parent().addClass("wrong");
+                  });
+                }
               }
-            }
-          });
-          indexFourth++;
-        });
-      
-        $.each($("#part7-detail .group-question .fifth-question .option-area"), function () {
-          var vm = this;
-          $.each($(vm).find("input"), function () {
-            var input = this;
-            if ($(input).val() == me.getPart7Data[indexFifth]?.FirstAnswer) {
-              me.$nextTick(function () {
-                $(input).parent().addClass("correct");
-              });
-            } else {
-              if ($(input).is(":checked")) {
+            });
+            indexFourth++;
+          }
+        );
+
+        $.each(
+          $("#part7-detail .group-question .fifth-question .option-area"),
+          function () {
+            var vm = this;
+            $.each($(vm).find("input"), function () {
+              // Disable tất cả input câu hỏi thứ 5
+              $(this).prop("disabled", true);
+              var input = this;
+              if ($(input).val() == me.getPart7Data[indexFifth]?.FirstAnswer) {
                 me.$nextTick(function () {
-                  $(input).parent().addClass("wrong");
+                  $(input).parent().addClass("correct");
                 });
+              } else {
+                if ($(input).is(":checked")) {
+                  me.$nextTick(function () {
+                    $(input).parent().addClass("wrong");
+                  });
+                }
               }
-            }
-          });
-          indexFifth++;
-        });
+            });
+            indexFifth++;
+          }
+        );
       } catch (e) {
         console.log(e);
       }
     },
     // Hiển thị phạm vi câu hỏi
-    showRangeQuestion(item){
+    showRangeQuestion(item) {
       try {
         var range = this.calculateRangeQuestion(item);
         return `${item.StartNumber} - ${item.StartNumber + range - 1}`;
-      } catch(e){
+      } catch (e) {
         console.log(e);
       }
     },
     // Tính phạm vi câu hỏi
-    calculateRangeQuestion(item){
-      try{
-        return 2 + (typeof(item.ThirdQuestion) != "object" ? 1 : 0) + (typeof(item.FourthQuestion) != "object" ? 1 : 0) + (typeof(item.FifthQuestion) != "object" ? 1 : 0);
-      } catch(e){
+    calculateRangeQuestion(item) {
+      try {
+        return (
+          2 +
+          (typeof item.ThirdQuestion != "object" ? 1 : 0) +
+          (typeof item.FourthQuestion != "object" ? 1 : 0) +
+          (typeof item.FifthQuestion != "object" ? 1 : 0)
+        );
+      } catch (e) {
         console.log(e);
       }
     },
@@ -432,7 +483,7 @@ export default {
   },
   computed: {
     ...mapGetters("toeicexam", ["getPart7Data"]),
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>

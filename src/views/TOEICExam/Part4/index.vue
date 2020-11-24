@@ -205,64 +205,82 @@ export default {
       try {
         var me = this;
         this.isFinished = true;
-        var indexFirst = 0, indexSecond = 0, indexThird = 0;
-        $.each($("#part4-detail .group-question .first-question .option-area"), function () {
-          var vm = this;
-          $.each($(vm).find("input"), function () {
-            var input = this;
-            if ($(input).val() == me.getPart4Data[indexFirst]?.FirstAnswer) {
-              me.$nextTick(function () {
-                $(input).parent().addClass("correct");
-              });
-            } else {
-              if ($(input).is(":checked")) {
+        var indexFirst = 0,
+          indexSecond = 0,
+          indexThird = 0;
+        $.each(
+          $("#part4-detail .group-question .first-question .option-area"),
+          function () {
+            var vm = this;
+            $.each($(vm).find("input"), function () {
+              // Disable tất cả input câu hỏi thứ 1
+              $(this).prop("disabled", true);
+              var input = this;
+              if ($(input).val() == me.getPart4Data[indexFirst]?.FirstAnswer) {
                 me.$nextTick(function () {
-                  $(input).parent().addClass("wrong");
+                  $(input).parent().addClass("correct");
                 });
+              } else {
+                if ($(input).is(":checked")) {
+                  me.$nextTick(function () {
+                    $(input).parent().addClass("wrong");
+                  });
+                }
               }
-            }
-          });
-          indexFirst++;
-        });
+            });
+            indexFirst++;
+          }
+        );
 
-        $.each($("#part4-detail .group-question .second-question .option-area"), function () {
-          var vm = this;
-          $.each($(vm).find("input"), function () {
-            var input = this;
-            if ($(input).val() == me.getPart4Data[indexSecond]?.SecondAnswer) {
-              me.$nextTick(function () {
-                $(input).parent().addClass("correct");
-              });
-            } else {
-              if ($(input).is(":checked")) {
+        $.each(
+          $("#part4-detail .group-question .second-question .option-area"),
+          function () {
+            var vm = this;
+            $.each($(vm).find("input"), function () {
+              // Disable tất cả input câu hỏi thứ 2
+              $(this).prop("disabled", true);
+              var input = this;
+              if (
+                $(input).val() == me.getPart4Data[indexSecond]?.SecondAnswer
+              ) {
                 me.$nextTick(function () {
-                  $(input).parent().addClass("wrong");
+                  $(input).parent().addClass("correct");
                 });
+              } else {
+                if ($(input).is(":checked")) {
+                  me.$nextTick(function () {
+                    $(input).parent().addClass("wrong");
+                  });
+                }
               }
-            }
-          });
-          indexSecond++;
-        });
+            });
+            indexSecond++;
+          }
+        );
 
-        $.each($("#part4-detail .group-question .third-question .option-area"), function () {
-          var vm = this;
-          $.each($(vm).find("input"), function () {
-            var input = this;
-            if ($(input).val() == me.getPart4Data[indexThird]?.ThirdAnswer) {
-              me.$nextTick(function () {
-                $(input).parent().addClass("correct");
-              });
-            } else {
-              if ($(input).is(":checked")) {
+        $.each(
+          $("#part4-detail .group-question .third-question .option-area"),
+          function () {
+            var vm = this;
+            $.each($(vm).find("input"), function () {
+              // Disable tất cả input câu hỏi thứ 3
+              $(this).prop("disabled", true);
+              var input = this;
+              if ($(input).val() == me.getPart4Data[indexThird]?.ThirdAnswer) {
                 me.$nextTick(function () {
-                  $(input).parent().addClass("wrong");
+                  $(input).parent().addClass("correct");
                 });
+              } else {
+                if ($(input).is(":checked")) {
+                  me.$nextTick(function () {
+                    $(input).parent().addClass("wrong");
+                  });
+                }
               }
-            }
-          });
-          indexThird++;
-        });
-      
+            });
+            indexThird++;
+          }
+        );
       } catch (e) {
         console.log(e);
       }
@@ -315,7 +333,7 @@ export default {
   },
   computed: {
     ...mapGetters("toeicexam", ["getPart4Data"]),
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>

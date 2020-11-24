@@ -92,6 +92,8 @@ export default {
         $.each($("#part5-detail .option-area"), function () {
           var vm = this;
           $.each($(vm).find("input"), function () {
+            // Disable tất cả input
+            $(this).prop("disabled", true);
             var input = this;
             if ($(this).val() == me.getPart5Data[index]?.Answer) {
               me.$nextTick(function () {
@@ -159,7 +161,7 @@ export default {
   },
   computed: {
     ...mapGetters("toeicexam", ["getPart5Data"]),
-  }
+  },
 };
 </script>
 <style lang="scss" scoped>
