@@ -1,7 +1,7 @@
 <template>
   <div id="toeic-exam">
     <div class="header"></div>
-    <div class="main-content mb-4">
+    <div class="main-content pb-4">
       <div class="intro w-100 p-4">
         <h2>Thi TOEIC trực tuyến miễn phí</h2>
         <p class="p-2 wrap text-left">
@@ -152,6 +152,7 @@ export default {
   //   background-size: 300px 100px;
   // }
   .main-content {
+    min-height: calc(100vh - 200px);
     .list-exam {
       .col-6 {
         border: 1px solid gray;
@@ -176,7 +177,7 @@ export default {
   }
   #footer {
     height: 200px;
-    width: 100vw;
+    width: 100%;;
     background-color: #4682b4;
     position: relative;
     bottom: 0;
