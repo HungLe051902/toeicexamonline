@@ -8,7 +8,7 @@
         <div class="item">TOEICExamOnline.pg</div>
         <div class="item">{{ countdown }}</div>
         <div class="item">☰</div>
-        <div class="item">&#x2715;</div>
+        <div v-on:click="showWarningBeforeFinishExam" class="item">&#x2715;</div>
       </div>
     </div>
     <div class="exam-content">
@@ -18,10 +18,27 @@
         </div>
       </div>
     </div>
+    <Dialog
+      title="Thông báo"
+      :dialogVisible="isShowFinishDialog"
+      @closeDialog="isShowFinishDialog = false"
+    >
+      <img src="@/assets/icons/warning.png" class="wh-50p" alt="">
+      <span>Bạn có muốn kết thúc và không ghi nhận kết quá bài thi?</span>
+      <template slot="dialog-footer">
+        <button v-on:click="isShowFinishDialog = false" type="submit" class="btn btn-light">
+          Không
+        </button>
+        <button v-on:click="endExam" type="submit" class="btn h-btn-primary ml-3">
+          Có
+        </button>
+      </template>
+    </Dialog>
   </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
+import Dialog from "@/components/Dialog.vue";
 export default {
   created() {
     this.countDownTime();
@@ -34,9 +51,31 @@ export default {
   data() {
     return {
       countdown: "02:00:00",
+      isShowFinishDialog: false,
     };
   },
+  components: {
+    Dialog,
+  },
   methods: {
+    endExam(){
+      try {
+        this.isShowFinishDialog = false;
+        this.$router.push('/toeicexam');
+      } catch(e){
+        console.log(e);
+      }
+    },
+    // Hàm hiển thị cảnh báo khi thoát bài thi
+    showWarningBeforeFinishExam() {
+      try {
+        if (localStorage.getItem("timeEnd")) {
+          this.isShowFinishDialog = true;
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    },
     // Hàm đếm ngược thời gian làm bài
     countDownTime() {
       try {
@@ -143,7 +182,7 @@ export default {
     width: 100%;
     overflow: auto;
     padding: 16px;
-    .content{
+    .content {
       width: 600px;
       margin: auto;
     }

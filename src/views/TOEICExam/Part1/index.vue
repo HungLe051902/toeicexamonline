@@ -72,6 +72,8 @@ export default {
         $.each($("#part1-detail .option-area"), function () {
           var vm = this;
           $.each($(vm).find("input"), function () {
+            // Disable tất cả input
+            
             var input = this;
             if ($(this).val() == me.getPart1Data[index]?.Answer) {
               me.$nextTick(function () {
