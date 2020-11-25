@@ -93,7 +93,7 @@
           Không
         </button>
         <button
-          v-on:click="endExam"
+          v-on:click="submitExam"
           type="submit"
           class="btn h-btn-primary ml-3"
         >
@@ -175,7 +175,250 @@ export default {
   methods: {
     showConfirmBeforeSubmit() {
       try {
+        if (!localStorage.getItem("timeEnd")) return;
         this.isShowConfirmBeforeSubmit = true;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    /**
+    Tính điểm part1
+     */
+    async calculatePart1Score() {
+      try {
+        var part1Score = 0;
+        var part1Answer = JSON.parse(localStorage.getItem("part1Answer"));
+        if (part1Answer) {
+          if (this.getPart1Data.length <= 0) {
+            await this.$store.dispatch("toeicexam/getQuestionByPart", {
+              part: "PART_1",
+              year: this.selectedExam?.Year,
+              examNo: this.selectedExam?.ExamCode,
+            });
+          }
+          for (let i = 0; i < this.getPart1Data.length; i++) {
+            if (part1Answer[i] && this.getPart1Data[i].Answer == part1Answer[i])
+              part1Score++;
+          }
+        }
+        return part1Score;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    /**
+    Tính điểm part2
+     */
+    async calculatePart2Score() {
+      try {
+        var part2Score = 0;
+        var part2Answer = JSON.parse(localStorage.getItem("part2Answer"));
+        if (part2Answer) {
+          if (this.getPart2Data.length <= 0) {
+            await this.$store.dispatch("toeicexam/getQuestionByPart", {
+              part: "PART_2",
+              year: this.selectedExam?.Year,
+              examNo: this.selectedExam?.ExamCode,
+            });
+          }
+          for (let i = 0; i < this.getPart2Data.length; i++) {
+            if (part2Answer[i] && this.getPart2Data[i].Answer == part2Answer[i])
+              part2Score++;
+          }
+        }
+        return part2Score;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    /**
+    Tính điểm part3
+     */
+    async calculatePart3Score() {
+      try {
+        var part3Score = 0;
+        var part3Answer = JSON.parse(localStorage.getItem("part3Answer"));
+        if (part3Answer) {
+          if (this.getPart3Data.length <= 0) {
+            await this.$store.dispatch("toeicexam/getQuestionByPart", {
+              part: "PART_3",
+              year: this.selectedExam?.Year,
+              examNo: this.selectedExam?.ExamCode,
+            });
+          }
+          for (let i = 0; i < this.getPart3Data.length; i++) {
+            if (
+              part3Answer[i].FirstAnswer &&
+              this.getPart3Data[i].FirstAnswer == part3Answer[i].FirstAnswer
+            )
+              part3Score++;
+            if (
+              part3Answer[i].SecondAnswer &&
+              this.getPart3Data[i].SecondAnswer == part3Answer[i].SecondAnswer
+            )
+              part3Score++;
+            if (
+              part3Answer[i].ThirdAnswer &&
+              this.getPart3Data[i].ThirdAnswer == part3Answer[i].ThirdAnswer
+            )
+              part3Score++;
+          }
+        }
+        return part3Score;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    /**
+    Tính điểm part4
+     */
+    async calculatePart4Score() {
+      try {
+        var part4Score = 0;
+        var part4Answer = JSON.parse(localStorage.getItem("part4Answer"));
+        if (part4Answer) {
+          if (this.getPart4Data.length <= 0) {
+            await this.$store.dispatch("toeicexam/getQuestionByPart", {
+              part: "PART_4",
+              year: this.selectedExam?.Year,
+              examNo: this.selectedExam?.ExamCode,
+            });
+          }
+          for (let i = 0; i < this.getPart4Data.length; i++) {
+            if (
+              part4Answer[i].FirstAnswer &&
+              this.getPart4Data[i].FirstAnswer == part4Answer[i].FirstAnswer
+            )
+              part4Score++;
+            if (
+              part4Answer[i].SecondAnswer &&
+              this.getPart4Data[i].SecondAnswer == part4Answer[i].SecondAnswer
+            )
+              part4Score++;
+            if (
+              part4Answer[i].ThirdAnswer &&
+              this.getPart4Data[i].ThirdAnswer == part4Answer[i].ThirdAnswer
+            )
+              part4Score++;
+          }
+        }
+        return part4Score;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    /**
+    Tính điểm part5
+     */
+    async calculatePart5Score() {
+      try {
+        var part5Score = 0;
+        var part5Answer = JSON.parse(localStorage.getItem("part5Answer"));
+        if (part5Answer) {
+          if (this.getPart5Data.length <= 0) {
+            await this.$store.dispatch("toeicexam/getQuestionByPart", {
+              part: "PART_5",
+              year: this.selectedExam?.Year,
+              examNo: this.selectedExam?.ExamCode,
+            });
+          }
+          for (let i = 0; i < this.getPart5Data.length; i++) {
+            if (part5Answer[i] && this.getPart5Data[i] == part5Answer[i])
+              part5Score++;
+          }
+        }
+        return part5Score;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    /**
+    Tính điểm part6
+     */
+    async calculatePart6Score() {
+      try {
+        let part6Score = 0;
+        let part6Answer = JSON.parse(localStorage.getItem("part6Answer"));
+        if (part6Answer) {
+          if (this.getPart6Data.length <= 0) {
+            await this.$store.dispatch("toeicexam/getQuestionByPart", {
+              part: "PART_6",
+              year: this.selectedExam?.Year,
+              examNo: this.selectedExam?.ExamCode,
+            });
+          }
+          for (let i = 0; i < this.getPart6Data.length; i++) {
+            if (
+              part6Answer[i].FirstAnswer &&
+              this.getPart6Data[i].FirstAnswer == part6Answer[i].FirstAnswer
+            )
+              part6Score++;
+            if (
+              part6Answer[i].SecondAnswer &&
+              this.getPart6Data[i].SecondAnswer == part6Answer[i].SecondAnswer
+            )
+              part6Score++;
+            if (
+              part6Answer[i].ThirdAnswer &&
+              this.getPart6Data[i].ThirdAnswer == part6Answer[i].ThirdAnswer
+            )
+              part6Score++;
+            if (
+              part6Answer[i].FourthAnswer &&
+              this.getPart6Data[i].FourthAnswer == part6Answer[i].FourthAnswer
+            )
+              part6Score++;
+          }
+        }
+        return part6Score;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    /**
+    Tính điểm part7
+     */
+    async calculatePart7Score() {
+      try {
+        let part7Score = 0;
+        let part7Answer = JSON.parse(localStorage.getItem("part7Answer"));
+        if (part7Answer) {
+          if (this.getPart7Data.length <= 0) {
+            await this.$store.dispatch("toeicexam/getQuestionByPart", {
+              part: "PART_7",
+              year: this.selectedExam?.Year,
+              examNo: this.selectedExam?.ExamCode,
+            });
+          }
+          for (let i = 0; i < this.getPart7Data.length; i++) {
+            if (
+              part7Answer[i].FirstAnswer &&
+              this.getPart7Data[i].FirstAnswer == part7Answer[i].FirstAnswer
+            )
+              part7Score++;
+            if (
+              part7Answer[i].SecondAnswer &&
+              this.getPart7Data[i].SecondAnswer == part7Answer[i].SecondAnswer
+            )
+              part7Score++;
+            if (
+              part7Answer[i].ThirdAnswer &&
+              this.getPart7Data[i].ThirdAnswer == part7Answer[i].ThirdAnswer
+            )
+              part7Score++;
+            if (
+              part7Answer[i].FourthAnswer &&
+              this.getPart7Data[i].FourthAnswer == part7Answer[i].FourthAnswer
+            )
+              part7Score++;
+            if (
+              part7Answer[i].FifthAnswer &&
+              this.getPart7Data[i].FifthAnswer == part7Answer[i].FifthAnswer
+            )
+              part7Score++;
+          }
+        }
+        return part7Score;
       } catch (e) {
         console.log(e);
       }
@@ -183,11 +426,50 @@ export default {
     /**
     Nộp bài
      */
-    submitExam() {
+    async submitExam() {
       try {
-        if (localStorage.getItem("timeEnd")) {
-          console.log(123);
-        }
+        this.showLoading();
+        this.isShowConfirmBeforeSubmit = false;
+        let totalListening = 0,
+          totalReading = 0,
+          totalScore = 0;
+        // Tính điểm listening
+        let part1Score = await this.calculatePart1Score();
+        let part2Score = await this.calculatePart2Score();
+        let part3Score = await this.calculatePart3Score();
+        let part4Score = await this.calculatePart4Score();
+        // Tính điểm reading
+        let part5Score = await this.calculatePart5Score();
+        let part6Score = await this.calculatePart6Score();
+        let part7Score = await this.calculatePart7Score();
+
+        //Lưu kết quả vào localStorage
+        let result = {
+          part1Score: part1Score,
+          part2Score: part2Score,
+          part3Score: part3Score,
+          part4Score: part4Score,
+          part5Score: part5Score,
+          part6Score: part6Score,
+          part7Score: part7Score,
+        };
+        localStorage.setItem('result', JSON.stringify(result));
+
+        // Hiển thị kết quả
+        console.log(
+          part1Score,
+          part2Score,
+          part3Score,
+          part4Score,
+          part5Score,
+          part6Score,
+          part7Score,
+          totalListening,
+          totalReading,
+          totalScore
+        );
+        this.hideLoading();
+        this.$router.push("/result");
       } catch (e) {
         console.log(e);
       }
@@ -291,7 +573,16 @@ export default {
     // this.countdown = localStorage.getItem("timeEnd");
   },
   computed: {
-    ...mapGetters("toeicexam", ["getHeaderTitle"]),
+    ...mapGetters("toeicexam", [
+      "getHeaderTitle",
+      "getPart1Data",
+      "getPart2Data",
+      "getPart3Data",
+      "getPart4Data",
+      "getPart5Data",
+      "getPart6Data",
+      "getPart7Data",
+    ]),
     isStarted() {
       return localStorage.getItem("timeEnd");
     },

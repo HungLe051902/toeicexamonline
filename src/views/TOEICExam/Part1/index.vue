@@ -66,6 +66,19 @@ export default {
     var vm = this;
     // Binding các câu trả lời đã chọn cũ
     vm.bindingAnswer();
+
+    // var part1Answer = localStorage.getItem('part1Answer') ? JSON.parse(localStorage.getItem('part1Answer')) : [];
+    // Tự động lưu câu trả lời
+    // $.each($("#part1-detail .option-area"), function (index) {
+    //   $(this).find('input').click(function(){
+    //     part1Answer[index] = $(this).val();
+    //     alert($(this).val());
+    //     localStorage.setItem('part1Answer', JSON.stringify(part1Answer));
+    //   });
+    // });
+    // $('.option-area').click(function(){
+    //   alert(1);
+    // })
   },
   methods: {
     // Hàm hiển thị lại câu trả lời của người dùng

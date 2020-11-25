@@ -23,7 +23,7 @@ export default {
 <style lang="scss">
 @import 'assets/css/base.scss';
 @import 'assets/css/font.scss';
-
+@import 'assets/css/custom.scss';
 
 #app-main-content{
   position: relative;
