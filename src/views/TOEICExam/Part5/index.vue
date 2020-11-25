@@ -82,7 +82,34 @@ export default {
       isFinished: false,
     };
   },
+  mounted() {
+    // Binding lại các câu trả lời
+    this.bindingAnswer();
+  },
   methods: {
+    // Hàm hiển thị lại câu trả lời của người dùng
+    bindingAnswer() {
+      try {
+        if (localStorage.getItem("part5Answer")) {
+          var i = 0;
+          var part5Answer = JSON.parse(localStorage.getItem("part5Answer"));
+          this.$nextTick(function () {
+            $.each($("#part5-detail .option-area"), function () {
+              if (part5Answer[i]) {
+                $.each($(this).find("input"), function () {
+                  if ($(this).val() == part5Answer[i]) {
+                    $(this).prop("checked", true);
+                  }
+                });
+              }
+              i++;
+            });
+          });
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    },
     // test
     finish() {
       try {
@@ -113,9 +140,29 @@ export default {
         console.log(e);
       }
     },
+    /**
+      Lưu các câu trả lời vào local storage
+     */
+    saveAnswerToLocalStorage() {
+      try {
+        var part5Answer = [];
+        $.each($("#part5-detail .option-area"), function () {
+          if ($(this).find("input:checked").length > 0) {
+            part5Answer.push($(this).find("input:checked").val());
+          } else {
+            part5Answer.push(null);
+          }
+        });
+        localStorage.setItem("part5Answer", JSON.stringify(part5Answer));
+      } catch (e) {
+        console.log(e);
+      }
+    },
     // Chuyển sang làm part6
     nextToPart6() {
       try {
+        // Lưu các câu trả lời vào localStorage
+        this.saveAnswerToLocalStorage();
         this.$router.push(
           `/toeicexam/${this.selectedExam?.ExamID}/part6-instruction`
         );
@@ -138,22 +185,10 @@ export default {
         this.isShowLoading = false;
         if (!res) {
           this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
+          return;
         }
-        // this.isShowLoading = true;
-        // var res = await ToeicExamService.getQuestionPart5ByYearAndExamNo(
-        //   this.selectedExam?.Year,
-        //   this.selectedExam?.ExamCode
-        // );
-        // this.isShowLoading = false;
-        // if (res) {
-        //   if (res.data.APPCode == 200) {
-        //     this.part5Data = res.data.Data;
-        //   } else {
-        //     this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
-        //   }
-        // } else {
-        //   this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
-        // }
+        // Binding lại các câu trả lời
+        this.bindingAnswer();
       } catch (e) {
         console.log(e);
       }

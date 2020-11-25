@@ -233,7 +233,69 @@ export default {
       isShowLoading: false,
     };
   },
+  mounted() {
+    // Binding các câu trả lời cũ
+    this.bindingAnswer();
+  },
   methods: {
+    /**
+    Hàm hiển thị lại câu trả lời của người dùng
+     */
+    bindingAnswer() {
+      try {
+        if (localStorage.getItem("part6Answer")) {
+          var i = 0;
+          var part6Answer = JSON.parse(localStorage.getItem("part6Answer"));
+          this.$nextTick(function () {
+            $.each($("#part6-detail .group-question"), function () {
+              if (part6Answer[i].FirstAnswer) {
+                $.each(
+                  $(this).find(".first-question .option-area").find("input"),
+                  function () {
+                    if ($(this).val() == part6Answer[i].FirstAnswer) {
+                      $(this).prop("checked", true);
+                    }
+                  }
+                );
+              }
+              if (part6Answer[i].SecondAnswer) {
+                $.each(
+                  $(this).find(".second-question .option-area").find("input"),
+                  function () {
+                    if ($(this).val() == part6Answer[i].SecondAnswer) {
+                      $(this).prop("checked", true);
+                    }
+                  }
+                );
+              }
+              if (part6Answer[i].ThirdAnswer) {
+                $.each(
+                  $(this).find(".third-question .option-area").find("input"),
+                  function () {
+                    if ($(this).val() == part6Answer[i].ThirdAnswer) {
+                      $(this).prop("checked", true);
+                    }
+                  }
+                );
+              }
+              if (part6Answer[i].FourthAnswer) {
+                $.each(
+                  $(this).find(".fourth-question .option-area").find("input"),
+                  function () {
+                    if ($(this).val() == part6Answer[i].FourthAnswer) {
+                      $(this).prop("checked", true);
+                    }
+                  }
+                );
+              }
+              i++;
+            });
+          });
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    },
     // test
     finish() {
       try {
@@ -344,9 +406,42 @@ export default {
         console.log(e);
       }
     },
+    /**
+      Lưu các câu trả lời vào local storage
+     */
+    saveAnswerToLocalStorage() {
+      try {
+        var part6Answer = [];
+        $.each($("#part6-detail .group-question"), function () {
+          var objAnswer = {};
+          objAnswer.FirstAnswer = $(this)
+            .find(".first-question")
+            .find("input:checked")
+            .val();
+          objAnswer.SecondAnswer = $(this)
+            .find(".second-question")
+            .find("input:checked")
+            .val();
+          objAnswer.ThirdAnswer = $(this)
+            .find(".third-question")
+            .find("input:checked")
+            .val();
+          objAnswer.FourthAnswer = $(this)
+            .find(".fourth-question")
+            .find("input:checked")
+            .val();
+          part6Answer.push(objAnswer);
+        });
+        localStorage.setItem("part6Answer", JSON.stringify(part6Answer));
+      } catch (e) {
+        console.log(e);
+      }
+    },
     // Chuyển sang làm part7
     nextToPart7() {
       try {
+        // Lưu các câu trả lời vào localStorage
+        this.saveAnswerToLocalStorage();
         this.$router.push(
           `/toeicexam/${this.selectedExam?.ExamID}/part7-instruction`
         );
@@ -369,22 +464,10 @@ export default {
         this.isShowLoading = false;
         if (!res) {
           this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
+          return;
         }
-        // this.isShowLoading = true;
-        // var res = await ToeicExamService.getQuestionPart6ByYearAndExamNo(
-        //   this.selectedExam?.Year,
-        //   this.selectedExam?.ExamCode
-        // );
-        // this.isShowLoading = false;
-        // if (res) {
-        //   if (res.data.APPCode == 200) {
-        //     this.part6Data = res.data.Data;
-        //   } else {
-        //     this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
-        //   }
-        // } else {
-        //   this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
-        // }
+        // Binding các câu trả lời cũ
+        this.bindingAnswer();
       } catch (e) {
         console.log(e);
       }
