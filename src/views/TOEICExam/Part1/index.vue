@@ -55,6 +55,8 @@ export default {
   },
   props: {},
   async created() {
+    // Lấy các lựa chọn đã được chọn
+
     // Đổi tiêu đề trên thanh header
     this.$store.commit("toeicexam/setHeaderTitle", titleResource.PART1_TITLE);
     // Lấy thông tin đề thi hiện tại
@@ -116,6 +118,8 @@ export default {
     // Chuyển sang phần 2
     nextToPart2() {
       try {
+        // Lưu câu trả lời hiện tại vào localStorage
+        console.log($("#part1-detail .option-area input:checked").length);
         this.$router.push(
           `/toeicexam/${this.selectedExam?.ExamID}/part2-instruction`
         );

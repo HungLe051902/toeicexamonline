@@ -7,11 +7,41 @@
       <div class="right-content">
         <div class="item">TOEICExamOnline.pg</div>
         <div class="item">{{ countdown }}</div>
-        <div class="item">☰</div>
-        <div v-on:click="showWarningBeforeFinishExam" class="item">&#x2715;</div>
+        <div v-on:click="toggleSideBar" class="item">☰</div>
+        <div v-on:click="showWarningBeforeFinishExam" class="item">
+          &#x2715;
+        </div>
       </div>
     </div>
     <div class="exam-content">
+      <div class="sidebar h-100">
+        <div class="listening-section">
+          <div class="title p-2 h-btn-primary">LISTENING TEST</div>
+          <div
+            class="part"
+            v-for="item in listeningPartData"
+            :key="item.partCode"
+            v-on:click="goToPart(item)"
+          >
+            <div>
+              <b>{{ item.partName }}</b>
+            </div>
+            <div>{{ item.description }}</div>
+          </div>
+        </div>
+        <div class="reading-section">
+          <div class="title p-2 h-btn-primary">READING TEST</div>
+          <div
+            class="part"
+            v-for="item in readingPartData"
+            :key="item.partCode"
+            v-on:click="goToPart(item)"
+          >
+            <div><b>{{item.partName}}</b></div>
+            <div>{{item.description}}</div>
+          </div>
+        </div>
+      </div>
       <div class="container-fluid">
         <div class="content h-100">
           <router-view></router-view>
@@ -23,13 +53,21 @@
       :dialogVisible="isShowFinishDialog"
       @closeDialog="isShowFinishDialog = false"
     >
-      <img src="@/assets/icons/warning.png" class="wh-50p" alt="">
+      <img src="@/assets/icons/warning.png" class="wh-50p" alt="" />
       <span>Bạn có muốn kết thúc và không ghi nhận kết quá bài thi?</span>
       <template slot="dialog-footer">
-        <button v-on:click="isShowFinishDialog = false" type="submit" class="btn btn-light">
+        <button
+          v-on:click="isShowFinishDialog = false"
+          type="submit"
+          class="btn btn-light"
+        >
           Không
         </button>
-        <button v-on:click="endExam" type="submit" class="btn h-btn-primary ml-3">
+        <button
+          v-on:click="endExam"
+          type="submit"
+          class="btn h-btn-primary ml-3"
+        >
           Có
         </button>
       </template>
@@ -39,9 +77,12 @@
 <script>
 import { mapGetters } from "vuex";
 import Dialog from "@/components/Dialog.vue";
+import $ from "jquery";
 export default {
   created() {
     this.countDownTime();
+    // Lấy thông tin đề thi hiện tại
+    this.selectedExam = JSON.parse(localStorage.getItem("selected-exam"));
   },
   watch: {
     isStarted(val) {
@@ -52,17 +93,78 @@ export default {
     return {
       countdown: "02:00:00",
       isShowFinishDialog: false,
+      selectedExam: null,
+      listeningPartData: [
+        {
+          partCode: 1,
+          partName: "Part I",
+          description: "Reading Comprehension",
+        },
+        {
+          partCode: 2,
+          partName: "Part II",
+          description: "Question - Response",
+        },
+        {
+          partCode: 3,
+          partName: "Part III",
+          description: "Short Conversations",
+        },
+        {
+          partCode: 4,
+          partName: "Part IV",
+          description: "Short Talks",
+        },
+      ],
+      readingPartData: [
+        {
+          partCode: 5,
+          partName: "Part V",
+          description: "Incomplete Sentences",
+        },
+        {
+          partCode: 6,
+          partName: "Part VI",
+          description: "Text Completion",
+        },
+        {
+          partCode: 7,
+          partName: "Part VII",
+          description: "Reading Comprehension",
+        },
+      ],
     };
   },
   components: {
     Dialog,
   },
   methods: {
-    endExam(){
+    // Hàm chuyển tới từng phần trong đề thi
+    goToPart(item){
+      try{
+        this.toggleSideBar();
+        this.$router.push(`/toeicexam/${this.selectedExam?.ExamID}/part${item.partCode}-detail`)
+      } catch(e){
+        console.log(e);
+      }
+    },
+    // Hàm mở/đóng sidebar
+    toggleSideBar() {
+      try {
+        if ($(".sidebar").css("display") == "none")
+          $(".sidebar").css("display", "block");
+        else $(".sidebar").css("display", "none");
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    // Kết thúc bài thi
+    endExam() {
       try {
         this.isShowFinishDialog = false;
-        this.$router.push('/toeicexam');
-      } catch(e){
+        this.$router.push("/toeicexam");
+        localStorage.clear();
+      } catch (e) {
         console.log(e);
       }
     },
@@ -71,6 +173,8 @@ export default {
       try {
         if (localStorage.getItem("timeEnd")) {
           this.isShowFinishDialog = true;
+        } else {
+          this.showNoti("info", "Bạn chưa bắt đầu làm bài!");
         }
       } catch (e) {
         console.log(e);
@@ -170,6 +274,30 @@ export default {
   }
 }
 .exam-content {
+  .sidebar {
+    width: 200px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 300px;
+    background-color: #ffffff;
+    border-left: 1px solid #1864a3;
+    display: none;
+    overflow-y: auto;
+    z-index: 100;
+    -webkit-animation: slide-down 0.3s ease-in-out;
+    -moz-animation: slide-down 0.3s ease-in-out;
+    .part {
+      border-bottom: 1px solid #1864a3;
+      padding: 16px;
+      padding-left: 24px;
+      &:hover {
+        cursor: pointer;
+        background-color: rgb(247, 241, 241);
+      }
+    }
+  }
+
   background-color: #f0f0f0;
   position: absolute;
   margin-top: 50px;
@@ -186,6 +314,27 @@ export default {
       width: 600px;
       margin: auto;
     }
+  }
+}
+
+@-webkit-keyframes slide-down {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+  }
+}
+@-moz-keyframes slide-down {
+  0% {
+    opacity: 0;
+    -moz-transform: translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    -moz-transform: translateX(0);
   }
 }
 </style>
