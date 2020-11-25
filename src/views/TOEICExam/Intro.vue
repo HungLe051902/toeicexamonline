@@ -5,7 +5,9 @@
         <b>{{ getHeaderTitle }}</b>
       </div>
       <div class="right-content">
-        <div class="item">TOEICExamOnline.pg</div>
+        <div v-on:click="showConfirmBeforeSubmit" class="item">
+          {{ completeExamText }}
+        </div>
         <div class="item">{{ countdown }}</div>
         <div v-on:click="toggleSideBar" class="item">☰</div>
         <div v-on:click="showWarningBeforeFinishExam" class="item">
@@ -37,8 +39,10 @@
             :key="item.partCode"
             v-on:click="goToPart(item)"
           >
-            <div><b>{{item.partName}}</b></div>
-            <div>{{item.description}}</div>
+            <div>
+              <b>{{ item.partName }}</b>
+            </div>
+            <div>{{ item.description }}</div>
           </div>
         </div>
       </div>
@@ -72,6 +76,31 @@
         </button>
       </template>
     </Dialog>
+    <Dialog
+      title="Thông báo"
+      widthDialog="500px"
+      :dialogVisible="isShowConfirmBeforeSubmit"
+      @closeDialog="isShowConfirmBeforeSubmit = false"
+    >
+      <img src="@/assets/icons/warning.png" class="wh-50p" alt="" />
+      <span>Vẫn còn thời gian làm bài, bạn có chắc chắn muốn nộp bài?</span>
+      <template slot="dialog-footer">
+        <button
+          v-on:click="isShowConfirmBeforeSubmit = false"
+          type="submit"
+          class="btn btn-light"
+        >
+          Không
+        </button>
+        <button
+          v-on:click="endExam"
+          type="submit"
+          class="btn h-btn-primary ml-3"
+        >
+          Có
+        </button>
+      </template>
+    </Dialog>
   </div>
 </template>
 <script>
@@ -80,7 +109,10 @@ import Dialog from "@/components/Dialog.vue";
 import $ from "jquery";
 export default {
   created() {
-    this.countDownTime();
+    if (localStorage.getItem("timeEnd")) {
+      this.countDownTime();
+      this.completeExamText = "NỘP BÀI";
+    }
     // Lấy thông tin đề thi hiện tại
     this.selectedExam = JSON.parse(localStorage.getItem("selected-exam"));
   },
@@ -93,7 +125,9 @@ export default {
     return {
       countdown: "02:00:00",
       isShowFinishDialog: false,
+      isShowConfirmBeforeSubmit: false,
       selectedExam: null,
+      completeExamText: "TOEICExamOnline.pg",
       listeningPartData: [
         {
           partCode: 1,
@@ -139,12 +173,33 @@ export default {
     Dialog,
   },
   methods: {
+    showConfirmBeforeSubmit() {
+      try {
+        this.isShowConfirmBeforeSubmit = true;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    /**
+    Nộp bài
+     */
+    submitExam() {
+      try {
+        if (localStorage.getItem("timeEnd")) {
+          console.log(123);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    },
     // Hàm chuyển tới từng phần trong đề thi
-    goToPart(item){
-      try{
+    goToPart(item) {
+      try {
         this.toggleSideBar();
-        this.$router.push(`/toeicexam/${this.selectedExam?.ExamID}/part${item.partCode}-detail`)
-      } catch(e){
+        this.$router.push(
+          `/toeicexam/${this.selectedExam?.ExamID}/part${item.partCode}-detail`
+        );
+      } catch (e) {
         console.log(e);
       }
     },
@@ -231,6 +286,7 @@ export default {
     // Đếm ngược thời gian làm bài
     this.$eventBus.$on("countdown", function () {
       vm.countDownTime();
+      vm.completeExamText = "NỘP BÀI";
     });
     // this.countdown = localStorage.getItem("timeEnd");
   },
