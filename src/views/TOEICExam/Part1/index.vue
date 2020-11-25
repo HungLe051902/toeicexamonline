@@ -55,8 +55,6 @@ export default {
   },
   props: {},
   async created() {
-    // Lấy các lựa chọn đã được chọn
-
     // Đổi tiêu đề trên thanh header
     this.$store.commit("toeicexam/setHeaderTitle", titleResource.PART1_TITLE);
     // Lấy thông tin đề thi hiện tại
@@ -64,7 +62,35 @@ export default {
     // Lấy dữ liệu part 1
     this.getQuestionPart1();
   },
+  mounted() {
+    var vm = this;
+    // Binding các câu trả lời đã chọn cũ
+    vm.bindingAnswer();
+  },
   methods: {
+    // Hàm hiển thị lại câu trả lời của người dùng
+    bindingAnswer() {
+      try {
+        if (localStorage.getItem("part1Answer")) {
+          var i = 0;
+          var part1Answer = JSON.parse(localStorage.getItem("part1Answer"));
+          this.$nextTick(function () {
+            $.each($("#part1-detail .option-area"), function () {
+              if (part1Answer[i]) {
+                $.each($(this).find("input"), function () {
+                  if ($(this).val() == part1Answer[i]) {
+                    $(this).prop("checked", true);
+                  }
+                });
+              }
+              i++;
+            });
+          });
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    },
     // test
     finish() {
       try {
@@ -110,7 +136,28 @@ export default {
         this.isShowLoading = false;
         if (!res) {
           this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
+          return;
         }
+        // Nếu tải lại trang, lấy lại dữ liệu => binding các câu trả lời
+        if (localStorage.getItem("part1Answer")) this.bindingAnswer();
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    /**
+      Lưu các câu trả lời vào local storage
+     */
+    saveAnswerToLocalStorage() {
+      try {
+        var part1Answer = [];
+        $.each($("#part1-detail .option-area"), function () {
+          if ($(this).find("input:checked").length > 0) {
+            part1Answer.push($(this).find("input:checked").val());
+          } else {
+            part1Answer.push(null);
+          }
+        });
+        localStorage.setItem("part1Answer", JSON.stringify(part1Answer));
       } catch (e) {
         console.log(e);
       }
@@ -119,7 +166,7 @@ export default {
     nextToPart2() {
       try {
         // Lưu câu trả lời hiện tại vào localStorage
-        console.log($("#part1-detail .option-area input:checked").length);
+        this.saveAnswerToLocalStorage();
         this.$router.push(
           `/toeicexam/${this.selectedExam?.ExamID}/part2-instruction`
         );
