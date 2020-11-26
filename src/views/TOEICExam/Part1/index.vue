@@ -34,8 +34,11 @@
     <button v-on:click="nextToPart2" class="btn h-btn-primary mb-4">
       Next
     </button>
-    <button v-on:click="finish" class="btn h-btn-primary mb-4 ml-3">
-      Chấm điểm
+    <button
+      v-on:click="saveAnswerToLocalStorage"
+      class="btn h-btn-primary mb-4 ml-3"
+    >
+      Ghi nhận câu trả lời
     </button>
   </div>
 </template>
@@ -63,24 +66,27 @@ export default {
     this.getQuestionPart1();
   },
   mounted() {
-    var vm = this;
-    // Binding các câu trả lời đã chọn cũ
-    vm.bindingAnswer();
-
-    // var part1Answer = localStorage.getItem('part1Answer') ? JSON.parse(localStorage.getItem('part1Answer')) : [];
-    // Tự động lưu câu trả lời
-    // $.each($("#part1-detail .option-area"), function (index) {
-    //   $(this).find('input').click(function(){
-    //     part1Answer[index] = $(this).val();
-    //     alert($(this).val());
-    //     localStorage.setItem('part1Answer', JSON.stringify(part1Answer));
-    //   });
-    // });
-    // $('.option-area').click(function(){
-    //   alert(1);
-    // })
+    this.handleAfterLoadData();
   },
   methods: {
+    /**
+      Hàm xử lý sau khi tải xong dữ liệu
+      Author: LXHUNG(26/11/2020)
+     */
+    handleAfterLoadData() {
+      try {
+        var vm = this;
+        // Binding các câu trả lời đã chọn cũ
+        vm.bindingAnswer();
+        /**
+          Lắng nghe sự kiện nộp bài để hiển thị đáp án và lời giải
+        */
+        // Nếu thông tin thời gian kết thúc trong localStorage được xóa (tức là người thi đã nộp bài) thì hiển thị đáp án và lời giải
+        if (!localStorage.getItem("timeEnd")) vm.finish();
+      } catch (e) {
+        console.log(e);
+      }
+    },
     // Hàm hiển thị lại câu trả lời của người dùng
     bindingAnswer() {
       try {
@@ -151,8 +157,7 @@ export default {
           this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
           return;
         }
-        // Nếu tải lại trang, lấy lại dữ liệu => binding các câu trả lời
-        if (localStorage.getItem("part1Answer")) this.bindingAnswer();
+        this.handleAfterLoadData();
       } catch (e) {
         console.log(e);
       }

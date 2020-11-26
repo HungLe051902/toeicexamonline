@@ -5,66 +5,13 @@
       <div v-if="result" class="">
         <div
           class="d-flex w-50 justify-content-between align-items-center mb-2"
+          v-for="(item, index) in partData" :key="index"
         >
           <div class="d-flex">
-            <div class="title">PART I:</div>
-            <div>{{ result.part1Score }}/6</div>
+            <div class="title">{{item.name}}:</div>
+            <div>{{ item.currentPoint }}/{{item.maxPoint}}</div>
           </div>
-          <button class="btn h-btn-primary">Chi tiết</button>
-        </div>
-        <div
-          class="d-flex w-50 justify-content-between align-items-center mb-2"
-        >
-          <div class="d-flex">
-            <div class="title">PART II:</div>
-            <div>{{ result.part2Score }}/25</div>
-          </div>
-          <button class="btn h-btn-primary">Chi tiết</button>
-        </div>
-        <div
-          class="d-flex w-50 justify-content-between align-items-center mb-2"
-        >
-          <div class="d-flex">
-            <div class="title">PART III:</div>
-            <div>{{ result.part3Score }}/39</div>
-          </div>
-          <button class="btn h-btn-primary">Chi tiết</button>
-        </div>
-        <div
-          class="d-flex w-50 justify-content-between align-items-center mb-2"
-        >
-          <div class="d-flex">
-            <div class="title">PART IV:</div>
-            <div>{{ result.part4Score }}/30</div>
-          </div>
-          <button class="btn h-btn-primary">Chi tiết</button>
-        </div>
-        <div
-          class="d-flex w-50 justify-content-between align-items-center mb-2"
-        >
-          <div class="d-flex">
-            <div class="title">PART V:</div>
-            <div>{{ result.part5Score }}/30</div>
-          </div>
-          <button class="btn h-btn-primary">Chi tiết</button>
-        </div>
-        <div
-          class="d-flex w-50 justify-content-between align-items-center mb-2"
-        >
-          <div class="d-flex">
-            <div class="title">PART VI:</div>
-            <div>{{ result.part6Score }}/16</div>
-          </div>
-          <button class="btn h-btn-primary">Chi tiết</button>
-        </div>
-        <div
-          class="d-flex w-50 justify-content-between align-items-center mb-2"
-        >
-          <div class="d-flex">
-            <div class="title">PART VII:</div>
-            <div>{{ result.part7Score }}/54</div>
-          </div>
-          <button class="btn h-btn-primary">Chi tiết</button>
+          <button v-on:click="goToDetail(item.code)" class="btn h-btn-primary">Chi tiết</button>
         </div>
       </div>
     </div>
@@ -73,16 +20,83 @@
 <script>
 export default {
   created() {
+    // Lấy thông tin đề thi hiện tại
+    this.selectedExam = JSON.parse(localStorage.getItem("selected-exam"));
     // Lấy thông tin kết quả trong localStorage
     this.result = localStorage.getItem("result")
       ? JSON.parse(localStorage.getItem("result"))
       : null;
+    if (this.result){
+      this.partData[0].currentPoint = this.result.part1Score;
+      this.partData[1].currentPoint = this.result.part2Score;
+      this.partData[2].currentPoint = this.result.part3Score;
+      this.partData[3].currentPoint = this.result.part4Score;
+      this.partData[4].currentPoint = this.result.part5Score;
+      this.partData[5].currentPoint = this.result.part6Score;
+      this.partData[6].currentPoint = this.result.part7Score;
+    }
   },
   data() {
     return {
       result: null,
+      partData: [
+        {
+          name: "PART I",
+          code: "part1",
+          currentPoint: 0,
+          maxPoint: 6
+        },
+        {
+          name: "PART II",
+          code: "part2",
+          currentPoint: 0,
+          maxPoint: 25
+        },
+        {
+          name: "PART III",
+          code: "part3",
+          currentPoint: 0,
+          maxPoint: 39
+        },
+        {
+          name: "PART IV",
+          code: "part4",
+          currentPoint: 0,
+          maxPoint: 30
+        },
+        {
+          name: "PART V",
+          code: "part5",
+          currentPoint: 0,
+          maxPoint: 30
+        },
+        {
+          name: "PART VI",
+          code: "part6",
+          currentPoint: 0,
+          maxPoint: 16
+        },
+        {
+          name: "PART VII",
+          code: "part7",
+          currentPoint: 0,
+          maxPoint: 54
+        },
+      ],
+      selectedExam: null
     };
   },
+  methods: {
+    goToDetail(partCode){
+      try{
+        this.$router.push(
+          `/toeicexam/${this.selectedExam?.ExamID}/${partCode}-detail`
+        );
+      } catch(e){
+        console.log(e);
+      }
+    }
+  }
 };
 </script>
 <style lang="scss">

@@ -52,8 +52,11 @@
     <button v-on:click="nextToPart3" class="btn h-btn-primary mb-4">
       Next
     </button>
-    <button v-on:click="finish" class="btn h-btn-primary mb-4 ml-3">
-      Chấm điểm
+    <button
+      v-on:click="saveAnswerToLocalStorage"
+      class="btn h-btn-primary mb-4 ml-3"
+    >
+      Ghi nhận câu trả lời
     </button>
   </div>
 </template>
@@ -77,11 +80,28 @@ export default {
       isFinished: false,
     };
   },
-  mounted(){
-    // Binding các câu trả lời đã chọn
-    this.bindingAnswer();
+  mounted() {
+    this.handleAfterLoadData();
   },
   methods: {
+    /**
+      Hàm xử lý sau khi tải xong dữ liệu
+      Author: LXHUNG(26/11/2020)
+     */
+    handleAfterLoadData() {
+      try {
+        var vm = this;
+        // Binding các câu trả lời đã chọn cũ
+        vm.bindingAnswer();
+        /**
+          Lắng nghe sự kiện nộp bài để hiển thị đáp án và lời giải
+        */
+        // Nếu thông tin thời gian kết thúc trong localStorage được xóa (tức là người thi đã nộp bài) thì hiển thị đáp án và lời giải
+        if (!localStorage.getItem("timeEnd")) vm.finish();
+      } catch (e) {
+        console.log(e);
+      }
+    },
     // Hàm hiển thị lại câu trả lời của người dùng
     bindingAnswer() {
       try {
@@ -180,10 +200,9 @@ export default {
         this.isShowLoading = false;
         if (!res) {
           this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
-          return ;
+          return;
         }
-        // Nếu tải lại trang, lấy lại dữ liệu => binding các câu trả lời
-        if (localStorage.getItem("part2Answer")) this.bindingAnswer();
+        this.handleAfterLoadData();
       } catch (e) {
         console.log(e);
       }

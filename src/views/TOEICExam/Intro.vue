@@ -323,7 +323,7 @@ export default {
             });
           }
           for (let i = 0; i < this.getPart5Data.length; i++) {
-            if (part5Answer[i] && this.getPart5Data[i] == part5Answer[i])
+            if (part5Answer[i] && this.getPart5Data[i].Answer == part5Answer[i])
               part5Score++;
           }
         }
@@ -428,11 +428,13 @@ export default {
      */
     async submitExam() {
       try {
+        // Khi nộp bài thì xóa thời gian kết thúc bài làm
+        localStorage.removeItem('timeEnd');
         this.showLoading();
         this.isShowConfirmBeforeSubmit = false;
-        let totalListening = 0,
-          totalReading = 0,
-          totalScore = 0;
+        // let totalListening = 0,
+        //   totalReading = 0,
+        //   totalScore = 0;
         // Tính điểm listening
         let part1Score = await this.calculatePart1Score();
         let part2Score = await this.calculatePart2Score();
@@ -454,20 +456,6 @@ export default {
           part7Score: part7Score,
         };
         localStorage.setItem('result', JSON.stringify(result));
-
-        // Hiển thị kết quả
-        console.log(
-          part1Score,
-          part2Score,
-          part3Score,
-          part4Score,
-          part5Score,
-          part6Score,
-          part7Score,
-          totalListening,
-          totalReading,
-          totalScore
-        );
         this.hideLoading();
         this.$router.push("/result");
       } catch (e) {
@@ -570,7 +558,9 @@ export default {
       vm.countDownTime();
       vm.completeExamText = "NỘP BÀI";
     });
-    // this.countdown = localStorage.getItem("timeEnd");
+    this.$eventBus.$on("submit", function(){
+      vm.submitExam();
+    });
   },
   computed: {
     ...mapGetters("toeicexam", [

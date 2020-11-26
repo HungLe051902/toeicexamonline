@@ -251,16 +251,42 @@
         </div>
       </div>
     </div>
-    <button v-on:click="done" class="btn h-btn-primary mb-4">Hoàn thành</button>
-    <button v-on:click="finish" class="btn h-btn-primary mb-4 ml-3">
-      Chấm điểm
+    <button
+      v-on:click="isShowConfirmBeforeSubmit = true"
+      class="btn h-btn-primary mb-4"
+    >
+      Hoàn thành
     </button>
+    <button v-on:click="saveAnswerToLocalStorage" class="btn h-btn-primary mb-4 ml-3">
+      Ghi nhận câu trả lời
+    </button>
+    <Dialog
+      title="Thông báo"
+      widthDialog="500px"
+      :dialogVisible="isShowConfirmBeforeSubmit"
+      @closeDialog="isShowConfirmBeforeSubmit = false"
+    >
+      <span>Vẫn còn thời gian làm bài, bạn có chắc chắn muốn nộp bài?</span>
+      <template slot="dialog-footer">
+        <button
+          v-on:click="isShowConfirmBeforeSubmit = false"
+          type="submit"
+          class="btn btn-light"
+        >
+          Không
+        </button>
+        <button v-on:click="done" type="submit" class="btn h-btn-primary ml-3">
+          Có
+        </button>
+      </template>
+    </Dialog>
   </div>
 </template>
 <script>
 import titleResource from "@/assets/resources/title.js";
 import { mapGetters } from "vuex";
 import $ from "jquery";
+import Dialog from "@/components/Dialog.vue";
 export default {
   created() {
     // Đổi tiêu đề trên thanh header
@@ -274,13 +300,34 @@ export default {
     return {
       selectedExam: null,
       isShowLoading: false,
+      isShowConfirmBeforeSubmit: false,
     };
   },
+  components: {
+    Dialog,
+  },
   mounted() {
-    // Binding các câu trả lời cũ
-    this.bindingAnswer();
+    this.handleAfterLoadData();
   },
   methods: {
+    /**
+      Hàm xử lý sau khi tải xong dữ liệu
+      Author: LXHUNG(26/11/2020)
+     */
+    handleAfterLoadData() {
+      try {
+        var vm = this;
+        // Binding các câu trả lời đã chọn cũ
+        vm.bindingAnswer();
+        /**
+          Lắng nghe sự kiện nộp bài để hiển thị đáp án và lời giải
+        */
+        // Nếu thông tin thời gian kết thúc trong localStorage được xóa (tức là người thi đã nộp bài) thì hiển thị đáp án và lời giải
+        if (!localStorage.getItem("timeEnd")) vm.finish();
+      } catch (e) {
+        console.log(e);
+      }
+    },
     /**
     Hàm hiển thị lại câu trả lời của người dùng
      */
@@ -546,7 +593,8 @@ export default {
       try {
         // Lưu câu trả lời vào localStorage
         this.saveAnswerToLocalStorage();
-        alert("done");
+        // alert("done");
+        this.$eventBus.$emit("submit");
       } catch (e) {
         console.log(e);
       }
@@ -568,8 +616,7 @@ export default {
           this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
           return;
         }
-        // Binding các câu trả lời cũ
-        this.bindingAnswer();
+        this.handleAfterLoadData();
       } catch (e) {
         console.log(e);
       }
