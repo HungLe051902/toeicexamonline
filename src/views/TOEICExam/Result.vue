@@ -13,6 +13,15 @@
           </div>
           <button v-on:click="goToDetail(item.code)" class="btn h-btn-primary">Chi tiết</button>
         </div>
+        <div class="w-50">
+          <div class="container-fluid">
+            <div class="row fs-18px">
+              <div class="col-4 pl-0"><b>Điểm phần nghe:</b> {{listeningScore}}/495</div>
+              <div class="col-4 pl-0"><b>Điểm phần đọc:</b> {{readingScore}}/495</div>
+              <div class="col-4 pl-0"><b>Tổng điểm:</b> {{totalScore}}/990</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -95,6 +104,23 @@ export default {
       } catch(e){
         console.log(e);
       }
+    }
+  },
+  computed: {
+    listeningScore(){
+      if (!this.result){
+        return 0;
+      }
+      return Math.round(495*((this.result.part1Score + this.result.part2Score + this.result.part3Score + this.result.part4Score)/100));
+    },
+    readingScore(){
+      if (!this.result){
+        return 0;
+      }
+      return Math.round((this.result.part5Score + this.result.part6Score + this.result.part7Score)*(495/100));
+    },
+    totalScore(){
+      return this.listeningScore + this.readingScore;
     }
   }
 };
