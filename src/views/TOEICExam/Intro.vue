@@ -429,7 +429,7 @@ export default {
     async submitExam() {
       try {
         // Khi nộp bài thì xóa thời gian kết thúc bài làm
-        localStorage.removeItem('timeEnd');
+        localStorage.removeItem("timeEnd");
         this.showLoading();
         this.isShowConfirmBeforeSubmit = false;
         // let totalListening = 0,
@@ -455,7 +455,7 @@ export default {
           part6Score: part6Score,
           part7Score: part7Score,
         };
-        localStorage.setItem('result', JSON.stringify(result));
+        localStorage.setItem("result", JSON.stringify(result));
         this.hideLoading();
         this.$router.push("/result");
       } catch (e) {
@@ -558,7 +558,7 @@ export default {
       vm.countDownTime();
       vm.completeExamText = "NỘP BÀI";
     });
-    this.$eventBus.$on("submit", function(){
+    this.$eventBus.$on("submit", function () {
       vm.submitExam();
     });
   },
