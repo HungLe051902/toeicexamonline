@@ -5,6 +5,7 @@
         <b>{{ getHeaderTitle }}</b>
       </div>
       <div class="right-content">
+        <div v-if="isFinishExam" v-on:click="goToResultView" class="item h-btn-primary">Kết quả</div>
         <div v-on:click="showConfirmBeforeSubmit" class="item">
           {{ completeExamText }}
         </div>
@@ -46,7 +47,7 @@
           </div>
         </div>
       </div>
-      <div class="container-fluid">
+      <div id="exam-section" class="container-fluid">
         <div class="content h-100">
           <router-view></router-view>
         </div>
@@ -173,6 +174,21 @@ export default {
     Dialog,
   },
   methods: {
+    /**
+    Hàm điều hướng tới trang hiển thị kết quả
+    Author: LXHUNG(28/11/2020)
+     */
+    goToResultView(){
+      try{
+        this.$router.push('/result');
+      } catch(e){
+        console.log(e);
+      }
+    },
+    /**
+    Hàm hiển thị thông báo xác nhận trước khi nộp bài
+    Author: LXHUNG(28/11/2020)
+     */
     showConfirmBeforeSubmit() {
       try {
         if (!localStorage.getItem("timeEnd")) return;
@@ -183,6 +199,7 @@ export default {
     },
     /**
     Tính điểm part1
+    Author: LXHUNG(28/11/2020)
      */
     async calculatePart1Score() {
       try {
@@ -575,7 +592,7 @@ export default {
       this.countdown = "00:00:00";
 
     // Lắng nghe sự kiện click ra ngoài sidebar thì ẩn sidebar
-    $(document).mouseup(function (e) {
+    $('#exam-section').mouseup(function (e) {
       if (
         !$(".sidebar").is(e.target) &&
         $(".sidebar").has(e.target).length === 0
@@ -598,6 +615,9 @@ export default {
     isStarted() {
       return localStorage.getItem("timeEnd");
     },
+    isFinishExam(){
+      return localStorage.getItem('state') == 'finished';
+    }
   },
 };
 </script>

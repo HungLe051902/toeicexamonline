@@ -24,7 +24,10 @@ const routes = [
   {
     path: '/toeicexam',
     name: 'TOEICExam',
-    component: () => import('@/views/TOEICExam')
+    component: () => import('@/views/TOEICExam'),
+    // beforeEnter: (to, from, next) => {
+    //   if
+    // }
   },
   {
     path: '/result',
@@ -38,6 +41,17 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  console.log(to.path, from.path);
+  if (to.path == '/toeicexam'){
+    localStorage.clear();
+    next();
+  }
+  else {
+    next();
+  }
 })
 
 export default router
