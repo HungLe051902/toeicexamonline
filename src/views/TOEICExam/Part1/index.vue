@@ -58,6 +58,7 @@ export default {
   },
   props: {},
   async created() {
+    // console.log("router", this.$route.params, this.$route.meta);
     // Đổi tiêu đề trên thanh header
     this.$store.commit("toeicexam/setHeaderTitle", titleResource.PART1_TITLE);
     // Lấy thông tin đề thi hiện tại

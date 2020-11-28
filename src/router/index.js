@@ -25,9 +25,6 @@ const routes = [
     path: '/toeicexam',
     name: 'TOEICExam',
     component: () => import('@/views/TOEICExam'),
-    // beforeEnter: (to, from, next) => {
-    //   if
-    // }
   },
   {
     path: '/result',

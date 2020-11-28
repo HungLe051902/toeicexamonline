@@ -22,6 +22,7 @@
           <div class="title p-2 h-btn-primary">LISTENING TEST</div>
           <div
             class="part"
+            v-bind:class="currentPart == item.partCode ? 'part-selected' : ''"
             v-for="item in listeningPartData"
             :key="item.partCode"
             v-on:click="goToPart(item)"
@@ -36,6 +37,7 @@
           <div class="title p-2 h-btn-primary">READING TEST</div>
           <div
             class="part"
+            v-bind:class="currentPart == item.partCode ? 'part-selected' : ''"
             v-for="item in readingPartData"
             :key="item.partCode"
             v-on:click="goToPart(item)"
@@ -131,39 +133,39 @@ export default {
       completeExamText: "TOEICExamOnline.pg",
       listeningPartData: [
         {
-          partCode: 1,
+          partCode: 'part1',
           partName: "Part I",
           description: "Reading Comprehension",
         },
         {
-          partCode: 2,
+          partCode: 'part2',
           partName: "Part II",
           description: "Question - Response",
         },
         {
-          partCode: 3,
+          partCode: 'part3',
           partName: "Part III",
           description: "Short Conversations",
         },
         {
-          partCode: 4,
+          partCode: 'part4',
           partName: "Part IV",
           description: "Short Talks",
         },
       ],
       readingPartData: [
         {
-          partCode: 5,
+          partCode: 'part5',
           partName: "Part V",
           description: "Incomplete Sentences",
         },
         {
-          partCode: 6,
+          partCode: 'part6',
           partName: "Part VI",
           description: "Text Completion",
         },
         {
-          partCode: 7,
+          partCode: 'part7',
           partName: "Part VII",
           description: "Reading Comprehension",
         },
@@ -487,7 +489,7 @@ export default {
         if (localStorage.getItem("state") != "beforeDoing") {
           this.toggleSideBar();
           this.$router.push(
-            `/toeicexam/${this.selectedExam?.ExamID}/part${item.partCode}-detail`
+            `/toeicexam/${this.selectedExam?.ExamID}/${item.partCode}-detail`
           );
         } else {
           this.toggleSideBar();
@@ -617,6 +619,9 @@ export default {
     },
     isFinishExam(){
       return localStorage.getItem('state') == 'finished';
+    },
+    currentPart(){
+      return this.$route.meta.partCode;
     }
   },
 };
@@ -673,7 +678,12 @@ export default {
       &:hover {
         cursor: pointer;
         background-color: rgb(247, 241, 241);
+        color: #000000;
       }
+    }
+    .part-selected{
+      background-color: gray;
+      color: #FFFFFF;
     }
   }
 
