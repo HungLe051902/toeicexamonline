@@ -172,7 +172,7 @@
       </div>
     </div>
     <button v-on:click="nextToPart5" class="btn h-btn-primary mb-4">
-      Next
+      Tiếp tục
     </button>
     <button v-on:click="saveAnswerToLocalStorage" class="btn h-btn-primary mb-4 ml-3">
       Ghi nhận câu trả lời
@@ -216,7 +216,11 @@ export default {
           Lắng nghe sự kiện nộp bài để hiển thị đáp án và lời giải
         */
         // Nếu thông tin thời gian kết thúc trong localStorage được xóa (tức là người thi đã nộp bài) thì hiển thị đáp án và lời giải
-        if (!localStorage.getItem("timeEnd")) vm.finish();
+        if (!localStorage.getItem("timeEnd")) {
+          this.$nextTick(function(){
+            vm.finish();
+          })
+        }
       } catch (e) {
         console.log(e);
       }

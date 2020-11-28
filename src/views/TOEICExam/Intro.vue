@@ -430,6 +430,8 @@ export default {
       try {
         // Khi nộp bài thì xóa thời gian kết thúc bài làm
         localStorage.removeItem("timeEnd");
+        // Chuyển trạng thái làm bài
+        localStorage.setItem("state", "finished");
         this.showLoading();
         this.isShowConfirmBeforeSubmit = false;
         // let totalListening = 0,
@@ -465,10 +467,15 @@ export default {
     // Hàm chuyển tới từng phần trong đề thi
     goToPart(item) {
       try {
-        this.toggleSideBar();
-        this.$router.push(
-          `/toeicexam/${this.selectedExam?.ExamID}/part${item.partCode}-detail`
-        );
+        if (localStorage.getItem("state") != "beforeDoing") {
+          this.toggleSideBar();
+          this.$router.push(
+            `/toeicexam/${this.selectedExam?.ExamID}/part${item.partCode}-detail`
+          );
+        } else {
+          this.toggleSideBar();
+          this.showNoti("info", "Bạn chưa bắt đầu bài thi!");
+        }
       } catch (e) {
         console.log(e);
       }
@@ -476,9 +483,10 @@ export default {
     // Hàm mở/đóng sidebar
     toggleSideBar() {
       try {
-        if ($(".sidebar").css("display") == "none")
-          $(".sidebar").css("display", "block");
-        else $(".sidebar").css("display", "none");
+        // if ($(".sidebar").css("display") == "none")
+        //   $(".sidebar").css("display", "block");
+        // else $(".sidebar").css("display", "none");
+        $(".sidebar").toggleClass("show-sidebar");
       } catch (e) {
         console.log(e);
       }
@@ -499,7 +507,7 @@ export default {
         if (localStorage.getItem("timeEnd")) {
           this.isShowFinishDialog = true;
         } else {
-          this.showNoti("info", "Bạn chưa bắt đầu làm bài!");
+          this.$router.push("/toeicexam");
         }
       } catch (e) {
         console.log(e);
@@ -539,8 +547,9 @@ export default {
             // If the count down is over, write some text
             if (distance < 0) {
               clearInterval(x);
-              localStorage.removeItem("timeEnd");
               vm.countdown = "00:00:00";
+              // Nộp bài
+              vm.submitExam();
             }
           }, 1);
         } else {
@@ -560,6 +569,19 @@ export default {
     });
     this.$eventBus.$on("submit", function () {
       vm.submitExam();
+    });
+
+    if (localStorage.getItem("state") == "finished")
+      this.countdown = "00:00:00";
+
+    // Lắng nghe sự kiện click ra ngoài sidebar thì ẩn sidebar
+    $(document).mouseup(function (e) {
+      if (
+        !$(".sidebar").is(e.target) &&
+        $(".sidebar").has(e.target).length === 0
+      ) {
+        $(".sidebar").removeClass("show-sidebar");
+      }
     });
   },
   computed: {
@@ -616,14 +638,14 @@ export default {
     position: absolute;
     right: 0;
     bottom: 0;
-    width: 300px;
+    width: 0;
     background-color: #ffffff;
     border-left: 1px solid #1864a3;
-    display: none;
     overflow-y: auto;
     z-index: 100;
-    -webkit-animation: slide-down 0.3s ease-in-out;
-    -moz-animation: slide-down 0.3s ease-in-out;
+    transition: width 1s;
+    // -webkit-animation: slide-down 0.3s ease-in-out;
+    // -moz-animation: slide-down 0.3s ease-in-out;
     .part {
       border-bottom: 1px solid #1864a3;
       padding: 16px;
@@ -633,6 +655,10 @@ export default {
         background-color: rgb(247, 241, 241);
       }
     }
+  }
+
+  .show-sidebar {
+    width: 300px;
   }
 
   background-color: #f0f0f0;

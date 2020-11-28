@@ -114,6 +114,8 @@ export default {
       try {
         // Xóa hết thông tin trong localStorage
         localStorage.clear();
+        // Lưu trạng thái trước khi làm bài
+        localStorage.setItem('state', 'beforeDoing');
         // Lưu thông tin đề được chọn
         localStorage.setItem("selected-exam", JSON.stringify(exam));
         this.$router.push(`/toeicexam/${exam.ExamID}`);

@@ -32,7 +32,7 @@
       </div>
     </div>
     <button v-on:click="nextToPart2" class="btn h-btn-primary mb-4">
-      Next
+      Tiếp tục
     </button>
     <button
       v-on:click="saveAnswerToLocalStorage"
@@ -82,7 +82,11 @@ export default {
           Lắng nghe sự kiện nộp bài để hiển thị đáp án và lời giải
         */
         // Nếu thông tin thời gian kết thúc trong localStorage được xóa (tức là người thi đã nộp bài) thì hiển thị đáp án và lời giải
-        if (!localStorage.getItem("timeEnd")) vm.finish();
+        if (!localStorage.getItem("timeEnd")) {
+          this.$nextTick(function(){
+            vm.finish();
+          })
+        }
       } catch (e) {
         console.log(e);
       }
@@ -110,7 +114,10 @@ export default {
         console.log(e);
       }
     },
-    // test
+    /**
+    Hàm thực hiện check câu nào đúng câu nào sai trên giao diện
+    Author: LXHUNG(28/11/2020)
+     */
     finish() {
       try {
         var me = this;

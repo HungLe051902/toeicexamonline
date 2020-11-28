@@ -22,8 +22,11 @@ export default {
         if (!localStorage.getItem("timeEnd"))
           localStorage.setItem(
             "timeEnd",
-            new Date().getTime() + 2 * 60 * 60 * 1000
+            new Date().getTime() + 120 * 1000
           );
+          //2 * 60 * 60 * 1000
+        // Lưu trạng thái đang làm bài vào localStorage
+        localStorage.setItem('state', 'doing');
         // Chuyển tới trang hướng dẫn part1
         this.$router.push(`/toeicexam/${this.selectedExam.ExamID}/part1-instruction`);
         // Thông báo sự kiện để đếm ngược thời gian làm bài
