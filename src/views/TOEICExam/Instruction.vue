@@ -22,7 +22,7 @@ export default {
         if (!localStorage.getItem("timeEnd"))
           localStorage.setItem(
             "timeEnd",
-            new Date().getTime() + 120 * 1000
+            new Date().getTime() + 2 * 60 * 60 * 1000
           );
           //2 * 60 * 60 * 1000
         // Lưu trạng thái đang làm bài vào localStorage
