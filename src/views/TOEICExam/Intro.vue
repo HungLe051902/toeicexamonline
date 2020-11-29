@@ -219,7 +219,7 @@ export default {
      */
     showConfirmBeforeSubmit() {
       try {
-        if (!localStorage.getItem("timeEnd")) return;
+        if (!localStorage.getItem("timeEnd")) this.$router.push('/');
         this.isShowConfirmBeforeSubmit = true;
       } catch (e) {
         console.log(e);

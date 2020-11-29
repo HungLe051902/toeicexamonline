@@ -13,7 +13,7 @@
             paragraph:</b
           ></label
         >
-        <img :src="item.LinkImg" alt="" />
+        <img :src="item.LinkImg" alt="" class="w-100" />
         <div class="first-question">
           <label for=""
             ><b>{{ item.StartNumber }}. {{ item.FirstQuestion }}</b></label

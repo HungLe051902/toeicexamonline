@@ -13,7 +13,7 @@
             following paragraph:</b
           ></label
         >
-        <img :src="item.LinkImg" alt="" />
+        <img :src="item.LinkImg" alt="" class="w-100" />
         <div class="group-question mb-5">
           <div class="first-question">
             <label for=""
