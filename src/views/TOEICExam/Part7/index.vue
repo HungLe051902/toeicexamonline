@@ -257,7 +257,7 @@
     >
       Hoàn thành
     </button>
-    <button v-on:click="saveAnswerToLocalStorage" class="btn h-btn-primary mb-4 ml-3">
+    <button v-on:click="saveAnswerToLocalStorage(true)" class="btn h-btn-primary mb-4 ml-3">
       Ghi nhận câu trả lời
     </button>
     <Dialog
@@ -287,6 +287,7 @@ import titleResource from "@/assets/resources/title.js";
 import { mapGetters } from "vuex";
 import $ from "jquery";
 import Dialog from "@/components/Dialog.vue";
+import toeicExamMixin from "@/mixins/toeicexam.vue";
 export default {
   created() {
     // Đổi tiêu đề trên thanh header
@@ -303,6 +304,7 @@ export default {
       isShowConfirmBeforeSubmit: false,
     };
   },
+  mixins: [toeicExamMixin],
   components: {
     Dialog,
   },
@@ -560,7 +562,7 @@ export default {
     /**
       Lưu các câu trả lời vào local storage
      */
-    saveAnswerToLocalStorage() {
+    saveAnswerToLocalStorage(isShowMessage) {
       try {
         var part7Answer = [];
         $.each($("#part7-detail .group-question"), function () {
@@ -588,6 +590,7 @@ export default {
           part7Answer.push(objAnswer);
         });
         localStorage.setItem("part7Answer", JSON.stringify(part7Answer));
+        if (isShowMessage) this.showNoti('success', 'Ghi nhận câu trả lời thành công!');
       } catch (e) {
         console.log(e);
       }

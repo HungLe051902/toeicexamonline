@@ -9,7 +9,7 @@
         >
           <div class="d-flex">
             <div class="title">{{item.name}}:</div>
-            <div>{{ item.currentPoint }}/{{item.maxPoint}}</div>
+            <div class="fs-15p">{{ item.currentPoint }}/{{item.maxPoint}}</div>
           </div>
           <button v-on:click="goToDetail(item.code)" class="btn h-btn-primary">Chi tiết</button>
         </div>
@@ -23,6 +23,7 @@
           </div>
         </div>
       </div>
+      <button v-on:click="goToListExamView" class="mt-3 btn btn-secondary">Thoát</button>
     </div>
   </div>
 </template>
@@ -96,6 +97,17 @@ export default {
     };
   },
   methods: {
+    goToListExamView(){
+      try{
+        this.$router.push('/toeicexam');
+      } catch(e){
+        console.log(e);
+      }
+    },
+    /**
+    Hàm đi vào chi tiết từng phần
+    Author: LXHUNG(29/11/2020)
+     */
     goToDetail(partCode){
       try{
         this.$router.push(

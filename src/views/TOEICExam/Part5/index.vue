@@ -57,7 +57,7 @@
     <button v-on:click="nextToPart6" class="btn h-btn-primary mb-4">
       Tiếp tục
     </button>
-    <button v-on:click="saveAnswerToLocalStorage" class="btn h-btn-primary mb-4 ml-3">
+    <button v-on:click="saveAnswerToLocalStorage(true)" class="btn h-btn-primary mb-4 ml-3">
       Ghi nhận câu trả lời
     </button>
   </div>
@@ -66,6 +66,7 @@
 import titleResource from "@/assets/resources/title.js";
 import { mapGetters } from "vuex";
 import $ from "jquery";
+import toeicExamMixin from "@/mixins/toeicexam.vue";
 export default {
   created() {
     // Đổi tiêu đề trên thanh header
@@ -82,6 +83,7 @@ export default {
       isFinished: false,
     };
   },
+  mixins: [toeicExamMixin],
   mounted() {
     this.handleAfterLoadData();
   },
@@ -164,7 +166,7 @@ export default {
     /**
       Lưu các câu trả lời vào local storage
      */
-    saveAnswerToLocalStorage() {
+    saveAnswerToLocalStorage(isShowMessage) {
       try {
         var part5Answer = [];
         $.each($("#part5-detail .option-area"), function () {
@@ -175,6 +177,7 @@ export default {
           }
         });
         localStorage.setItem("part5Answer", JSON.stringify(part5Answer));
+        if (isShowMessage) this.showNoti('success', 'Ghi nhận câu trả lời thành công!');
       } catch (e) {
         console.log(e);
       }

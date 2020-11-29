@@ -53,7 +53,7 @@
       Tiếp tục
     </button>
     <button
-      v-on:click="saveAnswerToLocalStorage"
+      v-on:click="saveAnswerToLocalStorage(true)"
       class="btn h-btn-primary mb-4 ml-3"
     >
       Ghi nhận câu trả lời
@@ -64,6 +64,7 @@
 import titleResource from "@/assets/resources/title.js";
 import { mapGetters } from "vuex";
 import $ from "jquery";
+import toeicExamMixin from "@/mixins/toeicexam.vue";
 export default {
   created() {
     // Đổi tiêu đề trên thanh header
@@ -80,6 +81,7 @@ export default {
       isFinished: false,
     };
   },
+  mixins: [toeicExamMixin],
   mounted() {
     this.handleAfterLoadData();
   },
@@ -165,7 +167,7 @@ export default {
     /**
       Lưu các câu trả lời vào local storage
      */
-    saveAnswerToLocalStorage() {
+    saveAnswerToLocalStorage(isShowMessage) {
       try {
         var part2Answer = [];
         $.each($("#part2-detail .option-area"), function () {
@@ -176,6 +178,7 @@ export default {
           }
         });
         localStorage.setItem("part2Answer", JSON.stringify(part2Answer));
+        if (isShowMessage) this.showNoti('success', 'Ghi nhận câu trả lời thành công!');
       } catch (e) {
         console.log(e);
       }

@@ -4,6 +4,7 @@
     :visible.sync="dialogVisible"
     :width="widthDialog"
     :before-close="handleClose"
+    :close-on-click-modal="false"
   >
     <slot></slot>
     <span slot="footer" class="dialog-footer">

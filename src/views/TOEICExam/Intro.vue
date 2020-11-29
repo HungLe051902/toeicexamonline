@@ -5,7 +5,7 @@
         <b>{{ getHeaderTitle }}</b>
       </div>
       <div class="right-content">
-        <div v-if="isFinishExam" v-on:click="goToResultView" class="item h-btn-primary">Kết quả</div>
+        <div v-if="isFinishExam" v-on:click="goToView('/result')" class="item h-btn-primary">Kết quả</div>
         <div v-on:click="showConfirmBeforeSubmit" class="item">
           {{ completeExamText }}
         </div>
@@ -104,6 +104,30 @@
         </button>
       </template>
     </Dialog>
+    <Dialog
+      title="Thông báo"
+      widthDialog="500px"
+      :dialogVisible="isShowTimeupPopup"
+      @closeDialog="isShowTimeupPopup = false"
+    >
+      <span>Đã hết thời gian làm bài!</span>
+      <template slot="dialog-footer">
+        <button
+          v-on:click="goToView('/toeicexam')"
+          type="submit"
+          class="btn btn-light"
+        >
+          Làm bài khác
+        </button>
+        <button
+          v-on:click="submitExam"
+          type="submit"
+          class="btn h-btn-primary ml-3"
+        >
+          Xem kết quả
+        </button>
+      </template>
+    </Dialog>
   </div>
 </template>
 <script>
@@ -170,6 +194,7 @@ export default {
           description: "Reading Comprehension",
         },
       ],
+      isShowTimeupPopup: false
     };
   },
   components: {
@@ -180,9 +205,10 @@ export default {
     Hàm điều hướng tới trang hiển thị kết quả
     Author: LXHUNG(28/11/2020)
      */
-    goToResultView(){
+    goToView(route){
       try{
-        this.$router.push('/result');
+        if (route)
+          this.$router.push(route);
       } catch(e){
         console.log(e);
       }
@@ -453,9 +479,6 @@ export default {
         localStorage.setItem("state", "finished");
         this.showLoading();
         this.isShowConfirmBeforeSubmit = false;
-        // let totalListening = 0,
-        //   totalReading = 0,
-        //   totalScore = 0;
         // Tính điểm listening
         let part1Score = await this.calculatePart1Score();
         let part2Score = await this.calculatePart2Score();
@@ -567,8 +590,8 @@ export default {
             if (distance < 0) {
               clearInterval(x);
               vm.countdown = "00:00:00";
-              // Nộp bài
-              vm.submitExam();
+              // Hiển thị popup khi hết thời gian
+              vm.isShowTimeupPopup = true;
             }
           }, 1);
         } else {

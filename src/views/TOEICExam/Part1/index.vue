@@ -47,6 +47,7 @@
 import titleResource from "@/assets/resources/title.js";
 import { mapGetters } from "vuex";
 import $ from "jquery";
+import toeicExamMixin from "@/mixins/toeicexam.vue";
 export default {
   data() {
     return {
@@ -57,8 +58,8 @@ export default {
     };
   },
   props: {},
+  mixins: [toeicExamMixin],
   async created() {
-    // console.log("router", this.$route.params, this.$route.meta);
     // Đổi tiêu đề trên thanh header
     this.$store.commit("toeicexam/setHeaderTitle", titleResource.PART1_TITLE);
     // Lấy thông tin đề thi hiện tại
@@ -84,9 +85,9 @@ export default {
         */
         // Nếu thông tin thời gian kết thúc trong localStorage được xóa (tức là người thi đã nộp bài) thì hiển thị đáp án và lời giải
         if (!localStorage.getItem("timeEnd")) {
-          this.$nextTick(function(){
+          this.$nextTick(function () {
             vm.finish();
-          })
+          });
         }
       } catch (e) {
         console.log(e);
@@ -173,7 +174,7 @@ export default {
     /**
       Lưu các câu trả lời vào local storage
      */
-    saveAnswerToLocalStorage() {
+    saveAnswerToLocalStorage(isShowMessage) {
       try {
         var part1Answer = [];
         $.each($("#part1-detail .option-area"), function () {
@@ -184,6 +185,8 @@ export default {
           }
         });
         localStorage.setItem("part1Answer", JSON.stringify(part1Answer));
+        if (isShowMessage)
+          this.showNoti("success", "Ghi nhận câu trả lời thành công!");
       } catch (e) {
         console.log(e);
       }

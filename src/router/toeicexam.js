@@ -9,6 +9,7 @@ var routes = {
         {
             path: 'part1-instruction',
             component: () => import("@/views/TOEICExam/Part1/Part1Instruction.vue"),
+            meta: {partCode: 'part1'}
         },
         {
             path: 'part1-detail',
