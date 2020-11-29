@@ -209,7 +209,10 @@
     <button v-on:click="nextToPart7" class="btn h-btn-primary mb-4">
       Tiếp tục
     </button>
-    <button v-on:click="saveAnswerToLocalStorage(true)" class="btn h-btn-primary mb-4 ml-3">
+    <button
+      v-on:click="saveAnswerToLocalStorage(true)"
+      class="btn h-btn-primary mb-4 ml-3"
+    >
       Ghi nhận câu trả lời
     </button>
   </div>
@@ -253,9 +256,9 @@ export default {
         */
         // Nếu thông tin thời gian kết thúc trong localStorage được xóa (tức là người thi đã nộp bài) thì hiển thị đáp án và lời giải
         if (!localStorage.getItem("timeEnd")) {
-          this.$nextTick(function(){
+          this.$nextTick(function () {
             vm.finish();
-          })
+          });
         }
       } catch (e) {
         console.log(e);
@@ -324,107 +327,152 @@ export default {
       try {
         var me = this;
         this.isFinished = true;
-        var indexFirst = 0,
-          indexSecond = 0,
-          indexThird = 0,
-          indexFourth = 0;
-        $.each(
-          $("#part6-detail .group-question .first-question .option-area"),
-          function () {
-            var vm = this;
-            $.each($(vm).find("input"), function () {
-              // Disable tất cả input câu hỏi thứ 1
-              $(this).prop("disabled", true);
-              var input = this;
-              if ($(input).val() == me.getPart6Data[indexFirst]?.FirstAnswer) {
-                me.$nextTick(function () {
-                  $(input).parent().addClass("correct");
-                });
-              } else {
-                if ($(input).is(":checked")) {
-                  me.$nextTick(function () {
-                    $(input).parent().addClass("wrong");
-                  });
-                }
-              }
-            });
-            indexFirst++;
-          }
-        );
+        // var indexFirst = 0,
+        //   indexSecond = 0,
+        //   indexThird = 0,
+        //   indexFourth = 0;
+        // $.each(
+        //   $("#part6-detail .group-question .first-question .option-area"),
+        //   function () {
+        //     var vm = this;
+        //     $.each($(vm).find("input"), function () {
+        //       // Disable tất cả input câu hỏi thứ 1
+        //       $(this).prop("disabled", true);
+        //       var input = this;
+        //       if ($(input).val() == me.getPart6Data[indexFirst]?.FirstAnswer) {
+        //         me.$nextTick(function () {
+        //           $(input).parent().addClass("correct");
+        //         });
+        //       } else {
+        //         if ($(input).is(":checked")) {
+        //           me.$nextTick(function () {
+        //             $(input).parent().addClass("wrong");
+        //           });
+        //         }
+        //       }
+        //     });
+        //     indexFirst++;
+        //   }
+        // );
 
-        $.each(
-          $("#part6-detail .group-question .second-question .option-area"),
-          function () {
-            var vm = this;
-            $.each($(vm).find("input"), function () {
-              // Disable tất cả input câu hỏi thứ 2
-              $(this).prop("disabled", true);
-              var input = this;
-              if (
-                $(input).val() == me.getPart6Data[indexSecond]?.SecondAnswer
-              ) {
-                me.$nextTick(function () {
-                  $(input).parent().addClass("correct");
-                });
-              } else {
-                if ($(input).is(":checked")) {
-                  me.$nextTick(function () {
-                    $(input).parent().addClass("wrong");
-                  });
-                }
-              }
-            });
-            indexSecond++;
-          }
-        );
+        // $.each(
+        //   $("#part6-detail .group-question .second-question .option-area"),
+        //   function () {
+        //     var vm = this;
+        //     $.each($(vm).find("input"), function () {
+        //       // Disable tất cả input câu hỏi thứ 2
+        //       $(this).prop("disabled", true);
+        //       var input = this;
+        //       if (
+        //         $(input).val() == me.getPart6Data[indexSecond]?.SecondAnswer
+        //       ) {
+        //         me.$nextTick(function () {
+        //           $(input).parent().addClass("correct");
+        //         });
+        //       } else {
+        //         if ($(input).is(":checked")) {
+        //           me.$nextTick(function () {
+        //             $(input).parent().addClass("wrong");
+        //           });
+        //         }
+        //       }
+        //     });
+        //     indexSecond++;
+        //   }
+        // );
 
-        $.each(
-          $("#part6-detail .group-question .third-question .option-area"),
-          function () {
-            var vm = this;
-            $.each($(vm).find("input"), function () {
-              // Disable tất cả input câu hỏi thứ 3
-              $(this).prop("disabled", true);
-              var input = this;
-              if ($(input).val() == me.getPart6Data[indexThird]?.ThirdAnswer) {
-                me.$nextTick(function () {
-                  $(input).parent().addClass("correct");
-                });
-              } else {
-                if ($(input).is(":checked")) {
-                  me.$nextTick(function () {
-                    $(input).parent().addClass("wrong");
-                  });
-                }
-              }
-            });
-            indexThird++;
-          }
-        );
+        // $.each(
+        //   $("#part6-detail .group-question .third-question .option-area"),
+        //   function () {
+        //     var vm = this;
+        //     $.each($(vm).find("input"), function () {
+        //       // Disable tất cả input câu hỏi thứ 3
+        //       $(this).prop("disabled", true);
+        //       var input = this;
+        //       if ($(input).val() == me.getPart6Data[indexThird]?.ThirdAnswer) {
+        //         me.$nextTick(function () {
+        //           $(input).parent().addClass("correct");
+        //         });
+        //       } else {
+        //         if ($(input).is(":checked")) {
+        //           me.$nextTick(function () {
+        //             $(input).parent().addClass("wrong");
+        //           });
+        //         }
+        //       }
+        //     });
+        //     indexThird++;
+        //   }
+        // );
 
-        $.each(
-          $("#part6-detail .group-question .fourth-question .option-area"),
-          function () {
-            var vm = this;
-            $.each($(vm).find("input"), function () {
-              // Disable tất cả input câu hỏi thứ 4
-              $(this).prop("disabled", true);
-              var input = this;
-              if ($(input).val() == me.getPart6Data[indexFourth]?.FirstAnswer) {
-                me.$nextTick(function () {
-                  $(input).parent().addClass("correct");
-                });
-              } else {
-                if ($(input).is(":checked")) {
+        // $.each(
+        //   $("#part6-detail .group-question .fourth-question .option-area"),
+        //   function () {
+        //     var vm = this;
+        //     $.each($(vm).find("input"), function () {
+        //       // Disable tất cả input câu hỏi thứ 4
+        //       $(this).prop("disabled", true);
+        //       var input = this;
+        //       if ($(input).val() == me.getPart6Data[indexFourth]?.FirstAnswer) {
+        //         me.$nextTick(function () {
+        //           $(input).parent().addClass("correct");
+        //         });
+        //       } else {
+        //         if ($(input).is(":checked")) {
+        //           me.$nextTick(function () {
+        //             $(input).parent().addClass("wrong");
+        //           });
+        //         }
+        //       }
+        //     });
+        //     indexFourth++;
+        //   }
+        // );
+
+        var index = 0;
+        var listSelector = [
+          {
+            className: "first-question",
+            propertyAnswer: "FirstAnswer",
+          },
+          {
+            className: "second-question",
+            propertyAnswer: "SecondAnswer",
+          },
+          {
+            className: "third-question",
+            propertyAnswer: "ThirdAnswer",
+          },
+          {
+            className: "fourth-question",
+            propertyAnswer: "FourthAnswer",
+          },
+        ];
+        $.each($("#part6-detail .group-question"), function () {
+          listSelector.forEach((ele) => {
+            $.each(
+              $(this).find(`.${ele.className} .option-area`).find("input"),
+              function () {
+                let input = this;
+                $(input).prop("disabled", true);
+                if (
+                  $(input).val() == me.getPart6Data[index][ele.propertyAnswer]
+                ) {
                   me.$nextTick(function () {
-                    $(input).parent().addClass("wrong");
+                    $(input).parent().addClass("correct");
                   });
+                } else {
+                  if ($(input).is(":checked")) {
+                    me.$nextTick(function () {
+                      $(input).parent().addClass("wrong");
+                    });
+                  }
                 }
               }
-            });
-            indexFourth++;
-          }
-        );
+            );
+          });
+          index++;
+        });
       } catch (e) {
         console.log(e);
       }
@@ -456,7 +504,8 @@ export default {
           part6Answer.push(objAnswer);
         });
         localStorage.setItem("part6Answer", JSON.stringify(part6Answer));
-        if (isShowMessage) this.showNoti('success', 'Ghi nhận câu trả lời thành công!');
+        if (isShowMessage)
+          this.showNoti("success", "Ghi nhận câu trả lời thành công!");
       } catch (e) {
         console.log(e);
       }
