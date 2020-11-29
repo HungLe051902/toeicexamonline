@@ -3,7 +3,15 @@
     <div class="header"></div>
     <div class="main-content pb-4">
       <div class="intro w-100 p-4">
-        <h2>Thi TOEIC trực tuyến miễn phí</h2>
+        <div class="d-flex align-items-center">
+          <img
+            v-on:click="backToHome"
+            class="icon-back"
+            src="@/assets/icons/back-arrow.png"
+            alt=""
+          />
+          <h2 class="ml-2 mb-0">Thi TOEIC trực tuyến miễn phí</h2>
+        </div>
         <p class="p-2 wrap text-left">
           TOEIC là một chứng chỉ được sử dụng phổ biến nhằm đánh giá trình độ sử
           dụng tiếng Anh trong môi trường giao tiếp quốc tế. Ở Việt Nam, chứng
@@ -109,13 +117,24 @@ export default {
     };
   },
   methods: {
+    /**
+    Hàm thực hiện điều hướng về trang chủ
+    Author: LXHUNG(29/11/2020)
+     */
+    backToHome() {
+      try {
+        this.$router.push("/");
+      } catch (e) {
+        console.log(e);
+      }
+    },
     // Đi tới màn hình giới thiệu đề thi
     goToIntroExam(exam) {
       try {
         // Xóa hết thông tin trong localStorage
         localStorage.clear();
         // Lưu trạng thái trước khi làm bài
-        localStorage.setItem('state', 'beforeDoing');
+        localStorage.setItem("state", "beforeDoing");
         // Lưu thông tin đề được chọn
         localStorage.setItem("selected-exam", JSON.stringify(exam));
         this.$router.push(`/toeicexam/${exam.ExamID}`);
@@ -151,11 +170,6 @@ export default {
 <style lang="scss" scoped>
 #toeic-exam {
   height: 100vh;
-  // .header{
-  //   background: url("../assets/img/logo-toeic.jpg");
-  //   background-repeat: no-repeat;
-  //   background-size: 300px 100px;
-  // }
   .main-content {
     min-height: calc(100vh - 200px);
     .list-exam {
@@ -179,10 +193,17 @@ export default {
         }
       }
     }
+    .icon-back {
+      width: 32px;
+      height: 32px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
   #footer {
     height: 200px;
-    width: 100%;;
+    width: 100%;
     background-color: #4682b4;
     position: relative;
     bottom: 0;
