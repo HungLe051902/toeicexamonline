@@ -4,6 +4,7 @@ import Main from '../views/Main/index.vue'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import toeicexamroute from '@/router/toeicexam.js';
+import store from "@/store";
 
 Vue.use(VueRouter)
 
@@ -43,6 +44,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   console.log(to.path, from.path);
   if (to.path == '/toeicexam'){
+    store.commit("toeicexam/clearAllData");
     localStorage.clear();
     next();
   }

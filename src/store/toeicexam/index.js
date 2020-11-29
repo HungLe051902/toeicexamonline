@@ -18,6 +18,23 @@ const toeicexam = {
             } catch (e) {
                 console.log(e);
             }
+        },
+        /**
+         * Thực hiện xóa hết dữ liệu các part trong store
+         * @param {*} state 
+         */
+        clearAllData(state){
+            try{
+                state.part1Data = [];
+                state.part2Data = [];
+                state.part3Data = [];
+                state.part4Data = [];
+                state.part5Data = [];
+                state.part6Data = [];
+                state.part7Data = [];
+            } catch(e){
+                console.log(e);
+            }
         }
     },
     actions: {
