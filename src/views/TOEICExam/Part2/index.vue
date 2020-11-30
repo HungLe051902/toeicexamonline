@@ -29,18 +29,21 @@
         >
         <div class="option-area">
           <label
+            v-on:click="autoSaveAnswer($event)"
             class="radio-inline mr-3"
             v-bind:class="isFinished ? 'd-block' : ''"
             ><input type="radio" :name="item.QuestionID" value="A" />&nbsp;A
             <span v-if="isFinished">. {{ item.OptionA }}</span>
           </label>
           <label
+            v-on:click="autoSaveAnswer($event)"
             class="radio-inline mr-3"
             v-bind:class="isFinished ? 'd-block' : ''"
             ><input type="radio" :name="item.QuestionID" value="B" />&nbsp;B
             <span v-if="isFinished">. {{ item.OptionB }}</span>
           </label>
           <label
+            v-on:click="autoSaveAnswer($event)"
             class="radio-inline mr-3"
             v-bind:class="isFinished ? 'd-block' : ''"
             ><input type="radio" :name="item.QuestionID" value="C" />&nbsp;C
@@ -86,6 +89,14 @@ export default {
     this.handleAfterLoadData();
   },
   methods: {
+    /**
+    Hàm lắng nghe sự kiện để lưu câu trả lời vào localStorage
+    Author: LXHUNG(30/11/2020)
+     */
+    autoSaveAnswer(e){
+      if (e.target.nodeName == 'LABEL') return;
+      this.saveAnswerToLocalStorage();
+    },
     /**
       Hàm xử lý sau khi tải xong dữ liệu
       Author: LXHUNG(26/11/2020)
