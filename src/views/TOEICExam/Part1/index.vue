@@ -34,12 +34,12 @@
     <button v-on:click="nextToPart2" class="btn h-btn-primary mb-4">
       Tiếp tục
     </button>
-    <button
+    <!--<button
       v-on:click="saveAnswerToLocalStorage"
       class="btn h-btn-primary mb-4 ml-3"
     >
       Ghi nhận câu trả lời
-    </button>
+    </button>-->
   </div>
 </template>
 <script>

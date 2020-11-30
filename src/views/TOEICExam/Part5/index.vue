@@ -57,9 +57,9 @@
     <button v-on:click="nextToPart6" class="btn h-btn-primary mb-4">
       Tiếp tục
     </button>
-    <button v-on:click="saveAnswerToLocalStorage(true)" class="btn h-btn-primary mb-4 ml-3">
+    <!--<button v-on:click="saveAnswerToLocalStorage(true)" class="btn h-btn-primary mb-4 ml-3">
       Ghi nhận câu trả lời
-    </button>
+    </button>-->
   </div>
 </template>
 <script>
