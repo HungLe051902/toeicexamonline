@@ -12,16 +12,36 @@ const routes = [
   {
     path: '/',
     name: 'Main',
-    component: Main
+    component: Main,
+    children: [
+      {
+        path: '/',
+        name: 'About',
+        component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+      },
+      {
+        path: '/home',
+        name: 'Home',
+        component: () => import('../views/Home.vue')
+      },
+      {
+        path: '/TOEICPreparation',
+        name: 'TOEICPreparation',
+        component: () => import('../views/TOEICPreparation/index.vue')
+      },
+      {
+        path: '/directory',
+        name: 'Directory',
+        component: () => import('../views/Directory/index.vue')
+      },
+      {
+        path: '/examtip',
+        name: 'ExamTip',
+        component: () => import('../views/ExamTip/index.vue')
+      }
+    ]
   },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  },
+
   {
     path: '/toeicexam',
     name: 'TOEICExam',
@@ -43,7 +63,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   console.log(to.path, from.path);
-  if (to.path == '/toeicexam'){
+  if (to.path == '/toeicexam') {
     store.commit("toeicexam/clearAllData");
     localStorage.clear();
     next();

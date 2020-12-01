@@ -28,29 +28,33 @@
           </button>
         </div>
       </div>
-      <div class="toolbar">
+      <div id="toolbar" class="">
         <div class="u-navbar d-flex justify-content-start align-items-center">
           <div
-            v-on:click="showNoti('info', 'Chức năng đang phát triển!')"
+            v-on:click="$router.push('/home')"
             class="navbar-item"
+            v-bind:class="$route.name == 'Home' ? 'active-item' : ''"
           >
             Trang chủ
           </div>
           <div
-            v-on:click="showNoti('info', 'Chức năng đang phát triển!')"
+            v-on:click="$router.push('/TOEICPreparation')"
             class="navbar-item"
+            v-bind:class="$route.name == 'TOEICPreparation' ? 'active-item' : ''"
           >
             Luyện thi TOEIC
           </div>
           <div
-            v-on:click="showNoti('info', 'Chức năng đang phát triển!')"
+            v-on:click="$router.push('/directory')"
             class="navbar-item"
+            v-bind:class="$route.name == 'Directory' ? 'active-item' : ''"
           >
             Danh mục
           </div>
           <div
-            v-on:click="showNoti('info', 'Chức năng đang phát triển!')"
+            v-on:click="$router.push('/examtip')"
             class="navbar-item"
+            v-bind:class="$route.name == 'ExamTip' ? 'active-item' : ''"
           >
             Mẹo thi TOEIC
           </div>
@@ -63,7 +67,10 @@
         id="register"
         :isShow="isShowRegisterForm"
         @closeRegisterDialog="isShowRegisterForm = false"
-        @openLoginForm="isShowRegisterForm = false;isShowLoginForm = true"
+        @openLoginForm="
+          isShowRegisterForm = false;
+          isShowLoginForm = true;
+        "
         v-if="isShowRegisterForm"
       />
       <LogIn
@@ -73,25 +80,7 @@
         v-if="isShowLoginForm"
       />
     </div>
-    <div class="content w-100">
-      <div class="intro w-100 p-4">
-        <h2>Thi TOEIC trực tuyến miễn phí</h2>
-        <p class="p-2 wrap text-left">
-          TOEIC là một chứng chỉ được sử dụng phổ biến nhằm đánh giá trình độ sử
-          dụng tiếng Anh trong môi trường giao tiếp quốc tế. Ở Việt Nam, chứng
-          chỉ TOEIC là một trong những tiêu chuẩn phổ biến để đánh giá trình độ
-          thông thạo tiếng Anh của người lao động được nhiều doanh nghiệp, tổ
-          chức lựa chọn. Ngoài ra, TOEIC còn là chuẩn đầu ra tiếng Anh của nhiều
-          trường đại học cho sinh viên khi tốt nghiệp. Bài thi toeic gồm 2 phần
-          là phần đọc và phần nghe. Để giúp các bạn có mong muốn thi toeic có
-          thể làm quen với đề thi trước khi thi thật. Nhóm chúng em có ý định
-          xây dựng web thi thử toeic online. Các đề thi làm trên web đều được
-          chấm điểm và có đáp án chi tiết để giúp các bạn có thể đánh giá chính
-          xác nhất trình độ hiện tại của mình và có thể đưa ra kế hoạch luyện
-          thi và học tập phù hợp.
-        </p>
-      </div>
-    </div>
+    <router-view></router-view>
     <div class="footer"></div>
   </div>
 </template>
@@ -101,8 +90,8 @@ import $ from "jquery";
 import Register from "@/views/Account/Register.vue";
 import LogIn from "@/views/Account/LogIn.vue";
 export default {
-  created () {
-    console.log("enviroment", process.env.VUE_APP_BASE_URL_LOGIN);
+  created() {
+    // console.log("enviroment", process.env.VUE_APP_BASE_URL_LOGIN);
   },
   data() {
     return {
@@ -152,28 +141,49 @@ export default {
     },
     showRegisterForm() {},
   },
+  mounted() {
+    // When the user scrolls the page, execute myFunction
+    window.onscroll = function () {
+      myFunction();
+    };
+
+    // Get the navbar
+    var navbar = document.getElementById("toolbar");
+
+    // Get the offset position of the navbar
+    var sticky = navbar.offsetTop;
+
+    // Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
+    function myFunction() {
+      if (window.pageYOffset >= sticky) {
+        navbar.classList.add("sticky");
+      } else {
+        navbar.classList.remove("sticky");
+      }
+    }
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .main-topbar {
   height: 50px;
-  position: absolute;
+  // position: absolute;
   top: 0;
   left: 0;
   width: 100vw;
   padding: 0 24px;
   background-color: #f0f0f0;
 }
-.toolbar {
-  top: 50px;
-  position: absolute;
+#toolbar {
+  // top: 50px;
+  // position: absolute;
   width: 100vw;
   background-color: #1864a3;
 }
 
 .u-navbar {
-  height: 100%;
+  // height: 100%;
   padding: 0 24px;
   .navbar-item {
     padding: 16px 8px;
@@ -186,8 +196,14 @@ export default {
     }
   }
 }
-.content {
-  position: absolute;
-  top: 106px;
+
+.sticky {
+  position: fixed;
+  top: 0;
+  // width: 100%;
+}
+
+.active-item{
+  background-color: #075696;
 }
 </style>
