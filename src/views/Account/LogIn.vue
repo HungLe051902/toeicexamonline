@@ -163,6 +163,9 @@ export default {
           if (res) {
             this.hideLoading();
             if (res.data.APPCode == 200) {
+              // Lưu token vào localStorage
+              if (res.data.Data)
+                localStorage.setItem('token', 'Bearer ' + res.data.Data);
               this.closeModal();
               this.$router.push("/toeicexam");
             } else if (res.data.APPCode == 600) {
