@@ -164,17 +164,17 @@ export default {
             this.hideLoading();
             if (res.data.APPCode == 200) {
               // Lưu token vào localStorage
-              if (res.data.Data)
-                localStorage.setItem('token', 'Bearer ' + res.data.Data);
-              this.closeModal();
-              this.$router.push("/toeicexam");
+              if (res.data.Data) {
+                localStorage.setItem("token", "Bearer " + res.data.Data);
+              }
+              this.closeDialog();
+              this.$router.push("/home");
             } else if (res.data.APPCode == 600) {
               this.showNoti(
                 "warning",
                 "Không tồn tại tài khoản trên hệ thống!"
               );
-            }
-            else {
+            } else {
               this.showNoti("error", "Có lỗi xảy ra. Vui lòng thử lại!");
             }
           } else {
