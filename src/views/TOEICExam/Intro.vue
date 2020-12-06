@@ -539,7 +539,7 @@ export default {
         this.isShowFinishDialog = false;
         this.$router.push("/toeicexam");
         this.$store.commit("toeicexam/clearAllData");
-        localStorage.clear();
+        // localStorage.clear();
       } catch (e) {
         console.log(e);
       }

@@ -131,8 +131,6 @@ export default {
     // Đi tới màn hình giới thiệu đề thi
     goToIntroExam(exam) {
       try {
-        // Xóa hết thông tin trong localStorage
-        localStorage.clear();
         // Lưu trạng thái trước khi làm bài
         localStorage.setItem("state", "beforeDoing");
         // Lưu thông tin đề được chọn
