@@ -8,24 +8,40 @@
           <h1 class="mb-0">Thi TOEIC trực tuyến</h1>
         </div>
         <div class="topbar-right">
-          <button
-            v-on:click="isShowRegisterForm = true"
-            type="button"
-            class="btn btn-light"
-            data-toggle="modal"
-            data-target="#register"
-          >
-            Đăng ký
-          </button>
-          <button
-            v-on:click="isShowLoginForm = true"
-            type="button"
-            class="btn h-btn-primary ml-3"
-            data-toggle="modal"
-            data-target="#login"
-          >
-            Đăng nhập
-          </button>
+          <template v-if="!hasLogined">
+            <button
+              v-on:click="isShowRegisterForm = true"
+              type="button"
+              class="btn btn-light"
+              data-toggle="modal"
+              data-target="#register"
+            >
+              Đăng ký
+            </button>
+            <button
+              v-on:click="isShowLoginForm = true"
+              type="button"
+              class="btn h-btn-primary ml-3"
+              data-toggle="modal"
+              data-target="#login"
+            >
+              Đăng nhập
+            </button>
+          </template>
+          <template v-else>
+            <img src="@/assets/icons/avatar.png" alt="Avatar" class="avatar" />
+            <span class="ml-2">{{ currentUsername }}</span>
+            <el-dropdown>
+              <span class="el-dropdown-link">
+                <i class="el-icon-arrow-down el-icon--right"></i>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item
+                  ><span v-on:click="logout">Đăng xuất</span></el-dropdown-item
+                >
+              </el-dropdown-menu>
+            </el-dropdown>
+          </template>
         </div>
       </div>
       <div id="toolbar" class="">
@@ -40,7 +56,9 @@
           <div
             v-on:click="$router.push('/TOEICPreparation')"
             class="navbar-item"
-            v-bind:class="$route.name == 'TOEICPreparation' ? 'active-item' : ''"
+            v-bind:class="
+              $route.name == 'TOEICPreparation' ? 'active-item' : ''
+            "
           >
             Luyện thi TOEIC
           </div>
@@ -77,6 +95,7 @@
         id="login"
         :isShow="isShowLoginForm"
         @closeLoginDialog="isShowLoginForm = false"
+        @login-success="handleLoginSuccess"
         v-if="isShowLoginForm"
       />
     </div>
@@ -89,6 +108,7 @@
 import $ from "jquery";
 import Register from "@/views/Account/Register.vue";
 import LogIn from "@/views/Account/LogIn.vue";
+import AuthenticationEnum from "@/enums/AuthenticationEnum";
 export default {
   created() {
     // console.log("enviroment", process.env.VUE_APP_BASE_URL_LOGIN);
@@ -97,6 +117,7 @@ export default {
     return {
       isShowLoginForm: false,
       isShowRegisterForm: false,
+      hasLogined: false
     };
   },
   name: "Main",
@@ -105,6 +126,28 @@ export default {
     LogIn,
   },
   methods: {
+    /**
+    Hàm xử lý khi đăng nhập thành công */
+    handleLoginSuccess(){
+      try {
+        this.hasLogined = true;
+      } catch(e){
+        console.log(e);
+      }
+    },
+    /**
+    Hàm thực hiện đăng xuất
+    Author: LXHUNG(06/12/2020)
+     */
+    logout() {
+      try {
+        localStorage.removeItem('token');
+        this.hasLogined = false;
+        this.$router.push('/');
+      } catch (e) {
+        console.log(e);
+      }
+    },
     // Hàm đóng form đăng ký
     closeRegisterForm(isShowLoginForm) {
       try {
@@ -140,6 +183,22 @@ export default {
       }
     },
     showRegisterForm() {},
+  },
+  computed: {
+    // hasLogined() {
+    //   if (localStorage.getItem("token")) {
+    //     return true;
+    //   }
+    //   return false;
+    // },
+    currentUsername() {
+      if (!localStorage.getItem("token")) {
+        return "USERNAME";
+      }
+      return this.parseJwt(localStorage.getItem("token"))[
+        AuthenticationEnum.USERNAME
+      ];
+    },
   },
   mounted() {
     // When the user scrolls the page, execute myFunction
@@ -203,7 +262,14 @@ export default {
   // width: 100%;
 }
 
-.active-item{
+.active-item {
   background-color: #075696;
+}
+
+.avatar {
+  vertical-align: middle;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
 }
 </style>

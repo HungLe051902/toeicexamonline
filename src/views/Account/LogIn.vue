@@ -169,6 +169,8 @@ export default {
               }
               this.closeDialog();
               this.$router.push("/home");
+              // location.reload();
+              this.$emit("login-success");
             } else if (res.data.APPCode == 600) {
               this.showNoti(
                 "warning",
