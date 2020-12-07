@@ -5,8 +5,10 @@ axios.interceptors.request.use(function (config) {
     config.headers = {
         'Authorization': sessionStorage.getItem("token")
     }
+    console.log(config);
     return config;
 }, function (error) {
+    console.log("status", error.response);
     // Do something with request error
     return Promise.reject(error);
 });

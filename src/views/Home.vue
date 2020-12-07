@@ -12,8 +12,8 @@ export default {
   name: "Home",
   computed: {
     currentRole(){
-      if (localStorage.getItem('token')){
-        return this.parseJwt(localStorage.getItem('token'))[AuthenticationEnum.ROLE];
+      if (sessionStorage.getItem('token')){
+        return this.parseJwt(sessionStorage.getItem('token'))[AuthenticationEnum.ROLE];
       }
       else return '';
     }
