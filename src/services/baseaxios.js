@@ -5,11 +5,19 @@ axios.interceptors.request.use(function (config) {
     config.headers = {
         'Authorization': sessionStorage.getItem("token")
     }
-    console.log(config);
     return config;
 }, function (error) {
-    console.log("status", error.response);
-    // Do something with request error
     return Promise.reject(error);
+});
+axios.interceptors.response.use(function (config) {
+    return config;
+}, function (error) {
+    if (error.response.status === 401){
+        window.location = '/';
+        sessionStorage.clear();
+    }
+    // Do something with request error
+    else
+        return Promise.reject(error);
 });
 export default axios
