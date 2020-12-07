@@ -65,12 +65,12 @@ router.beforeEach((to, from, next) => {
   console.log(to.path, from.path);
   if (to.path == '/toeicexam') {
     store.commit("toeicexam/clearAllData");
-    var token = null;
-    if (localStorage.getItem('token'))
-      token = localStorage.getItem('token');
+    // var token = null;
+    // if (localStorage.getItem('token'))
+    //   token = localStorage.getItem('token');
     localStorage.clear();
-    if (token)
-      localStorage.setItem('token', token);  
+    // if (token)
+    //   localStorage.setItem('token', token);  
     next();
   }
   else {

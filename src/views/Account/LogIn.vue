@@ -165,7 +165,8 @@ export default {
             if (res.data.APPCode == 200) {
               // Lưu token vào localStorage
               if (res.data.Data) {
-                localStorage.setItem("token", "Bearer " + res.data.Data);
+                // localStorage.setItem("token", "Bearer " + res.data.Data);
+                sessionStorage.setItem("token", "Bearer " + res.data.Data);
               }
               this.closeDialog();
               this.$router.push("/home");

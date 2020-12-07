@@ -112,7 +112,7 @@ import AuthenticationEnum from "@/enums/AuthenticationEnum";
 export default {
   created() {
     // console.log("enviroment", process.env.VUE_APP_BASE_URL_LOGIN);
-    this.hasLogined = localStorage.getItem('token') ? true : false;
+    this.hasLogined = sessionStorage.getItem('token') ? true : false;
   },
   data() {
     return {
@@ -142,7 +142,7 @@ export default {
      */
     logout() {
       try {
-        localStorage.removeItem("token");
+        sessionStorage.removeItem("token");
         this.hasLogined = false;
         this.$router.push("/");
       } catch (e) {
@@ -179,7 +179,7 @@ export default {
     goToExamView() {
       try {
         // Nếu chưa đăng nhập thì hiển thị form đăng nhập lên
-        if (!localStorage.getItem("token")) {
+        if (!sessionStorage.getItem("token")) {
           this.isShowLoginForm = Object.assign(true);
         } else {
           this.$router.push("/toeicexam");
@@ -191,17 +191,11 @@ export default {
     showRegisterForm() {},
   },
   computed: {
-    // hasLogined() {
-    //   if (localStorage.getItem("token")) {
-    //     return true;
-    //   }
-    //   return false;
-    // },
     currentUsername() {
-      if (!localStorage.getItem("token")) {
+      if (!sessionStorage.getItem("token")) {
         return "USERNAME";
       }
-      return this.parseJwt(localStorage.getItem("token"))[
+      return this.parseJwt(sessionStorage.getItem("token"))[
         AuthenticationEnum.USERNAME
       ];
     },
