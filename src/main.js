@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import mixin from './mixins'
+import CKEditor from '@ckeditor/ckeditor5-vue2';
 import 'element-ui/lib/theme-chalk/index.css';
 
 import Toast from "vue-toastification";
@@ -28,6 +29,8 @@ Vue.use(Element)
 Vue.config.productionTip = false
 
 // Vue.config.silent = true
+
+Vue.use(CKEditor);
 
 new Vue({
   router,
