@@ -33,7 +33,7 @@
       <div
         class="h-100 align-items-center d-flex justify-content-center text-light"
       >
-        © 2020 Copyright: LEXUANHUNG
+        © 2020 Copyright: LXH
       </div>
     </div>
   </div>

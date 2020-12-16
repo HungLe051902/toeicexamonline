@@ -12,7 +12,7 @@
           />
           <h2 class="ml-2 mb-0">Thi TOEIC trực tuyến miễn phí</h2>
         </div>
-        <p class="p-2 wrap text-left">
+        <p class="p-2 wrap mb-0 text-left">
           TOEIC là một chứng chỉ được sử dụng phổ biến nhằm đánh giá trình độ sử
           dụng tiếng Anh trong môi trường giao tiếp quốc tế. Ở Việt Nam, chứng
           chỉ TOEIC là một trong những tiêu chuẩn phổ biến để đánh giá trình độ
@@ -99,7 +99,7 @@
         <div
           class="h-100 align-items-center d-flex justify-content-center text-light"
         >
-          © 2020 Copyright: LEXUANHUNG
+          © 2020 Copyright: LXH
         </div>
       </div>
     </div>
