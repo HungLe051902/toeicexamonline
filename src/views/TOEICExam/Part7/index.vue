@@ -252,6 +252,14 @@
       </div>
     </div>
     <button
+      v-if="isFinishExam"
+      v-on:click="isShowConfirmBeforeSubmit = true"
+      class="btn h-btn-primary mb-4"
+    >
+      Kết quả
+    </button>
+    <button
+      v-else
       v-on:click="isShowConfirmBeforeSubmit = true"
       class="btn h-btn-primary mb-4"
     >
@@ -690,6 +698,9 @@ export default {
   },
   computed: {
     ...mapGetters("toeicexam", ["getPart7Data"]),
+    isFinishExam(){
+      return localStorage.getItem('state') == 'finished';
+    },
   },
 };
 </script>
