@@ -20,7 +20,10 @@
           >
           <div class="option-area">
             <div class="form-check">
-              <label v-on:click="autoSaveAnswer($event)" class="form-check-label">
+              <label
+                v-on:click="autoSaveAnswer($event)"
+                class="form-check-label"
+              >
                 <input
                   type="radio"
                   class="form-check-input"
@@ -30,7 +33,10 @@
               </label>
             </div>
             <div class="form-check">
-              <label v-on:click="autoSaveAnswer($event)" class="form-check-label">
+              <label
+                v-on:click="autoSaveAnswer($event)"
+                class="form-check-label"
+              >
                 <input
                   type="radio"
                   class="form-check-input"
@@ -40,7 +46,10 @@
               </label>
             </div>
             <div class="form-check">
-              <label v-on:click="autoSaveAnswer($event)" class="form-check-label">
+              <label
+                v-on:click="autoSaveAnswer($event)"
+                class="form-check-label"
+              >
                 <input
                   type="radio"
                   class="form-check-input"
@@ -50,7 +59,10 @@
               </label>
             </div>
             <div class="form-check">
-              <label v-on:click="autoSaveAnswer($event)" class="form-check-label">
+              <label
+                v-on:click="autoSaveAnswer($event)"
+                class="form-check-label"
+              >
                 <input
                   type="radio"
                   class="form-check-input"
@@ -67,7 +79,10 @@
           >
           <div class="option-area">
             <div class="form-check">
-              <label v-on:click="autoSaveAnswer($event)" class="form-check-label">
+              <label
+                v-on:click="autoSaveAnswer($event)"
+                class="form-check-label"
+              >
                 <input
                   type="radio"
                   class="form-check-input"
@@ -77,7 +92,10 @@
               </label>
             </div>
             <div class="form-check">
-              <label v-on:click="autoSaveAnswer($event)" class="form-check-label">
+              <label
+                v-on:click="autoSaveAnswer($event)"
+                class="form-check-label"
+              >
                 <input
                   type="radio"
                   class="form-check-input"
@@ -87,7 +105,10 @@
               </label>
             </div>
             <div class="form-check">
-              <label v-on:click="autoSaveAnswer($event)" class="form-check-label">
+              <label
+                v-on:click="autoSaveAnswer($event)"
+                class="form-check-label"
+              >
                 <input
                   type="radio"
                   class="form-check-input"
@@ -97,7 +118,10 @@
               </label>
             </div>
             <div class="form-check">
-              <label v-on:click="autoSaveAnswer($event)" class="form-check-label">
+              <label
+                v-on:click="autoSaveAnswer($event)"
+                class="form-check-label"
+              >
                 <input
                   type="radio"
                   class="form-check-input"
@@ -114,7 +138,10 @@
           >
           <div class="option-area">
             <div class="form-check">
-              <label v-on:click="autoSaveAnswer($event)" class="form-check-label">
+              <label
+                v-on:click="autoSaveAnswer($event)"
+                class="form-check-label"
+              >
                 <input
                   type="radio"
                   class="form-check-input"
@@ -124,7 +151,10 @@
               </label>
             </div>
             <div class="form-check">
-              <label v-on:click="autoSaveAnswer($event)" class="form-check-label">
+              <label
+                v-on:click="autoSaveAnswer($event)"
+                class="form-check-label"
+              >
                 <input
                   type="radio"
                   class="form-check-input"
@@ -134,7 +164,10 @@
               </label>
             </div>
             <div class="form-check">
-              <label v-on:click="autoSaveAnswer($event)" class="form-check-label">
+              <label
+                v-on:click="autoSaveAnswer($event)"
+                class="form-check-label"
+              >
                 <input
                   type="radio"
                   class="form-check-input"
@@ -144,7 +177,10 @@
               </label>
             </div>
             <div class="form-check">
-              <label v-on:click="autoSaveAnswer($event)" class="form-check-label">
+              <label
+                v-on:click="autoSaveAnswer($event)"
+                class="form-check-label"
+              >
                 <input
                   type="radio"
                   class="form-check-input"
@@ -161,7 +197,10 @@
           >
           <div class="option-area">
             <div class="form-check">
-              <label v-on:click="autoSaveAnswer($event)" class="form-check-label">
+              <label
+                v-on:click="autoSaveAnswer($event)"
+                class="form-check-label"
+              >
                 <input
                   type="radio"
                   class="form-check-input"
@@ -171,7 +210,10 @@
               </label>
             </div>
             <div class="form-check">
-              <label v-on:click="autoSaveAnswer($event)" class="form-check-label">
+              <label
+                v-on:click="autoSaveAnswer($event)"
+                class="form-check-label"
+              >
                 <input
                   type="radio"
                   class="form-check-input"
@@ -181,7 +223,10 @@
               </label>
             </div>
             <div class="form-check">
-              <label v-on:click="autoSaveAnswer($event)" class="form-check-label">
+              <label
+                v-on:click="autoSaveAnswer($event)"
+                class="form-check-label"
+              >
                 <input
                   type="radio"
                   class="form-check-input"
@@ -191,7 +236,10 @@
               </label>
             </div>
             <div class="form-check">
-              <label v-on:click="autoSaveAnswer($event)" class="form-check-label">
+              <label
+                v-on:click="autoSaveAnswer($event)"
+                class="form-check-label"
+              >
                 <input
                   type="radio"
                   class="form-check-input"
@@ -208,7 +256,10 @@
           >
           <div class="option-area">
             <div class="form-check">
-              <label v-on:click="autoSaveAnswer($event)" class="form-check-label">
+              <label
+                v-on:click="autoSaveAnswer($event)"
+                class="form-check-label"
+              >
                 <input
                   type="radio"
                   class="form-check-input"
@@ -218,7 +269,10 @@
               </label>
             </div>
             <div class="form-check">
-              <label v-on:click="autoSaveAnswer($event)" class="form-check-label">
+              <label
+                v-on:click="autoSaveAnswer($event)"
+                class="form-check-label"
+              >
                 <input
                   type="radio"
                   class="form-check-input"
@@ -228,7 +282,10 @@
               </label>
             </div>
             <div class="form-check">
-              <label v-on:click="autoSaveAnswer($event)" class="form-check-label">
+              <label
+                v-on:click="autoSaveAnswer($event)"
+                class="form-check-label"
+              >
                 <input
                   type="radio"
                   class="form-check-input"
@@ -238,7 +295,10 @@
               </label>
             </div>
             <div class="form-check">
-              <label v-on:click="autoSaveAnswer($event)" class="form-check-label">
+              <label
+                v-on:click="autoSaveAnswer($event)"
+                class="form-check-label"
+              >
                 <input
                   type="radio"
                   class="form-check-input"
@@ -253,7 +313,7 @@
     </div>
     <button
       v-if="isFinishExam"
-      v-on:click="isShowConfirmBeforeSubmit = true"
+      v-on:click="goToView('/result')"
       class="btn h-btn-primary mb-4"
     >
       Kết quả
@@ -324,11 +384,22 @@ export default {
   },
   methods: {
     /**
+    Hàm điều hướng tới trang hiển thị kết quả
+    Author: LXHUNG(28/11/2020)
+     */
+    goToView(route) {
+      try {
+        if (route) this.$router.push(route);
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    /**
     Hàm lắng nghe sự kiện để lưu câu trả lời vào localStorage
     Author: LXHUNG(30/11/2020)
      */
-    autoSaveAnswer(e){
-      if (e.target.nodeName == 'LABEL') return;
+    autoSaveAnswer(e) {
+      if (e.target.nodeName == "LABEL") return;
       this.saveAnswerToLocalStorage();
     },
     /**
@@ -557,25 +628,25 @@ export default {
         var listSelector = [
           {
             className: "first-question",
-            propertyAnswer: "FirstAnswer"
+            propertyAnswer: "FirstAnswer",
           },
           {
             className: "second-question",
-            propertyAnswer: "SecondAnswer"
+            propertyAnswer: "SecondAnswer",
           },
           {
             className: "third-question",
-            propertyAnswer: "ThirdAnswer"
+            propertyAnswer: "ThirdAnswer",
           },
           {
             className: "fourth-question",
-            propertyAnswer: "FourthAnswer"
+            propertyAnswer: "FourthAnswer",
           },
           {
             className: "fifth-question",
-            propertyAnswer: "FifthAnswer"
+            propertyAnswer: "FifthAnswer",
           },
-        ]
+        ];
         $.each($("#part7-detail .group-question"), function () {
           listSelector.forEach((ele) => {
             $.each(
@@ -583,7 +654,9 @@ export default {
               function () {
                 let input = this;
                 $(input).prop("disabled", true);
-                if ($(input).val() == me.getPart7Data[index][ele.propertyAnswer]) {
+                if (
+                  $(input).val() == me.getPart7Data[index][ele.propertyAnswer]
+                ) {
                   me.$nextTick(function () {
                     $(input).parent().addClass("correct");
                   });
@@ -698,8 +771,8 @@ export default {
   },
   computed: {
     ...mapGetters("toeicexam", ["getPart7Data"]),
-    isFinishExam(){
-      return localStorage.getItem('state') == 'finished';
+    isFinishExam() {
+      return localStorage.getItem("state") == "finished";
     },
   },
 };
